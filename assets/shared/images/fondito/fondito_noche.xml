@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="fondito_noche.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="fondo animate pne0000" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0001" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0002" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0003" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0004" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0005" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0006" x="1920" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0007" x="1920" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0008" x="1920" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0009" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0010" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0011" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0012" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0013" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0014" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0015" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0016" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0017" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0018" x="0" y="0" width="1920" height="1080"/>
+	<SubTexture name="fondo animate pne0019" x="0" y="0" width="1920" height="1080"/>
+</TextureAtlas>

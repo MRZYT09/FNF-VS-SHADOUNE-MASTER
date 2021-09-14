@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="shadoune_assets.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="shadoune DOWN0000" x="0" y="0" width="436" height="584" frameX="-1" frameY="0" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0001" x="0" y="0" width="436" height="584" frameX="-1" frameY="0" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0002" x="436" y="0" width="432" height="579" frameX="0" frameY="-5" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0003" x="436" y="0" width="432" height="579" frameX="0" frameY="-5" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0004" x="868" y="0" width="432" height="572" frameX="0" frameY="-12" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0005" x="868" y="0" width="432" height="572" frameX="0" frameY="-12" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0006" x="1300" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0007" x="1300" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0008" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0009" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0010" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0011" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0012" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0013" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune DOWN0014" x="1732" y="0" width="432" height="565" frameX="0" frameY="-19" frameWidth="437" frameHeight="584"/>
+	<SubTexture name="shadoune LEFT0000" x="2164" y="0" width="466" height="614" frameX="-14" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0001" x="2164" y="0" width="466" height="614" frameX="-14" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0002" x="2630" y="0" width="468" height="614" frameX="-10" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0003" x="2630" y="0" width="468" height="614" frameX="-10" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0004" x="3098" y="0" width="472" height="614" frameX="-6" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0005" x="3098" y="0" width="472" height="614" frameX="-6" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0006" x="3570" y="0" width="474" height="614" frameX="-4" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0007" x="3570" y="0" width="474" height="614" frameX="-4" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0008" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0009" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0010" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0011" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0012" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0013" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune LEFT0014" x="0" y="614" width="478" height="614" frameX="0" frameY="0" frameWidth="480" frameHeight="614"/>
+	<SubTexture name="shadoune RIGHT0000" x="478" y="614" width="538" height="608" frameX="-3" frameY="0" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0001" x="478" y="614" width="538" height="608" frameX="-3" frameY="0" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0002" x="1016" y="614" width="546" height="605" frameX="0" frameY="-3" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0003" x="1016" y="614" width="546" height="605" frameX="0" frameY="-3" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0004" x="1562" y="614" width="550" height="605" frameX="0" frameY="-3" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0005" x="1562" y="614" width="550" height="605" frameX="0" frameY="-3" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0006" x="2112" y="614" width="553" height="604" frameX="0" frameY="-4" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0007" x="2112" y="614" width="553" height="604" frameX="0" frameY="-4" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0008" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0009" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0010" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0011" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0012" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0013" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune RIGHT0014" x="2665" y="614" width="555" height="603" frameX="0" frameY="-5" frameWidth="555" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0000" x="3220" y="614" width="649" height="608" frameX="-3" frameY="0" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0001" x="3220" y="614" width="649" height="608" frameX="-3" frameY="0" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0002" x="0" y="1228" width="603" height="605" frameX="0" frameY="-3" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0003" x="603" y="1228" width="623" height="605" frameX="0" frameY="-3" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0004" x="1226" y="1228" width="598" height="605" frameX="0" frameY="-3" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0005" x="1824" y="1228" width="564" height="605" frameX="0" frameY="-3" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0006" x="2388" y="1228" width="604" height="604" frameX="0" frameY="-4" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0007" x="2388" y="1228" width="604" height="604" frameX="0" frameY="-4" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0008" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0009" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0010" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0011" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0012" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0013" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune SWORD0014" x="2992" y="1228" width="576" height="603" frameX="0" frameY="-5" frameWidth="652" frameHeight="608"/>
+	<SubTexture name="shadoune UP0000" x="0" y="1833" width="586" height="708" frameX="-1" frameY="-13" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0001" x="0" y="1833" width="586" height="708" frameX="-1" frameY="-13" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0002" x="586" y="1833" width="583" height="710" frameX="0" frameY="-11" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0003" x="586" y="1833" width="583" height="710" frameX="0" frameY="-11" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0004" x="1169" y="1833" width="583" height="713" frameX="0" frameY="-8" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0005" x="1169" y="1833" width="583" height="713" frameX="0" frameY="-8" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0006" x="1752" y="1833" width="583" height="717" frameX="0" frameY="-4" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0007" x="1752" y="1833" width="583" height="717" frameX="0" frameY="-4" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0008" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0009" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0010" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0011" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0012" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0013" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune UP0014" x="2335" y="1833" width="583" height="721" frameX="0" frameY="0" frameWidth="587" frameHeight="721"/>
+	<SubTexture name="shadoune idle0000" x="2918" y="1833" width="417" height="711" frameX="0" frameY="-2" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0001" x="2918" y="1833" width="417" height="711" frameX="0" frameY="-2" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0002" x="3335" y="1833" width="418" height="714" frameX="0" frameY="-1" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0003" x="3335" y="1833" width="418" height="714" frameX="0" frameY="-1" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0004" x="0" y="2554" width="417" height="714" frameX="0" frameY="-1" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0005" x="0" y="2554" width="417" height="714" frameX="0" frameY="-1" frameWidth="419" frameHeight="715"/>
+	<SubTexture name="shadoune idle0006" x="417" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0007" x="417" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0008" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0009" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0010" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0011" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0012" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0013" x="836" y="2554" width="419" height="715"/>
+	<SubTexture name="shadoune idle0014" x="836" y="2554" width="419" height="715"/>
+</TextureAtlas>
