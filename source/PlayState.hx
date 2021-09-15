@@ -4336,7 +4336,7 @@ class PlayState extends MusicBeatState
 								totalNotesHit += 1;
 							sicks++;
 						}
-						//a
+						//zd
 			}
 
 			// trace('Wife accuracy loss: ' + wife + ' | Rating: ' + daRating + ' | Score: ' + score + ' | Weight: ' + (1 - wife));
