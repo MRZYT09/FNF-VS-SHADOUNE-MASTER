@@ -25,12 +25,17 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCategory> = [
+		new OptionCategory("mecanics", [
+			new Dodge("dodge mecanic"),
+			new Health("health mecanic"),
+			new Espacedodge("Key of dodge (pls use click Right)")
+		]),
+		new OptionCategory("if the mod is so hard", [
+			new Bestinputfornoobs("new input spam")
+		]),
 		new OptionCategory("Mod Specfic", [
-			new OldTimingsOption("Change between KE 1.5.4 and KE 1.4.2 Hit timings"),
-			new NoteSplashOption("Toggle if a Splash will appear when hitting sicks"),
-			new NoteColorOption("Change the color of the second up arrow for 8/9 key"),
-			new GTHColorsOption("Change the color of the notes for 5 key to match the colors from Guitar Hero"),
-			new GTHModeOption("Change the input system to act similar to Guitar Hero (actual controller recommended)")
+			new OldTimingsOption("Change between KE 1.5.4 and KE 1.4.2 Hit timings."),
+			new NoteSplashOption("Toggle if a Splash will appear when hitting sicks.")
 		]),
 		new OptionCategory("Gameplay", [
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
@@ -75,6 +80,9 @@ class OptionsMenu extends MusicBeatState
 			new GraphicLoading("On startup, cache every character. Significantly decrease load times. (HIGH MEMORY)"),
 			new BotPlay("Showcase your charts and mods with autoplay."),
 		]),
+		new OptionCategory("Experimental", [
+			new GTHModeOption("Change the input system to act similar to Guitar Hero(actual controller recommended)")
+		]),
 		new OptionCategory("Saves and Data", [
 			#if desktop
 			new ReplayOption("View saved song replays."),
@@ -98,7 +106,7 @@ class OptionsMenu extends MusicBeatState
 		instance = this;
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 
-		
+
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
@@ -143,7 +151,7 @@ class OptionsMenu extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if (acceptInput)
+		if (acceptInput || FlxG.mouse.pressed)
 		{
 			if (controls.BACK && !isCat)
 				FlxG.switchState(new MainMenuState());
@@ -181,9 +189,9 @@ class OptionsMenu extends MusicBeatState
 				}
 			}
 			
-			if (FlxG.keys.justPressed.UP)
+			if (FlxG.keys.justPressed.UP || FlxG.mouse.wheel == 1)
 				changeSelection(-1);
-			if (FlxG.keys.justPressed.DOWN)
+			if (FlxG.keys.justPressed.DOWN || FlxG.mouse.wheel == -1)
 				changeSelection(1);
 			
 			if (isCat)
@@ -247,7 +255,7 @@ class OptionsMenu extends MusicBeatState
 			if (controls.RESET)
 					FlxG.save.data.offset = 0;
 
-			if (controls.ACCEPT)
+			if (controls.ACCEPT || FlxG.mouse.pressed)
 			{
 				if (isCat)
 				{

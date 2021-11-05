@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bg_mc.png">
+	<!-- Created with Adobe Animate version 19.2.1.408 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="BG Noshe0000" x="10" y="10" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0001" x="10" y="10" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0002" x="10" y="10" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0003" x="1508" y="10" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0004" x="10" y="928" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0005" x="1508" y="928" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0006" x="10" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0007" x="1508" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0011" x="10" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0012" x="10" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0013" x="10" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0014" x="1508" y="1846" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0023" x="10" y="10" width="1448" height="868"/>
+	<SubTexture name="BG Noshe0024" x="10" y="10" width="1448" height="868"/>
+</TextureAtlas>

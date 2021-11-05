@@ -53,9 +53,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
+		/*#if polymod
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
+		#end*/
 		
 		#if sys
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
@@ -68,6 +68,7 @@ class TitleState extends MusicBeatState
 		}
 		
 		PlayerSettings.init();
+		
 
 		#if windows
 		DiscordClient.initialize();
@@ -181,7 +182,7 @@ class TitleState extends MusicBeatState
 			// logoBl.screenCenter();
 			// logoBl.color = FlxColor.BLACK;
 		} else {
-			logoBl = new FlxSprite(-150, -100);
+			logoBl = new FlxSprite(-50, -50);
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 			logoBl.antialiasing = true;
 			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
@@ -292,7 +293,7 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		if (pressedEnter && !transitioning && skippedIntro)
+		if (pressedEnter || FlxG.mouse.pressed && !transitioning && skippedIntro)
 		{
 			#if !switch
 			NGio.unlockMedal(60960);
@@ -329,7 +330,7 @@ class TitleState extends MusicBeatState
 						trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = returnedData[0];
 						OutdatedSubState.currChanges = returnedData[1];
-						FlxG.switchState(new MainMenuState());
+						FlxG.switchState(new OutdatedSubState());
 					}
 					else
 					{
@@ -347,7 +348,7 @@ class TitleState extends MusicBeatState
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
-		if (pressedEnter && !skippedIntro && initialized)
+		if (pressedEnter || FlxG.mouse.pressed && !skippedIntro && initialized)
 		{
 			skipIntro();
 		}
@@ -402,16 +403,16 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['kade engine GOD', 'MDC engine zzz']);
+				createCoolText(['better than','funkin madness', 'fight me yesnt','and DevJxlian']);
 			case 2:
 				deleteCoolText();
 			case 3:	
-				createCoolText(['original songs by', 'fasion', 'sinesita', 'spark wolf']);
+				createCoolText(['original songs by', 'fasion', 'sinesita', 'spark wolf', 'trap music now']);
 			case 4: 
 				deleteCoolText();
 				
 			case 5:
-				createCoolText(['M.R.Z.', 'Kronos XL', 'Ivan3484', 'JamieFailure', 'sammie.']);
+				createCoolText(['M.R.Z.', 'Kronos XL', 'JamieFailure', 'Ristar']);
 			// credTextShit.visible = true;
 			case 6:
 				addMoreText('present');

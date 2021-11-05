@@ -17,6 +17,8 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 
+	public var isPlayingAsBF:Bool;
+
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -24,6 +26,8 @@ class Character extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
+
+		isPlayingAsBF = !FlxG.save.data.flip;
 
 		var tex:FlxAtlasFrames;
 		antialiasing = FlxG.save.data.antialiasing;
@@ -284,6 +288,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
 				animation.addByPrefix('hit', 'BF hit', 24, false);
+				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
 
 				animation.addByPrefix('firstDeath', "BF dies", 24, false);
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
@@ -306,6 +311,7 @@ class Character extends FlxSprite
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
 				addOffset('scared', -4);
+				addOffset("dodge", -38, -7);
 				addOffset("SHIELD", -10, -50);
 
 				playAnim('idle');
@@ -325,6 +331,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
+				animation.addByPrefix('singHey', 'BF HEY', 24, false);
 
 				addOffset('idle', -5);
 				addOffset("singUP", -29, 27);
@@ -336,6 +343,7 @@ class Character extends FlxSprite
 				addOffset("singLEFTmiss", 12, 24);
 				addOffset("singDOWNmiss", -11, -19);
 				addOffset("hey", 7, 4);
+				addOffset("singHey", 7, 4);
 
 				playAnim('idle');
 
@@ -502,7 +510,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
-
+				
 			case 'shadoune':
 				// SHADOUNE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('shadoune_assets');
@@ -513,18 +521,19 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'shadoune DOWN', 24);
 				animation.addByPrefix('singLEFT', 'shadoune LEFT', 24);
 				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
+
 	
 	
-				addOffset('idle', 225, 23);
-				addOffset("singUP", 318, -2);
-				addOffset("singRIGHT", 236, -51);
-				addOffset("singLEFT", 342, -50);
-				addOffset("singDOWN", 269, -67);
-				addOffset("SWORD", 236, -51);
+				addOffset('idle', 715, 185);
+				addOffset("singUP", 715, 185);
+				addOffset("singRIGHT", 715, 170);
+				addOffset("singLEFT", 715, 240);
+				addOffset("singDOWN", 715, 290);
+				addOffset("SWORD", 715, 106);
 	
 				playAnim('idle');
 
-				case 'shadounearmor':
+			case 'shadounearmor':
 				// SHADOUNE ARMOR  ANIMATION LOADING CODE :trollface:
 				tex = Paths.getSparrowAtlas('shadoune_armor');
 				frames = tex;
@@ -536,14 +545,158 @@ class Character extends FlxSprite
 				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
 	
 	
-				addOffset('idle', 225, 23);
-				addOffset("singUP", 318, -2);
-				addOffset("singRIGHT", 236, -51);
-				addOffset("singLEFT", 342, -50);
-				addOffset("singDOWN", 269, -67);
-				addOffset("SWORD", 236, -51);
+				addOffset('idle', 715, 185);
+				addOffset("singUP", 715, 240);
+				addOffset("singRIGHT", 715, 290);
+				addOffset("singLEFT", 715, 240);
+				addOffset("singDOWN", 715, 290);
+				addOffset("SWORD", 715, 170);
 	
 				playAnim('idle');	
+
+			case 'uwu':
+				// UWU ANIMATION LOADING CODE :uvu:
+				tex = Paths.getSparrowAtlas('uwu_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'shadoune idle', 24);
+				animation.addByPrefix('singUP', 'shadoune UP', 24);
+				animation.addByPrefix('singRIGHT', 'shadoune RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'shadoune DOWN', 24);
+				animation.addByPrefix('singLEFT', 'shadoune LEFT', 24);
+				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
+
+	
+	
+				addOffset('idle', 325, 20);
+				addOffset("singUP", 325, 27);
+				addOffset("singRIGHT", 325, 17);
+				addOffset("singLEFT", 325, 16);
+				addOffset("singDOWN", 325, 20);
+				addOffset("SWORD", 631, 56);
+	
+				playAnim('idle');	
+			
+			case 'bfnoche':
+				tex = Paths.getSparrowAtlas('BFnoche');
+				frames = tex;
+
+				animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				animation.addByPrefix('SHIELD', 'SHIELD', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+				animation.addByPrefix('hey', 'BF HEY', 24, false);
+				animation.addByPrefix('hit', 'BF hit', 24, false);
+
+				animation.addByPrefix('firstDeath', "BF dies", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
+
+				animation.addByPrefix('scared', 'BF idle shaking', 24);
+
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				addOffset("hey", 7, 4);
+				addOffset("hit", -5);
+				addOffset('firstDeath', 37, 11);
+				addOffset('deathLoop', 37, 5);
+				addOffset('deathConfirm', 37, 69);
+				addOffset('scared', -4);
+				addOffset("SHIELD", -10, -50);
+
+				playAnim('idle');
+
+				flipX = true;
+
+	
+				case 'furro':
+				tex = Paths.getSparrowAtlas('FURRO');
+				frames = tex;
+
+				animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				animation.addByPrefix('SHIELD', 'SHIELD', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+				animation.addByPrefix('hey', 'BF HEY', 24, false);
+				animation.addByPrefix('hit', 'BF hit', 24, false);
+
+				animation.addByPrefix('firstDeath', "BF dies", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
+
+				animation.addByPrefix('scared', 'BF idle shaking', 24);
+
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				addOffset("hey", 7, 4);
+				addOffset("hit", -5);
+				addOffset('firstDeath', 37, 11);
+				addOffset('deathLoop', 37, 5);
+				addOffset('deathConfirm', 37, 69);
+				addOffset('scared', -4);
+				addOffset("SHIELD", -10, -50);
+
+				playAnim('idle');
+
+				flipX = true;
+
+				case 'gfnoche':
+				// GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('characters/GFnoche');
+				frames = tex;
+				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
+				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
+				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
+				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
+				animation.addByPrefix('scared', 'GF FEAR', 24);
+
+				addOffset('cheer');
+				addOffset('sad', -2, -2);
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+
+				addOffset("singUP", 0, 4);
+				addOffset("singRIGHT", 0, -20);
+				addOffset("singLEFT", 0, -19);
+				addOffset("singDOWN", 0, -20);
+				addOffset('hairBlow', 45, -8);
+				addOffset('hairFall', 0, -9);
+
+				addOffset('scared', -2, -17);
+
+				playAnim('danceRight');
+				
 		}
 
 		dance();
@@ -573,25 +726,50 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if (!isPlayingAsBF)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
-			{
-				holdTimer += elapsed;
-			}
-
-			var dadVar:Float = 4;
-
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
-			{
-				trace('dance');
-				dance();
-				holdTimer = 0;
-			}
+			if (curCharacter.startsWith('bf') && !isPlayer)
+				{
+					if (animation.curAnim.name.startsWith('sing'))
+					{
+						holdTimer += elapsed;
+					}
+		
+					var dadVar:Float = 4;
+		
+					if (curCharacter == 'dad')
+						dadVar = 6.1;
+					if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+					{
+						trace('dance');
+						dance();
+						holdTimer = 0;
+					}
+				}
+		
 		}
-
+		else
+		{
+			if (!isPlayer)
+				{
+					if (animation.curAnim.name.startsWith('sing'))
+					{
+						holdTimer += elapsed;
+					}
+		
+					var dadVar:Float = 4;
+		
+					if (curCharacter == 'dad')
+						dadVar = 6.1;
+					if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+					{
+						trace('dance');
+						dance();
+						holdTimer = 0;
+					}
+				}
+		}
+		
 		switch (curCharacter)
 		{
 			case 'gf':
@@ -614,6 +792,17 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf':
+					if (!animation.curAnim.name.startsWith('hair'))
+					{
+						danced = !danced;
+
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
+
+					case 'gfnoche':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

@@ -1,21 +1,45 @@
-function start(song) -- do nothing
+function start(song)
+
+    spinLength = 19
 
 end
 
 function update(elapsed)
-    if curStep > 0 then
+
+    if difficulty == 2 and curStep > 128 then
+
+        if spinLength < 32 then
+
+            spinLength = spinLength + 6
+
+        end
+
         local currentBeat = (songPos / 1000)*(bpm/60)
-		for i=0,7 do
-			setActorX(_G['defaultStrum'..i..'X'] + 22 * math.sin((currentBeat + i*0.25) * math.pi), i)
-			setActorY(_G['defaultStrum'..i..'Y'] + 22 * math.cos((currentBeat + i*0.25) * math.pi), i)
-		end
+
+    for i=0,7,1 do
+
+            local receptor = _G['receptor_'..i]
+
+        receptor.x = receptor.defaultX + spinLength * math.sin((currentBeat + i*50) * math.pi)
+
+        receptor.y = receptor.defaultY + spinLength * math.cos((currentBeat + i*0.25) * math.pi)
+
+        end
+
     end
-end
-
-function beatHit(beat) -- do nothing
 
 end
 
-function stepHit(step) -- do nothing
+function playerTwoTurn()
+
+    camGame:tweenZoom(0.7,(crochet * 4) / 1000)
 
 end
+
+function playerOneTurn()
+
+    camGame:tweenZoom(0.7,(crochet * 4) / 1000)
+
+end
+
+print("Yay The Mod Chart script  Has loaded In :D")

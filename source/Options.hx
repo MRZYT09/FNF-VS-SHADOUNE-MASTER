@@ -118,6 +118,94 @@ class CpuStrums extends Option
 	}
 
 }
+// noobs option
+	class Bestinputfornoobs extends Option
+	{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.bestinputfornoobs = !FlxG.save.data.bestinputfornoobs;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+	return FlxG.save.data.bestinputfornoobs ? "best input for noobs on" : "best input for noobs off";
+	}
+	}
+
+	// dodge mecanic
+	class Dodge extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.dodge = !FlxG.save.data.dodge;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.dodge ? "dodge on" : "dodge off";
+			}
+	}
+
+		// health mecanic
+		class Health extends Option
+		{
+			public function new(desc:String)
+			{
+				super();
+				description = desc;
+			}
+	
+			public override function press():Bool
+			{
+				FlxG.save.data.health = !FlxG.save.data.health;
+				display = updateDisplay();
+				return true;
+			}
+	
+			private override function updateDisplay():String
+				{
+					return FlxG.save.data.health ? "health limit on" : "health limit off";
+				}
+		}
+
+		// espace key
+		class Espacedodge extends Option
+		{
+			public function new(desc:String)
+			{
+				super();
+				description = desc;
+			}
+	
+			public override function press():Bool
+			{
+				FlxG.save.data.espacedodge = !FlxG.save.data.espacedodge;
+				display = updateDisplay();
+				return true;
+			}
+	
+			private override function updateDisplay():String
+				{
+					return FlxG.save.data.espacedodge ? "espace dodge on" : "click Right dodge on";
+				}
+		}
+
 class GraphicLoading extends Option
 {
 	public function new(desc:String)
@@ -941,6 +1029,12 @@ class ResetSettings extends Option
 		FlxG.save.data.accuracyMod = null;
 		FlxG.save.data.watermark = null;
 		FlxG.save.data.ghost = null;
+		//noobs
+		FlxG.save.data.bestinputfornoobs = null;
+		FlxG.save.data.dodge = null;
+		FlxG.save.data.health = null;
+		FlxG.save.data.espacedodge = null;
+		// my options
 		FlxG.save.data.distractions = null;
 		FlxG.save.data.stepMania = null;
 		FlxG.save.data.flashing = null;
@@ -1017,6 +1111,44 @@ class NoteColorOption extends Option
 	private override function updateDisplay():String
 	{
 		return "Alt Note Color: " + FlxG.save.data.noteColor;
+	}
+}
+class RandomNotesOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.randomNotes = !FlxG.save.data.randomNotes;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Randomization: " + (!FlxG.save.data.randomNotes ? "off" : "on");
+	}
+}
+class RandomSectionOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.randomSection = !FlxG.save.data.randomSection;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Section Based Random Notes: " + (!FlxG.save.data.randomSection ? "off" : "on");
 	}
 }
 class GTHColorsOption extends Option

@@ -34,6 +34,8 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
+		FlxG.mouse.visible = true;
+
 		if (PlayState.instance.useVideo)
 		{
 			menuItems.remove("Resume");
@@ -118,14 +120,6 @@ class PauseSubState extends MusicBeatSubstate
 		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
 
-		if (gamepad != null && KeyBinds.gamepad)
-		{
-			upP = gamepad.justPressed.DPAD_UP;
-			downP = gamepad.justPressed.DPAD_DOWN;
-			leftP = gamepad.justPressed.DPAD_LEFT;
-			rightP = gamepad.justPressed.DPAD_RIGHT;
-		}
-
 		// pre lowercasing the song name (update)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
 		switch (songLowercase) {
@@ -134,11 +128,11 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		var songPath = 'assets/data/' + songLowercase + '/';
 
-		if (upP)
+		if (upP || FlxG.mouse.wheel == 1)
 		{
 			changeSelection(-1);
    
-		}else if (downP)
+		}else if (downP || FlxG.mouse.wheel == -1)
 		{
 			changeSelection(1);
 		}
@@ -199,7 +193,7 @@ class PauseSubState extends MusicBeatSubstate
 			}
 		#end
 
-		if (accepted)
+		if (accepted || FlxG.mouse.pressed)
 		{
 			var daSelected:String = menuItems[curSelected];
 

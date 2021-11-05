@@ -49,7 +49,7 @@ class DialogueBox extends FlxSpriteGroup
 			case 'thorns':
 				FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
-			case 'uhc':
+			case 'permadeath':
 				FlxG.sound.playMusic(Paths.music('Lunchbox'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
 		}
@@ -93,7 +93,7 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
-			case 'uhc':
+			case 'permadeath':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('portraits/mc_box', 'shared');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
@@ -157,8 +157,8 @@ class DialogueBox extends FlxSpriteGroup
 		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox'));
 		add(handSelect);
 	}
-	
-	if (PlayState.SONG.song.toLowerCase() == 'uhc' || PlayState.SONG.song.toLowerCase() == 'shadoune' || PlayState.SONG.song.toLowerCase() == 'decition' || PlayState.SONG.song.toLowerCase() == 'you-are-mine' || PlayState.SONG.song.toLowerCase() == 'shadpurgation')
+
+	if (PlayState.SONG.song.toLowerCase() == 'permadeath' || PlayState.SONG.song.toLowerCase() == 'shadoune' || PlayState.SONG.song.toLowerCase() == 'decition' || PlayState.SONG.song.toLowerCase() == 'you-are-mine' || PlayState.SONG.song.toLowerCase() == 'shadpurgation')
 		{
 
 			portraitLeft = new FlxSprite(0, 40);
@@ -254,7 +254,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (PlayerSettings.player1.controls.ACCEPT && dialogueStarted == true)
+		if (PlayerSettings.player1.controls.ACCEPT || FlxG.mouse.pressed && dialogueStarted == true)
 		{
 			remove(dialogue);
 				
@@ -266,7 +266,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					isEnding = true;
 
-					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns' || PlayState.SONG.song.toLowerCase() == 'uhc' || PlayState.SONG.song.toLowerCase() == 'shadoune')
+					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns' || PlayState.SONG.song.toLowerCase() == 'permadeath' || PlayState.SONG.song.toLowerCase() == 'shadoune')
 						FlxG.sound.music.fadeOut(2.2, 0);
 
 					new FlxTimer().start(0.2, function(tmr:FlxTimer)

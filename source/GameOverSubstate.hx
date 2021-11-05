@@ -23,6 +23,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'bf-pixel':
 				stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
+			case 'bfnoche':
+				daBf = 'bfnoche';	
 			default:
 				daBf = 'bf';
 		}
@@ -52,7 +54,9 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT)
+		FlxG.mouse.visible = true;
+
+		if (controls.ACCEPT || FlxG.mouse.pressed)
 		{
 			endBullshit();
 		}
