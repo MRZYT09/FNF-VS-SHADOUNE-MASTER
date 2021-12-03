@@ -3,3 +3,4 @@ internal,decition,shadoune,bad
 internal,you-are-mine,shadounearmor,good
 internal,permadeath,shadounearmor,bad
 internal,shadlocked,shadoune,good
+internal,rainbow,shadoune,good

@@ -294,6 +294,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
 				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
 
+				animation.addByPrefix('firstDeathtotem', "totem dies", 24, false);
+				animation.addByPrefix('deathLooptotem', "totem loop", 24, true);
+				animation.addByPrefix('deathConfirmtotem', "totem confirm", 24, false);
+
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
 				addOffset('idle', -5);
@@ -310,9 +314,14 @@ class Character extends FlxSprite
 				addOffset('firstDeath', 37, 11);
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
+
+				addOffset('firstDeathtotem', 37, 11);
+				addOffset('deathLooptotem', 37, 5);
+				addOffset('deathConfirmtotem', 37, 69);
+
 				addOffset('scared', -4);
 				addOffset("dodge", -38, -7);
-				addOffset("SHIELD", -10, -50);
+				addOffset("SHIELD", 30, 1);
 
 				playAnim('idle');
 
@@ -526,7 +535,7 @@ class Character extends FlxSprite
 	
 				addOffset('idle', 715, 185);
 				addOffset("singUP", 715, 185);
-				addOffset("singRIGHT", 715, 170);
+				addOffset("singRIGHT", 715, 160);
 				addOffset("singLEFT", 715, 240);
 				addOffset("singDOWN", 715, 290);
 				addOffset("SWORD", 715, 106);
@@ -547,10 +556,10 @@ class Character extends FlxSprite
 	
 				addOffset('idle', 715, 185);
 				addOffset("singUP", 715, 240);
-				addOffset("singRIGHT", 715, 290);
+				addOffset("singRIGHT", 715,350);
 				addOffset("singLEFT", 715, 240);
 				addOffset("singDOWN", 715, 290);
-				addOffset("SWORD", 715, 170);
+				addOffset("SWORD", 715,360);
 	
 				playAnim('idle');	
 
@@ -565,7 +574,22 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'shadoune LEFT', 24);
 				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
 
-	
+				animation.addByPrefix('singUPmiss', 'shadoune UP', 24);
+				animation.addByPrefix('singRIGHTmiss', 'shadoune RIGHT', 24);
+				animation.addByPrefix('singDOWNmiss', 'shadoune DOWN', 24);
+				animation.addByPrefix('singLEFTmiss', 'shadoune LEFT', 24);
+
+				animation.addByPrefix('firstDeath', "shadoune LEFT", 24, false);
+				animation.addByPrefix('deathLoop', "shadoune DOWN", 24, true);
+				animation.addByPrefix('deathConfirm', "shadoune UP", 24, false);
+
+				animation.addByPrefix('firstDeathtotem', "shadoune LEFT", 24, false);
+				animation.addByPrefix('deathLooptotem', "shadoune DOWN", 24, true);
+				animation.addByPrefix('deathConfirmtotem', "shadoune UP", 24, false);
+
+				animation.addByPrefix('SHIELD', 'shadoune RIGHT', 24);
+
+				//xd
 	
 				addOffset('idle', 325, 20);
 				addOffset("singUP", 325, 27);
@@ -573,12 +597,32 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 325, 16);
 				addOffset("singDOWN", 325, 20);
 				addOffset("SWORD", 631, 56);
+				addOffset("SHIELD", 325, 17);
+
+				addOffset("singUPmiss", 325, 27);
+				addOffset("singRIGHTmiss", 325, 17);
+				addOffset("singLEFTmiss", 325, 16);
+				addOffset("singDOWNmiss", 325, 20);
+
+				addOffset("firstDeath", 325, 27);
+				addOffset("deathLoop", 325, 16);
+				addOffset("deathConfirm", 325, 20);
+
+				addOffset("firstDeathtotem", 325, 27);
+				addOffset("deathLooptotem", 325, 16);
+				addOffset("deathConfirmtotem", 325, 20);
+
+
+
+				
 	
 				playAnim('idle');	
 			
 			case 'bfnoche':
-				tex = Paths.getSparrowAtlas('BFnoche');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
 				frames = tex;
+
+				trace(tex.frames.length);
 
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -592,10 +636,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
 				animation.addByPrefix('hit', 'BF hit', 24, false);
+				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
 
 				animation.addByPrefix('firstDeath', "BF dies", 24, false);
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
 				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
+
+				animation.addByPrefix('firstDeathtotem', "totem dies", 24, false);
+				animation.addByPrefix('deathLooptotem', "totem loop", 24, true);
+				animation.addByPrefix('deathConfirmtotem', "totem confirm", 24, false);
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
@@ -613,13 +662,18 @@ class Character extends FlxSprite
 				addOffset('firstDeath', 37, 11);
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
+
+				addOffset('firstDeathtotem', 37, 11);
+				addOffset('deathLooptotem', 37, 5);
+				addOffset('deathConfirmtotem', 37, 69);
+
 				addOffset('scared', -4);
-				addOffset("SHIELD", -10, -50);
+				addOffset("dodge", -38, -7);
+				addOffset("SHIELD", 30, 1);
 
 				playAnim('idle');
 
 				flipX = true;
-
 	
 				case 'furro':
 				tex = Paths.getSparrowAtlas('FURRO');

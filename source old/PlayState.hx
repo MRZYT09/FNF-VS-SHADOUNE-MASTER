@@ -3405,22 +3405,22 @@ class PlayState extends MusicBeatState
 						camFollow.y = boyfriend.getMidpoint().y - 200;
 					case 'shadoune':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 					case 'shadounearmor':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 					case 'permadeath':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 					case 'shadlocked':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 					case 'decition':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 					case 'you-are-mine':
 						camFollow.x -= 525;
-						camFollow.y -= 160;
+						camFollow.y -= 180;
 				}
 			}
 		}

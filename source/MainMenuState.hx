@@ -18,8 +18,8 @@ import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.util.FlxColor;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
@@ -1552,12 +1552,26 @@ class MainMenuState extends MusicBeatState
 		menuItem.antialiasing = true;
 		
 
-		var menuItem:FlxSprite = new FlxSprite(265, 520);
+		var menuItem:FlxSprite = new FlxSprite(300, 520);
 		menuItem.frames = tex;
 		menuItem.animation.addByPrefix('idle', optionShit[3] + " basic", 24);
 		menuItem.animation.addByPrefix('selected', optionShit[3] + " white", 24);
 		menuItem.animation.play('idle');
 		menuItem.ID = 3;
+		menuItem.updateHitbox();
+		//menuItem.screenCenter(X);
+		menuItem.setGraphicSize(Std.int(menuItem.width * 0.5));
+		menuItems.add(menuItem);
+
+		menuItem.antialiasing = true;
+
+
+		var menuItem:FlxSprite = new FlxSprite(650, 520);
+		menuItem.frames = tex;
+		menuItem.animation.addByPrefix('idle', optionShit[4] + " basic", 24);
+		menuItem.animation.addByPrefix('selected', optionShit[4] + " white", 24);
+		menuItem.animation.play('idle');
+		menuItem.ID = 4;
 		menuItem.updateHitbox();
 		//menuItem.screenCenter(X);
 		menuItem.setGraphicSize(Std.int(menuItem.width * 0.6));
@@ -1566,21 +1580,7 @@ class MainMenuState extends MusicBeatState
 		menuItem.antialiasing = true;
 
 
-		var menuItem:FlxSprite = new FlxSprite(690, 522);
-		menuItem.frames = tex;
-		menuItem.animation.addByPrefix('idle', optionShit[4] + " basic", 24);
-		menuItem.animation.addByPrefix('selected', optionShit[4] + " white", 24);
-		menuItem.animation.play('idle');
-		menuItem.ID = 4;
-		menuItem.updateHitbox();
-		//menuItem.screenCenter(X);
-		menuItem.setGraphicSize(Std.int(menuItem.width * 0.75));
-		menuItems.add(menuItem);
-
-		menuItem.antialiasing = true;
-
-
-		var menuItem:FlxSprite = new FlxSprite(995, 440);
+		var menuItem:FlxSprite = new FlxSprite(995, 475);
 		menuItem.frames = tex;
 		menuItem.animation.addByPrefix('idle', optionShit[5] + " basic", 24);
 		menuItem.animation.addByPrefix('selected', optionShit[5] + " white", 24);
@@ -1594,7 +1594,7 @@ class MainMenuState extends MusicBeatState
 		menuItem.antialiasing = true;
 
 
-		var menuItem:FlxSprite = new FlxSprite(220, 440);
+		var menuItem:FlxSprite = new FlxSprite(220, 480);
 		menuItem.frames = tex;
 		menuItem.animation.addByPrefix('idle', optionShit[6] + " basic", 24);
 		menuItem.animation.addByPrefix('selected', optionShit[6] + " white", 24);
@@ -1615,6 +1615,7 @@ class MainMenuState extends MusicBeatState
 		x - derecha + izquierda
 		y - abajo + arriba
 		*/
+		//xddddd
 
 		yellowShit = new FlxText(0, 0, 0, finalVar[0] + '\n' + finalVar[1]);
 		yellowShit.setFormat(Paths.font("minecraftia.ttf"), 18, FlxColor.YELLOW, CENTER);
@@ -1631,6 +1632,12 @@ class MainMenuState extends MusicBeatState
 		firstStart = false;
 
 		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
+
+		var credits:FlxText = new FlxText(5,675 ,"Intro Song of Trap Music Now", 12);
+		credits.scrollFactor.set();
+		credits.setFormat("Minecraftia 2.0", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(credits);
+		
 
 		var versionShit:FlxText = new FlxText(5,699 ,gameVer +  (Main.watermarks ? " FNF - " + kadeEngineVer + " - VS SHADOUNE" : ""), 12);
 		versionShit.scrollFactor.set();

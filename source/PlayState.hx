@@ -95,6 +95,10 @@ class PlayState extends MusicBeatState
 	public static var keyAmmo:Array<Int> = [4, 6, 9, 5, 7, 8, 1, 2, 3];
 	private var ctrTime:Float = 0;
 
+	var canDrain:Bool = false;
+	public static var fire:FlxSprite;
+
+
 	public static var songPosBG:FlxSprite;
 	public var visibleCombos:Array<FlxSprite> = [];
 	public static var songPosBar:FlxBar;
@@ -120,9 +124,13 @@ class PlayState extends MusicBeatState
 	var bfCanDodge:Bool = false;
 	var bfDodgeTiming:Float = 0.22625;
 	var bfDodgeCooldown:Float = 0.1135;
-	var kb_attack_saw:FlxSprite;
-	var kb_attack_alert:FlxSprite;
+	var shad_attack_saw:FlxSprite;
+	var shad_attack_alert:FlxSprite;
 	public static var deathBySawBlade:Bool = false;
+	public static var healthDrainVerifi:Bool = false;
+
+
+	var fireTimer:FlxTimer;
 
 	var songLength:Float = 0;
 	var kadeEngineWatermark:FlxText;
@@ -244,6 +252,7 @@ class PlayState extends MusicBeatState
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
 	var espada:FlxSprite;
+	var uno:FlxSprite;
 
 	//tetris vs mami
 	var tetrisLight:FlxSprite;
@@ -295,7 +304,7 @@ class PlayState extends MusicBeatState
 	// Per song additive offset
 	public static var songOffset:Float = 0;
 	// BotPlay text
-	private var botPlayState:FlxText;
+	public static var botPlayState:FlxText;
 	// Replay shit
 	private var saveNotes:Array<Dynamic> = [];
 	private var saveJudge:Array<String> = [];
@@ -914,23 +923,31 @@ class PlayState extends MusicBeatState
 
 				 
 				   //Saw that one coming!
-				   kb_attack_saw = new FlxSprite();
-				   kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-				   kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-				   kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-				   kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-				   kb_attack_saw.antialiasing = true;
-				   kb_attack_saw.setPosition(-860,615);
+				   shad_attack_saw = new FlxSprite();
+				   shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+				   shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+				   shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+				   shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+				   shad_attack_saw.antialiasing = true;
+				   shad_attack_saw.setPosition(-860,615);
 
 				   //Alert!
-				   kb_attack_alert = new FlxSprite();
-				   kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-				   kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-				   kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-				   kb_attack_alert.antialiasing = true;
-				   kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-				   kb_attack_alert.cameras = [camHUD];
-				   kb_attack_alert.screenCenter(XY);
+				   shad_attack_alert = new FlxSprite();
+				   shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+				   shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+				   shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+				   shad_attack_alert.antialiasing = true;
+				   shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+				   shad_attack_alert.cameras = [camHUD];
+				   shad_attack_alert.screenCenter(XY);
+
+				   var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+				   uno.setGraphicSize(Std.int(uno.width * 0.9));
+				   uno.updateHitbox();
+				   uno.antialiasing = FlxG.save.data.antialiasing;
+				   uno.scrollFactor.set(1.3, 1.3);
+				   uno.active = true;
+				   uno.screenCenter(XY);
 	  
 				if (SONG.player1 == 'uwu')
 					{
@@ -948,29 +965,37 @@ class PlayState extends MusicBeatState
 						add(fondito);
 
 						//Saw that one coming!
-						kb_attack_saw = new FlxSprite();
-						kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-						kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-						kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-						kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-						kb_attack_saw.antialiasing = true;
-						kb_attack_saw.setPosition(-860,615);
+						shad_attack_saw = new FlxSprite();
+						shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+						shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+						shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+						shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+						shad_attack_saw.antialiasing = true;
+						shad_attack_saw.setPosition(-860,615);
 
 						//Alert!
-						kb_attack_alert = new FlxSprite();
-						kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-						kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-						kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-						kb_attack_alert.antialiasing = true;
-						kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-						kb_attack_alert.cameras = [camHUD];
-						kb_attack_alert.screenCenter(XY);
+						shad_attack_alert = new FlxSprite();
+						shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+						shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+						shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+						shad_attack_alert.antialiasing = true;
+						shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+						shad_attack_alert.cameras = [camHUD];
+						shad_attack_alert.screenCenter(XY);
 
 						publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 						publico.animation.addByPrefix('idle', 'publico61', 24);
 						publico.animation.play('idle');
 						publico.updateHitbox();
 						publico.active = true;
+
+						var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+						uno.setGraphicSize(Std.int(uno.width * 0.9));
+						uno.updateHitbox();
+						uno.antialiasing = FlxG.save.data.antialiasing;
+						uno.scrollFactor.set(1.3, 1.3);
+						uno.active = true;
+						uno.screenCenter(XY);
 					}
 			 } 
 			  case 'you-are-mine':
@@ -1004,23 +1029,31 @@ class PlayState extends MusicBeatState
 
 				  
 					//Saw that one coming!
-					kb_attack_saw = new FlxSprite();
-					kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-					kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-					kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-					kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-					kb_attack_saw.antialiasing = true;
-					kb_attack_saw.setPosition(-860,615);
+					shad_attack_saw = new FlxSprite();
+					shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+					shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+					shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+					shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+					shad_attack_saw.antialiasing = true;
+					shad_attack_saw.setPosition(-860,615);
 
 					//Alert!
-					kb_attack_alert = new FlxSprite();
-					kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-					kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-					kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-					kb_attack_alert.antialiasing = true;
-					kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-					kb_attack_alert.cameras = [camHUD];
-					kb_attack_alert.screenCenter(XY);
+					shad_attack_alert = new FlxSprite();
+					shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+					shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+					shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+					shad_attack_alert.antialiasing = true;
+					shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+					shad_attack_alert.cameras = [camHUD];
+					shad_attack_alert.screenCenter(XY);
+
+					var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+					uno.setGraphicSize(Std.int(uno.width * 0.9));
+					uno.updateHitbox();
+					uno.antialiasing = FlxG.save.data.antialiasing;
+					uno.scrollFactor.set(1.3, 1.3);
+					uno.active = true;
+					uno.screenCenter(XY);
 	   
 				  if (SONG.player1 == 'uwu')
 					{
@@ -1037,29 +1070,37 @@ class PlayState extends MusicBeatState
 						add(fondito);
 
 						//Saw that one coming!
-						kb_attack_saw = new FlxSprite();
-						kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-						kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-						kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-						kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-						kb_attack_saw.antialiasing = true;
-						kb_attack_saw.setPosition(-860,615);
+						shad_attack_saw = new FlxSprite();
+						shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+						shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+						shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+						shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+						shad_attack_saw.antialiasing = true;
+						shad_attack_saw.setPosition(-860,615);
 
 						//Alert!
-						kb_attack_alert = new FlxSprite();
-						kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-						kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-						kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-						kb_attack_alert.antialiasing = true;
-						kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-						kb_attack_alert.cameras = [camHUD];
-						kb_attack_alert.screenCenter(XY);
+						shad_attack_alert = new FlxSprite();
+						shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+						shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+						shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+						shad_attack_alert.antialiasing = true;
+						shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+						shad_attack_alert.cameras = [camHUD];
+						shad_attack_alert.screenCenter(XY);
 
 						publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 						publico.animation.addByPrefix('idle', 'publico61', 24);
 						publico.animation.play('idle');
 						publico.updateHitbox();
 						publico.active = true;
+
+						var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+						uno.setGraphicSize(Std.int(uno.width * 0.9));
+						uno.updateHitbox();
+						uno.antialiasing = FlxG.save.data.antialiasing;
+						uno.scrollFactor.set(1.3, 1.3);
+						uno.active = true;
+						uno.screenCenter(XY);
 					}
 			  } 
 			  case 'Termination':
@@ -1093,23 +1134,31 @@ class PlayState extends MusicBeatState
 
 				 
 					   //Saw that one coming!
-					   kb_attack_saw = new FlxSprite();
-					   kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-					   kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-					   kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-					   kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-					   kb_attack_saw.antialiasing = true;
-					   kb_attack_saw.setPosition(-860,615);
+					   shad_attack_saw = new FlxSprite();
+					   shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+					   shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+					   shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+					   shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+					   shad_attack_saw.antialiasing = true;
+					   shad_attack_saw.setPosition(-860,615);
 
 					   //Alert!
-					   kb_attack_alert = new FlxSprite();
-					   kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-					   kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-					   kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-					   kb_attack_alert.antialiasing = true;
-					   kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-					   kb_attack_alert.cameras = [camHUD];
-					   kb_attack_alert.screenCenter(XY);
+					   shad_attack_alert = new FlxSprite();
+					   shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+					   shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+					   shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+					   shad_attack_alert.antialiasing = true;
+					   shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+					   shad_attack_alert.cameras = [camHUD];
+					   shad_attack_alert.screenCenter(XY);
+
+					   var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+					   uno.setGraphicSize(Std.int(uno.width * 0.9));
+					   uno.updateHitbox();
+					   uno.antialiasing = FlxG.save.data.antialiasing;
+					   uno.scrollFactor.set(1.3, 1.3);
+					   uno.active = true;
+					   uno.screenCenter(XY);
 	  
 				 if (SONG.player1 == 'uwu')
 				   {
@@ -1126,29 +1175,37 @@ class PlayState extends MusicBeatState
 					   add(fondito);
 
 					   //Saw that one coming!
-					   kb_attack_saw = new FlxSprite();
-					   kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-					   kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-					   kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-					   kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-					   kb_attack_saw.antialiasing = true;
-					   kb_attack_saw.setPosition(-860,615);
+					   shad_attack_saw = new FlxSprite();
+					   shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+					   shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+					   shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+					   shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+					   shad_attack_saw.antialiasing = true;
+					   shad_attack_saw.setPosition(-860,615);
 
 					   //Alert!
-					   kb_attack_alert = new FlxSprite();
-					   kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-					   kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-					   kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-					   kb_attack_alert.antialiasing = true;
-					   kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-					   kb_attack_alert.cameras = [camHUD];
-					   kb_attack_alert.screenCenter(XY);
+					   shad_attack_alert = new FlxSprite();
+					   shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+					   shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+					   shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+					   shad_attack_alert.antialiasing = true;
+					   shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+					   shad_attack_alert.cameras = [camHUD];
+					   shad_attack_alert.screenCenter(XY);
 
 					   publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 					   publico.animation.addByPrefix('idle', 'publico61', 24);
 					   publico.animation.play('idle');
 					   publico.updateHitbox();
 					   publico.active = true;
+
+					   var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+					   uno.setGraphicSize(Std.int(uno.width * 0.9));
+					   uno.updateHitbox();
+					   uno.antialiasing = FlxG.save.data.antialiasing;
+					   uno.scrollFactor.set(1.3, 1.3);
+					   uno.active = true;
+					   uno.screenCenter(XY);
 				   }
 			 } 
 			  case 'shadoune':
@@ -1182,23 +1239,31 @@ class PlayState extends MusicBeatState
 					
    
 					//Saw that one coming!
-				   kb_attack_saw = new FlxSprite();
-				   kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-				   kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-				   kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-				   kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-				   kb_attack_saw.antialiasing = true;
-				   kb_attack_saw.setPosition(-860,615);
+				   shad_attack_saw = new FlxSprite();
+				   shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+				   shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+				   shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+				   shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+				   shad_attack_saw.antialiasing = true;
+				   shad_attack_saw.setPosition(-860,615);
    
 				   //Alert!
-				   kb_attack_alert = new FlxSprite();
-				   kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-				   kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-				   kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-				   kb_attack_alert.antialiasing = true;
-				   kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-				   kb_attack_alert.cameras = [camHUD];
-				   kb_attack_alert.screenCenter(XY);
+				   shad_attack_alert = new FlxSprite();
+				   shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+				   shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+				   shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+				   shad_attack_alert.antialiasing = true;
+				   shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+				   shad_attack_alert.cameras = [camHUD];
+				   shad_attack_alert.screenCenter(XY);
+
+				   var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+				   uno.setGraphicSize(Std.int(uno.width * 0.9));
+				   uno.updateHitbox();
+				   uno.antialiasing = FlxG.save.data.antialiasing;
+				   uno.scrollFactor.set(1.3, 1.3);
+				   uno.active = true;
+				   uno.screenCenter(XY);
 				   
 					
 					
@@ -1218,29 +1283,37 @@ class PlayState extends MusicBeatState
 						   add(fondito);
    
 						   //Saw that one coming!
-						   kb_attack_saw = new FlxSprite();
-						   kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-						   kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-						   kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-						   kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-						   kb_attack_saw.antialiasing = true;
-						   kb_attack_saw.setPosition(-860,615);
+						   shad_attack_saw = new FlxSprite();
+						   shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+						   shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+						   shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+						   shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+						   shad_attack_saw.antialiasing = true;
+						   shad_attack_saw.setPosition(-860,615);
    
 						   //Alert!
-						   kb_attack_alert = new FlxSprite();
-						   kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-						   kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-						   kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-						   kb_attack_alert.antialiasing = true;
-						   kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-						   kb_attack_alert.cameras = [camHUD];
-						   kb_attack_alert.screenCenter(XY);
+						   shad_attack_alert = new FlxSprite();
+						   shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+						   shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+						   shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+						   shad_attack_alert.antialiasing = true;
+						   shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+						   shad_attack_alert.cameras = [camHUD];
+						   shad_attack_alert.screenCenter(XY);
    
 						   publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 						   publico.animation.addByPrefix('idle', 'publico61', 24);
 						   publico.animation.play('idle');
 						   publico.updateHitbox();
 						   publico.active = true;
+
+						   var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+						   uno.setGraphicSize(Std.int(uno.width * 0.9));
+						   uno.updateHitbox();
+						   uno.antialiasing = FlxG.save.data.antialiasing;
+						   uno.scrollFactor.set(1.3, 1.3);
+						   uno.active = true;
+						   uno.screenCenter(XY);
 					   }
 			 } 
 			  case 'decition':
@@ -1275,23 +1348,31 @@ class PlayState extends MusicBeatState
 				 
 
 				 //Saw that one coming!
-				kb_attack_saw = new FlxSprite();
-				kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-				kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-				kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-				kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-				kb_attack_saw.antialiasing = true;
-				kb_attack_saw.setPosition(-860,615);
+				shad_attack_saw = new FlxSprite();
+				shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+				shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+				shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+				shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+				shad_attack_saw.antialiasing = true;
+				shad_attack_saw.setPosition(-860,615);
 
 				//Alert!
-				kb_attack_alert = new FlxSprite();
-				kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-				kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-				kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-				kb_attack_alert.antialiasing = true;
-				kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-				kb_attack_alert.cameras = [camHUD];
-				kb_attack_alert.screenCenter(XY);
+				shad_attack_alert = new FlxSprite();
+				shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+				shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+				shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+				shad_attack_alert.antialiasing = true;
+				shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+				shad_attack_alert.cameras = [camHUD];
+				shad_attack_alert.screenCenter(XY);
+
+				var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+				uno.setGraphicSize(Std.int(uno.width * 0.9));
+				uno.updateHitbox();
+				uno.antialiasing = FlxG.save.data.antialiasing;
+				uno.scrollFactor.set(1.3, 1.3);
+				uno.active = true;
+				uno.screenCenter(XY);
 				
 				 
 				 
@@ -1312,29 +1393,37 @@ class PlayState extends MusicBeatState
 						add(fondito);
 
 						//Saw that one coming!
-						kb_attack_saw = new FlxSprite();
-						kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-						kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-						kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-						kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-						kb_attack_saw.antialiasing = true;
-						kb_attack_saw.setPosition(-860,615);
+						shad_attack_saw = new FlxSprite();
+						shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+						shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+						shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+						shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+						shad_attack_saw.antialiasing = true;
+						shad_attack_saw.setPosition(-860,615);
 
 						//Alert!
-						kb_attack_alert = new FlxSprite();
-						kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-						kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-						kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-						kb_attack_alert.antialiasing = true;
-						kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-						kb_attack_alert.cameras = [camHUD];
-						kb_attack_alert.screenCenter(XY);
+						shad_attack_alert = new FlxSprite();
+						shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+						shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+						shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+						shad_attack_alert.antialiasing = true;
+						shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+						shad_attack_alert.cameras = [camHUD];
+						shad_attack_alert.screenCenter(XY);
 
 						publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 						publico.animation.addByPrefix('idle', 'publico61', 24);
 						publico.animation.play('idle');
 						publico.updateHitbox();
 						publico.active = true;
+
+						var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+						uno.setGraphicSize(Std.int(uno.width * 0.9));
+						uno.updateHitbox();
+						uno.antialiasing = FlxG.save.data.antialiasing;
+						uno.scrollFactor.set(1.3, 1.3);
+						uno.active = true;
+						uno.screenCenter(XY);
 					}
 				 
 			  } 
@@ -1365,7 +1454,15 @@ class PlayState extends MusicBeatState
 				 publico.animation.play('idle');
 				 publico.updateHitbox();
 				 publico.active = true;
-	 
+
+				 var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+				 uno.setGraphicSize(Std.int(uno.width * 0.9));
+				 uno.updateHitbox();
+				 uno.antialiasing = FlxG.save.data.antialiasing;
+				 uno.scrollFactor.set(1.3, 1.3);
+				 uno.active = true;
+				 uno.screenCenter(XY);
+
 				 if (SONG.player1 == 'uwu')
 					{
 						defaultCamZoom = 0.90;
@@ -1382,29 +1479,37 @@ class PlayState extends MusicBeatState
 						add(fondito);
 
 						//Saw that one coming!
-						kb_attack_saw = new FlxSprite();
-						kb_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
-						kb_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
-						kb_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
-						kb_attack_saw.setGraphicSize(Std.int(kb_attack_saw.width * 1.15));
-						kb_attack_saw.antialiasing = true;
-						kb_attack_saw.setPosition(-860,615);
+						shad_attack_saw = new FlxSprite();
+						shad_attack_saw.frames = Paths.getSparrowAtlas('bonus/attackv6', 'shared');
+						shad_attack_saw.animation.addByPrefix('fire', 'kb_attack_animation_fire', 24, false);	
+						shad_attack_saw.animation.addByPrefix('prepare', 'kb_attack_animation_prepare', 24, false);	
+						shad_attack_saw.setGraphicSize(Std.int(shad_attack_saw.width * 1.15));
+						shad_attack_saw.antialiasing = true;
+						shad_attack_saw.setPosition(-860,615);
 
 						//Alert!
-						kb_attack_alert = new FlxSprite();
-						kb_attack_alert.frames = Paths.getSparrowAtlas('bonus/attack_alert_NEW', 'shared');
-						kb_attack_alert.animation.addByPrefix('alert', 'kb_attack_animation_alert-single', 24, false);	
-						kb_attack_alert.animation.addByPrefix('alertDOUBLE', 'kb_attack_animation_alert-double', 24, false);	
-						kb_attack_alert.antialiasing = true;
-						kb_attack_alert.setGraphicSize(Std.int(kb_attack_alert.width * 1.5));
-						kb_attack_alert.cameras = [camHUD];
-						kb_attack_alert.screenCenter(XY);
+						shad_attack_alert = new FlxSprite();
+						shad_attack_alert.frames = Paths.getSparrowAtlas('bonus/warningsword', 'shared');
+						shad_attack_alert.animation.addByPrefix('alert', 'WarningSword', 24, false);	
+						shad_attack_alert.animation.addByPrefix('alertDOUBLE', 'WarningSwordDouble', 24, false);	
+						shad_attack_alert.antialiasing = true;
+						shad_attack_alert.setGraphicSize(Std.int(shad_attack_alert.width * 1));
+						shad_attack_alert.cameras = [camHUD];
+						shad_attack_alert.screenCenter(XY);
 
 						publico.frames = Paths.getSparrowAtlas('fondito/publico61');
 						publico.animation.addByPrefix('idle', 'publico61', 24);
 						publico.animation.play('idle');
 						publico.updateHitbox();
 						publico.active = true;
+
+						var uno:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('uno'));
+						uno.setGraphicSize(Std.int(uno.width * 0.9));
+						uno.updateHitbox();
+						uno.antialiasing = FlxG.save.data.antialiasing;
+						uno.scrollFactor.set(1.3, 1.3);
+						uno.active = true;
+						uno.screenCenter(XY);
 					}
 			 }
 			case 'stage':
@@ -1619,14 +1724,28 @@ class PlayState extends MusicBeatState
 				case 'permadeath':
 					gf.x += 200;
 					gf.y += 1;
-					fantasma = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-					add(fantasma);
+
+					if (dad.curCharacter == 'shadounearmor')
+						{
+							if (FlxG.save.data.distractions)
+								{
+									// trailArea.scrollFactor.set();
+									if (!PlayStateChangeables.Optimize)
+										{	
+											fantasma = new FlxTrail(dad, null, 1, 10, 0.5, 0.070);
+											add(fantasma);
+										}
+								}
+						}
+
+				
+					
 	
 				case 'shadlocked':
 					gf.x += 200;
 					gf.y += 1;
-					fantasma = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-					add(fantasma);
+				
+				
 	
 				case 'you-are-mine':
 						gf.x += 200;
@@ -1662,16 +1781,20 @@ class PlayState extends MusicBeatState
 
 			add(dad);
 			add(boyfriend);
-			if (curStage == 'decition')
-				add(publico);	
-			if (curStage == 'shadoune')
-				add(publico);	
-			if (curStage == 'permadeath')
-				add(publico);	
-			if (curStage == 'you-are-mine')
-				add(publico);	
-			if (curStage == 'shadlocked')
-				add(publico);	
+			if (SONG.player1 == 'uwu')
+				{
+					if (curStage == 'decition')
+						add(publico);	
+					if (curStage == 'shadoune')
+						add(publico);	
+					if (curStage == 'permadeath')
+						add(publico);	
+					if (curStage == 'you-are-mine')
+						add(publico);	
+					if (curStage == 'shadlocked')
+						add(publico);	
+				}
+		
 		}
 
 
@@ -1827,12 +1950,14 @@ class PlayState extends MusicBeatState
 				songName.cameras = [camHUD];
 			}
 
+			
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
 		if (PlayStateChangeables.useDownscroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
+
 
 		if (!PlayStateChangeables.flip)
 			{
@@ -1900,11 +2025,131 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(overhealthBar);
 
+		
+		/*if (healthDrainVerifi == true)
+			{
+					
+
+
+							fire = new FlxSprite(0, FlxG.height * 1).loadGraphic(Paths.image('FIRE'));
+							if (PlayStateChangeables.useDownscroll)
+								{	
+									fire.y = 50;
+								}
+								
+							fire.screenCenter(X);
+							fire.scrollFactor.set();
+							add(fire);
+
+							
+							
+							//new FlxTimer().start(0.01, ?OnComplete:FlxTimer ‑> Void, Loops:Int = 1):FlxTimer
+
+							new FlxTimer().start(0.01, function(tmr:FlxTimer)
+								{
+									remove(fire);
+									
+									
+									add(fire);
+
+						
+
+																
+								}, 300);
+
+								//no se timers ayudaaaa
+
+
+								//talves sea el coso de fire dentro de {} , aun no lo compruebo xd
+						
+									//mrz acuerdate lo  del shadoune chikito que ya lleva mas de un mes sin fixear
+
+									//ya el dommingo xd
+
+								
+								x - izquierda + derecha
+								y - arriba + abajo
+								
+								 character.hx:
+								x - derecha + izquierda
+								y - abajo + arriba
+								
+								//xddddd
+				
+			} */
+		
+			
+
 		// Add Kade Engine watermark
 		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + CoolUtil.difficultyFromInt(storyDifficulty) + (Main.watermarks ? "| VS SHADOUNE": ""), 16);
 		kadeEngineWatermark.setFormat(Paths.font("minecraftia.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
+
+		
+			/*
+			x - izquierda + derecha
+			y - arriba + abajo
+			*/
+			/* character.hx:
+			x - derecha + izquierda
+			y - abajo + arriba
+			*/
+			//xddddd
+
+			var credits:String;
+			switch (SONG.song.toLowerCase())
+			{
+				case 'shadoune':
+					credits = 'Original Song made by Fasion';
+				case 'decition':
+					credits = 'Original Song made by Sinesita';
+				case 'you-are-mine':
+					credits = 'Original Song made by Sinesita';
+				case 'permadeath':
+					credits = 'Original Song made by Spark Wolf';
+				case 'shadlocked':
+					credits = 'Original Song made by F-777';
+				case 'rainbow':
+					credits = 'Original Song made by Kitsune²';
+				case 'Termination':
+					credits = 'Original Song made by Hazardous24';
+				default:
+					credits = '';
+			}
+			var creditsText:Bool = credits != '';
+			var textYPos:Float = healthBarBG.y + 50;
+			if (creditsText)
+			{
+				textYPos = healthBarBG.y + 30;
+			}
+		/*if (SONG.song.toLowerCase() == 'decition')
+			{
+				var creditos:FlxText = new FlxText(0,healthBarBG.y + 60,0, "Original song by Sinesita", 12);
+				creditos.scrollFactor.set();
+				creditos.setFormat(Paths.font("minecraftia.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+				creditos.cameras = [camHUD];
+				add(creditos);
+				/*var creditos = new FlxText(0,healthBarBG.y + 50,0 + "riginal song by Sinesita", 16);
+				creditos.setFormat(Paths.font("minecraftia.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+				creditos.scrollFactor.set();
+				add(creditos);
+
+				//aun no lo compreubo xd
+			}*/
+			if (creditsText)
+				{
+					var creditsWatermark = new FlxText(4, healthBarBG.y + 30, 0, credits, 16);
+					creditsWatermark.setFormat(Paths.font("minecraftia.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+					creditsWatermark.scrollFactor.set();
+					add(creditsWatermark);
+					creditsWatermark.cameras = [camHUD];
+				}
+
+
+			//mrz del futuro tu lo arreglas ok xd
+			//aun no lo compruebo xd
+
 
 		if (PlayStateChangeables.useDownscroll)
 			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
@@ -2879,8 +3124,8 @@ class PlayState extends MusicBeatState
 		bfCanDodge = true;
 		hazardRandom = FlxG.random.int(1, 5);
 		/*if(curSong.toLowerCase() == 'tutorial'){ //Change this so that they appear when the relevant function is first called!!!!
-			add(kb_attack_alert);
-			add(kb_attack_saw);
+			add(shad_attack_alert);
+			add(shad_attack_saw);
 		}*/
 
 		if (!paused)
@@ -3310,6 +3555,16 @@ class PlayState extends MusicBeatState
 
 	private function generateStaticArrows(player:Int):Void
 	{
+		var index = 0;
+		strumLineNotes.forEach(function(babyArrow:FlxSprite)
+		{
+			if (isStoryMode && !FlxG.save.data.middlescroll || executeModchart)
+				babyArrow.alpha = 1;
+			if (index > 3 && FlxG.save.data.middlescroll)
+				babyArrow.alpha = 1;
+			index++;
+		});
+
 		for (i in 0...keyAmmo[mania])
 		{
 			// FlxG.log.add(i);
@@ -3636,6 +3891,10 @@ class PlayState extends MusicBeatState
 
 			if (!isStoryMode)
 			{
+				babyArrow.y -= 10;
+				// babyArrow.alpha = 0;
+				if (!FlxG.save.data.middlescroll || executeModchart || player == 1)
+					FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 				//babyArrow.y -= 10;
 				//babyArrow.alpha = 0;
 				//FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
@@ -3655,6 +3914,13 @@ class PlayState extends MusicBeatState
 
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
+
+			if (PlayStateChangeables.Optimize || FlxG.save.data.middlescroll)
+				{	
+					babyArrow.x -= 270;
+				}
+			
+
 			if (PlayStateChangeables.flip)
 			{
 				
@@ -3767,9 +4033,12 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		if (shake == true)
+		if (FlxG.save.data.shake)
 			{
-				FlxG.camera.shake(0.02, 0.02);
+				if (shake == true)
+					{
+						FlxG.camera.shake(0.02, 0.02);
+					}	
 			}
 		
 		#if !debug
@@ -4048,6 +4317,39 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
+			#if debug
+			if (FlxG.keys.justPressed.EIGHT)
+			{
+				FlxG.switchState(new AnimationDebug(SONG.player2));
+				#if windows
+					if (luaModchart != null)
+					{
+						luaModchart.die();
+						luaModchart = null;
+					}
+					#end
+			}
+			
+			#end
+
+			if (FlxG.keys.pressed.SHIFT)
+				
+				{
+					if (FlxG.keys.justPressed.EIGHT)
+						{	
+							FlxG.switchState(new AnimationDebug(SONG.player1));
+					
+							#if windows
+							if (luaModchart != null)
+							{
+								luaModchart.die();
+								luaModchart = null;
+							}
+							#end
+						}
+					
+				}
+
 		#if debug
 		if (FlxG.keys.justPressed.SIX)
 		{
@@ -4289,6 +4591,7 @@ class PlayState extends MusicBeatState
 								case 'shadlocked':
 									camFollow.x -= 385;
 									camFollow.y -= 240;
+									
 						}
 
 		
@@ -4315,6 +4618,16 @@ class PlayState extends MusicBeatState
 						#end
 		
 
+
+						/*
+						x - izquierda + derecha
+						y - arriba + abajo
+						*/
+						/* character.hx:
+						x - derecha + izquierda
+						y - abajo + arriba
+						*/
+						//xddddd
 						switch (boyfriend.curCharacter)
 						{
 							case 'mom':
@@ -4325,24 +4638,24 @@ class PlayState extends MusicBeatState
 							case 'senpai-angry':
 								camFollow.y = boyfriend.getMidpoint().y - 430;
 								camFollow.x = boyfriend.getMidpoint().x - 100;
-								case 'shadoune':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
-								case 'shadounearmor':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
-								case 'permadeath':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
+								case 'bf':
+									camFollow.x -= 450;
+									camFollow.y -= 75;
+								case 'bfnoche':
+									camFollow.x -= 450;
+									camFollow.y -= 75;
+								case 'uwu':
+									camFollow.x -= 200;
+									camFollow.y -= 75;
 								case 'shadlocked':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
+									camFollow.x -= 525;
+									camFollow.y -= 280;
 								case 'decition':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
+									camFollow.x -= 525;
+									camFollow.y -= 280;
 								case 'you-are-mine':
-									camFollow.x -= 530;
-									camFollow.y -= 255;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 						}
 					}
 			}
@@ -4430,23 +4743,41 @@ class PlayState extends MusicBeatState
 								camFollow.y = boyfriend.getMidpoint().y - 200;
 
 								case 'shadoune':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'shadounearmor':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'permadeath':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'shadlocked':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'decition':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'you-are-mine':
-									camFollow.x -= 525;
-									camFollow.y -= 240;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
+									//mrz del futuro revisa esto , aun no lo testeo yo
+
+
+									//me da risa que si alguien ve esto va a pensar que tengo ezquisofrenia
+
+									//pero si tienes
+
+									//A 
+
+									//tambien acuerdate de revisar lo del zoroforce engine no se xd
+									// lo del middle scroll :VVVV
+
+
+									// mrz del futuro el coso del cam ya esta listo pero acuerdate de hacer que los cosos del publico sea solo para el shadoune uwu
+
+									// PTM de una vez has lo del middle scroll
+
+									//ya lo hice pero esta raro xd
 						}
 					}
 			}
@@ -4510,8 +4841,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (health <= 0 && !cannotDie)
+		if (health <= 0 && !cannotDie && FlxG.save.data.die)
 		{
+			
 			boyfriend.stunned = true;
 
 			persistentUpdate = false;
@@ -4521,7 +4853,16 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			if(deathBySawBlade)
+				{
+					openSubState(new GameOverSWORD(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				}
+				else
+					{
+						openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+					}
+
+			
 
 			#if windows
 			// Game Over doesn't get his own variable because it's only used here
@@ -4543,7 +4884,14 @@ class PlayState extends MusicBeatState
 					vocals.stop();
 					FlxG.sound.music.stop();
 		
-					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+					if(deathBySawBlade)
+						{
+							openSubState(new GameOverSWORD(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+						}
+						else
+							{
+								openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+							}
 		
 					#if windows
 					// Game Over doesn't get his own variable because it's only used here
@@ -4792,6 +5140,43 @@ class PlayState extends MusicBeatState
 
 						dad.playAnim('sing' + sDir[daNote.noteData] + altAnim, true);
 
+					
+						
+								
+								
+					
+							if (storyDifficulty == 3 && !FlxG.save.data.health)
+							{
+								if (health > 0.09)
+									{
+										health -= 0.06;
+									}
+									
+								else if (health <= 0.021)
+									{
+										health -= 0;
+									}		
+									
+							}	
+								
+							
+								
+									
+							
+
+							if (SONG.song.toLowerCase() == 'permadeath')
+								{
+									if (FlxG.save.data.shake)
+									{
+										
+											  shake = true;
+
+											  gf.playAnim('scared');
+										
+									}
+								  
+								}
+
 
 						/*if (daNote.isSustainNote)
 						{
@@ -4920,6 +5305,11 @@ class PlayState extends MusicBeatState
 							}
 							daNote.modAngle = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].angle;
 						}
+
+						
+						if (!daNote.mustPress && FlxG.save.data.middlescroll && !executeModchart)
+							daNote.alpha = 0;
+
 		
 						if (daNote.isSustainNote)
 						{
@@ -5083,13 +5473,20 @@ class PlayState extends MusicBeatState
 
 								case 3:  //warning notes, removes half health and then removed so it doesn't repeatedly deal damage
 								{
-										dad.playAnim('SWORD', true);
-									boyfriend.playAnim('hit', true);
-									health = 0;
-									sonidomuerte = FlxG.sound.play(Paths.sound('sonidomuerte'));
-									sonidomuerte.play();
 									
-									vocals.volume = 0;
+									health = 0;
+
+									if (FlxG.save.data.die)
+										{
+											dad.playAnim('SWORD', true);
+											boyfriend.playAnim('hit', true);
+											FlxG.sound.play(Paths.sound('sonidomuerte'));
+											vocals.volume = 0;
+										}
+									
+									
+									
+									
 									misses++;
 									updateAccuracy();
 								
@@ -5257,6 +5654,11 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
+	function fuegoDesaparecer(tmr:FlxTimer)
+		{
+			remove(fire);
+		}
+
 	function dodgeTimingOverride(newValue:Float = 0.22625):Void
 		{
 			bfDodgeTiming = newValue;
@@ -5267,20 +5669,20 @@ class PlayState extends MusicBeatState
 			bfDodgeCooldown = newValue;
 		}	
 	
-		function KBATTACK_TOGGLE(shouldAdd:Bool = true):Void
+		function SHADATTACK_TOGGLE(shouldAdd:Bool = true):Void
 		{
 			if(shouldAdd)
-				add(kb_attack_saw);
+				add(shad_attack_saw);
 			else
-				remove(kb_attack_saw);
+				remove(shad_attack_saw);
 		}
 	
-		function KBALERT_TOGGLE(shouldAdd:Bool = true):Void
+		function SHADALERT_TOGGLE(shouldAdd:Bool = true):Void
 		{
 			if(shouldAdd)
-				add(kb_attack_alert);
+				add(shad_attack_alert);
 			else
-				remove(kb_attack_alert);
+				remove(shad_attack_alert);
 		}
 
 
@@ -5288,9 +5690,9 @@ class PlayState extends MusicBeatState
 	
 		//False state = Prime!
 		//True state = Attack!
-		function KBATTACK(state:Bool = false, soundToPlay:String = 'attack'):Void
+		function SHADATTACK(state:Bool = false, soundToPlay:String = 'attack'):Void
 		{
-			if(!(SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
+			if(!(SONG.song.toLowerCase() == "permadeath" || SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
 				trace("Sawblade Attack Error, cannot use Termination functions outside Termination or Tutorial.");
 			}
 			trace("HE ATACC!");
@@ -5298,18 +5700,16 @@ class PlayState extends MusicBeatState
 				// talves FlxG.sound.play(Paths.sound(soundToPlay,'qt'),0.75); ok se que eso esta mal pero cambialo asi como el de atack o algo asi no se pero fixealo ok chau (de hecho si aun sigue funcionanado xd)
 				//Play saw attack animation
 				dad.playAnim('SWORD', true);
-				kb_attack_saw.animation.play('fire');
-				kb_attack_saw.offset.set(1600,0);
-	
-				/*kb_attack_saw.animation.finishCallback = function(pog:String){
+				
+				/*shad_attack_saw.animation.finishCallback = function(pog:String){
 					if(state) //I don't get it.
-						remove(kb_attack_saw);
+						remove(shad_attack_saw);
 				}*/
 	
 				//Slight delay for animation. Yeah I know I should be doing this using curStep and curBeat and what not, but I'm lazy -Haz
 				new FlxTimer().start(0.09, function(tmr:FlxTimer)
 				{
-					if(!bfDodging){
+					if(!bfDodging && !PlayStateChangeables.botPlay && !FlxG.save.data.botPlay){
 						//MURDER THE BITCH!
 						boyfriend.playAnim('hit', true);
 						FlxG.sound.play(Paths.sound('sonidomuerte'));
@@ -5319,36 +5719,42 @@ class PlayState extends MusicBeatState
 				});
 			}else{
 				dad.playAnim('SWORD', true);
-				kb_attack_saw.animation.play('prepare');
-				kb_attack_saw.offset.set(-333,0);
+				
 			}
 		}
-		function KBATTACK_ALERT(pointless:Bool = false):Void //For some reason, modchart doesn't like functions with no parameter? why? dunno.
+		function SHADATTACK_ALERT(pointless:Bool = false):Void //For some reason, modchart doesn't like functions with no parameter? why? dunno.
 		{
-			if(!(SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
+			if(!(SONG.song.toLowerCase() == "permadeath" || SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
 				trace("Sawblade Alert Error, cannot use Termination functions outside Termination or Tutorial.");
 			}
 			trace("DANGER!");
-			kb_attack_alert.animation.play('alert');
+			shad_attack_alert.animation.play('alert');
 			FlxG.sound.play(Paths.sound('alert'));
+
+			/*new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					remove(shad_attack_alert);
+				});*/
+
+				//aun no lo compruebo xd
 		}
 	
 		//OLD ATTACK DOUBLE VARIATION
-		function KBATTACK_ALERTDOUBLE(pointless:Bool = false):Void
+		function SHADATTACK_ALERTDOUBLE(pointless:Bool = false):Void
 		{
-			if(!(SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
+			if(!(SONG.song.toLowerCase() == "permadeath" || SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase() == "tutorial" || SONG.song.toLowerCase() == "termination")){
 				trace("Sawblade AlertDOUBLE Error, cannot use Termination functions outside Termination or Tutorial.");
 			}
 			trace("DANGER DOUBLE INCOMING!!");
-			kb_attack_alert.animation.play('alertDOUBLE');
+			shad_attack_alert.animation.play('alertDOUBLE');
 			FlxG.sound.play(Paths.sound('old/alertALT'));
 		}
 		
 
 	function endSong():Void
 	{
-		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
-		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
+	/*	FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);*/
 		if (useVideo)
 			{
 				GlobalVideo.get().stop();
@@ -5360,8 +5766,8 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 			campaignMisses = misses;
 
-		if (!loadRep)
-			rep.SaveReplay(saveNotes, saveJudge, replayAna);
+		/*if (!loadRep)
+			rep.SaveReplay(saveNotes, saveJudge, replayAna);*/
 		else
 		{
 			PlayStateChangeables.botPlay = false;
@@ -5500,14 +5906,25 @@ class PlayState extends MusicBeatState
 					PlayState.SONG = Song.loadFromJson(poop, PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
 
-					if (curSong.toLowerCase() == 'permadeath')
+					if (curSong.toLowerCase() == 'decition')
 						{
-							LoadingState.loadAndSwitchState(new CreditsState(), true);
-							/*var video:MP4Handler = new MP4Handler();
+							
+							var video:MP4Handler = new MP4Handler();
 
 					
-							video.playMP4(Paths.video('xutscene'), new PlayState()); 
-							isCutscene = true;*/
+							video.playMP4(Paths.video('pog'), new PlayState()); 
+							isCutscene = true;
+						
+						}
+
+					else if (curSong.toLowerCase() == 'permadeath')
+						{
+							
+							var video:MP4Handler = new MP4Handler();
+
+					
+							video.playMP4(Paths.video('thanks'), new PlayState()); 
+							isCutscene = true;
 						
 						}
 						
@@ -5533,9 +5950,15 @@ class PlayState extends MusicBeatState
 				vocals.stop();
 
 				if (FlxG.save.data.scoreScreen)
-					openSubState(new ResultsScreen());
+					{
+						openSubState(new ResultsScreen());
+					}
+					
 				else
-					FlxG.switchState(new FreeplayState());
+					{
+						FlxG.switchState(new FreeplayState());
+					}
+					
 			}
 		}
 	}
@@ -5693,6 +6116,39 @@ class PlayState extends MusicBeatState
 							if (FlxG.save.data.accuracyMod == 0)
 								totalNotesHit -= 1;
 						}
+
+						if (dad.curCharacter == 'shadounearmor')
+							{
+								score = -300;
+								combo = 0;
+								misses++;
+								if (!FlxG.save.data.gthm)
+									health -= 0.4;
+								ss = false;
+								shits++;
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit -= 1;
+							}
+							
+							 if (storyDifficulty == 3)
+								{
+									score = -700;
+									combo = 0;
+									misses++;
+									if (!FlxG.save.data.gthm)
+										{
+											health -= 0.5;
+										}
+									
+									if (FlxG.save.data.bestinputfornoobs)
+										{
+											health -= 0.25;
+										}
+									ss = false;
+									shits++;
+									if (FlxG.save.data.accuracyMod == 0)
+										totalNotesHit -= 1;
+								}
 				case 'bad':	
 					{
 						daRating = 'bad';
@@ -5721,6 +6177,35 @@ class PlayState extends MusicBeatState
 							if (FlxG.save.data.accuracyMod == 0)
 								totalNotesHit += 0.50;
 						}
+
+						if (dad.curCharacter == 'shadounearmor')
+							{
+								daRating = 'bad';
+								score = -200;
+								if (!FlxG.save.data.gthm)
+									health -= 0.07;
+								
+								ss = false;
+								bads++;
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 0.50;
+							}
+							
+							 if (storyDifficulty == 3)
+								{
+									daRating = 'bad';
+									score = 0;
+									if (!FlxG.save.data.gthm)
+										health -= 0.075;
+									if (FlxG.save.data.bestinputfornoobs)
+										{
+											health -= 0.055;
+										}
+									ss = false;
+									bads++;
+									if (FlxG.save.data.accuracyMod == 0)
+										totalNotesHit += 0.50;
+								}
 				case 'good':
 					{
 						daRating = 'good';
@@ -5745,6 +6230,31 @@ class PlayState extends MusicBeatState
 							if (FlxG.save.data.accuracyMod == 0)
 								totalNotesHit += 0.75;
 						}
+						if (dad.curCharacter == 'shadounearmor')
+							{
+
+							daRating = 'good';
+							score = 200;
+							ss = false;
+							goods++;
+							if (health < 2)
+								health += 0.018;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit += 0.75;
+						}
+						
+						 if (storyDifficulty == 3)
+							{
+								daRating = 'good';
+								score = 200;
+								ss = false;
+								goods++;
+								if (health < 2)
+									health += 0.008;
+								
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 0.75;
+							}
 				case 'sick':
 					{
 						if (health < 2)
@@ -5763,8 +6273,149 @@ class PlayState extends MusicBeatState
 							sicks++;
 							
 						}
-						//zd
-			}
+
+						if (dad.curCharacter == 'shadounearmor')
+							{
+
+								if (health < 2)
+									health += 0.05;
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 1;
+								sicks++;
+							
+							
+								 if (storyDifficulty == 3)
+									{
+										if (health < 2)
+										health += 0.045;	
+										if (FlxG.save.data.accuracyMod == 0)
+											totalNotesHit += 1;
+										sicks++;
+										
+									}
+									//xd
+
+							}
+
+			}	
+
+			/*if (dad.curCharacter == 'shadounearmor')
+				{
+
+					switch(daRating)
+					{
+						case 'shit':
+						{
+							score = -300;
+							combo = 0;
+							misses++;
+							if (!FlxG.save.data.gthm)
+								health -= 0.4;
+							ss = false;
+							shits++;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit -= 1;
+						}
+						
+						if (storyDifficulty == 3)
+							{
+								score = -700;
+								combo = 0;
+								misses++;
+								if (!FlxG.save.data.gthm)
+									{
+										health -= 0.5;
+									}
+								
+								if (FlxG.save.data.bestinputfornoobs)
+									{
+										health -= 0.25;
+									}
+								ss = false;
+								shits++;
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit -= 1;
+							}
+					case 'bad':	
+						{
+							daRating = 'bad';
+							score = -200;
+							if (!FlxG.save.data.gthm)
+								health -= 0.07;
+							
+							ss = false;
+							bads++;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit += 0.50;
+						}
+						
+						if (storyDifficulty == 3)
+							{
+								daRating = 'bad';
+								score = 0;
+								if (!FlxG.save.data.gthm)
+									health -= 0.075;
+								if (FlxG.save.data.bestinputfornoobs)
+									{
+										health -= 0.055;
+									}
+								ss = false;
+								bads++;
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 0.50;
+							}
+					case 'good':
+						{
+							daRating = 'good';
+							score = 200;
+							ss = false;
+							goods++;
+							if (health < 2)
+								health += 0.018;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit += 0.75;
+						}
+						
+						if (storyDifficulty == 3)
+							{
+								daRating = 'good';
+								score = 200;
+								ss = false;
+								goods++;
+								if (health < 2)
+									health += 0.008;
+								
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 0.75;
+							}
+					case 'sick':
+						{
+							if (health < 2)
+								health += 0.05;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit += 1;
+							sicks++;
+						}
+						
+						if (storyDifficulty == 3)
+							{
+								if (health < 2)
+								health += 0.045;	
+								if (FlxG.save.data.accuracyMod == 0)
+									totalNotesHit += 1;
+								sicks++;
+								
+							}
+							//xd
+					}
+
+				
+				}*/
+
+
+						
+						
+			
 
 			// trace('Wife accuracy loss: ' + wife + ' | Rating: ' + daRating + ' | Score: ' + score + ' | Weight: ' + (1 - wife));
 
@@ -6045,20 +6696,27 @@ class PlayState extends MusicBeatState
 		{
 			
 					//Dodge code only works on termination and Tutorial -Haz
-					if(SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase()=='tutorial' || SONG.song.toLowerCase() == "termination")
+					if(SONG.song.toLowerCase() == 'permadeath' || SONG.song.toLowerCase() == "decition" || SONG.song.toLowerCase()=='tutorial' || SONG.song.toLowerCase() == "termination")
 						{
 							//Dodge code, yes it's bad but oh well. -Haz
 							//var dodgeButton = controls.ACCEPT; //I have no idea how to add custom controls so fuck it. -Haz
 		
-							if(FlxG.keys.justPressed.SPACE || FlxG.mouse.pressedRight)
+							if(FlxG.keys.justPressed.SPACE)
 								trace('butttonpressed');
 		
-							if(FlxG.keys.justPressed.SPACE || FlxG.mouse.pressedRight && !bfDodging && bfCanDodge){
+							if(FlxG.keys.justPressed.SPACE && !bfDodging && bfCanDodge){
 								trace('DODGE START!');
 								bfDodging = true;
 								bfCanDodge = false;
-		
-									boyfriend.playAnim('SHIELD');
+								
+								if (FlxG.random.bool(0.01))
+									{
+										boyfriend.playAnim('SHIELD');
+										add(uno);
+									}
+									else
+										boyfriend.playAnim('SHIELD');
+									
 		
 								FlxG.sound.play(Paths.sound('dodge01'));
 		
@@ -6810,6 +7468,19 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			if (dad.curCharacter == 'shadounearmor')
+				{
+					health -= 0.095;
+					if (storyDifficulty == 3)
+						{
+							health -= 0.1;
+						}
+					
+				}
+			if (storyDifficulty == 3)
+				{
+					health -= 0.09;
+				}
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -6845,6 +7516,8 @@ class PlayState extends MusicBeatState
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
 			// FlxG.log.add('played imss note');
 			boyfriend.playAnim('sing' + sDir[direction] + 'miss', true);
+
+			canDrain = true;
 
 			#if windows
 			if (luaModchart != null)
@@ -7022,9 +7695,35 @@ class PlayState extends MusicBeatState
 					{
 						if (boyfriend.curCharacter == 'bf')
 							boyfriend.playAnim('sing' + bfsDir[note.noteData] + altAnim, true);
+
+						if (SONG.song.toLowerCase() == 'permadeath')
+							{
+								if (boyfriend.curCharacter == 'bf')
+									boyfriend.playAnim('sing' + bfsDir[note.noteData] + altAnim, true);
+								if (FlxG.save.data.shake)
+								{
+									
+										  shake = false;
+									
+								}
+							  
+							}
 						else
 							boyfriend.playAnim('sing' + sDir[note.noteData] + altAnim, true);
 						boyfriend.holdTimer = 0;
+
+						if (SONG.song.toLowerCase() == 'permadeath')
+							{
+								boyfriend.playAnim('sing' + sDir[note.noteData] + altAnim, true);
+								boyfriend.holdTimer = 0;
+								if (FlxG.save.data.shake)
+								{
+									
+										  shake = false;
+									
+								}
+							  
+							}
 					}
 					else if (note.noteData <= 3)
 					{
@@ -7035,7 +7734,9 @@ class PlayState extends MusicBeatState
 					{
 						dad.playAnim('sing' + sDir[note.noteData] + altAnim, true);
 						dad.holdTimer = 0;
+					
 					}
+
 
 
 
@@ -7050,8 +7751,8 @@ class PlayState extends MusicBeatState
 							dad.playAnim('SWORD', true);
 							boyfriend.playAnim('hit', true);
 							health = 0;
-							sonidomuerte = FlxG.sound.play(Paths.sound('sonidomuerte'));
-							sonidomuerte.play();
+							FlxG.sound.play(Paths.sound('sonidomuerte'));
+							
 							
 							vocals.volume = 0;
 							misses++;
@@ -7063,8 +7764,8 @@ class PlayState extends MusicBeatState
 							dad.playAnim('SWORD', true);
 							boyfriend.playAnim('hit', true);
 							health = 0;
-							sonidomuerte = FlxG.sound.play(Paths.sound('sonidomuerte'));
-							sonidomuerte.play();
+							FlxG.sound.play(Paths.sound('sonidomuerte'));
+							
 							
 							vocals.volume = 0;
 							misses++;
@@ -7178,12 +7879,44 @@ class PlayState extends MusicBeatState
 
 	function HealthDrain():Void //code from vs bob
 		{
+			healthDrainVerifi = true;
 			FlxG.sound.play(Paths.sound('bob fire'));
 			boyfriend.playAnim('hit', true);
+
+			fire = new FlxSprite(0, FlxG.height * 1.2).loadGraphic(Paths.image('FIRE'));
+			if (PlayStateChangeables.useDownscroll)
+				{	
+					fire.y = 50;
+				}
+				
+			fire.screenCenter(X);
+			fire.scrollFactor.set();
+
+			add(fire);
+			
+
+							
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
 			{
+				remove(fire);
+									
+									
+				
 				health -= 0.005;
 			}, 300);
+
+			
+
+			new FlxTimer().start(0.02, function(tmr:FlxTimer)
+				{
+					
+										
+										
+					add(fire);
+				
+				}, 250);
+
+
 		}
 
 	function badNoteHit():Void
@@ -7599,13 +8332,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			if (SONG.song.toLowerCase() == 'permadeath')
-				{
-				   if (curStep == 129)
-					{
-					  shake = true;
-					}
-				}
+			
 
 			if (FlxG.save.data.dodge)
 				{
@@ -7616,33 +8343,871 @@ class PlayState extends MusicBeatState
 									/* guia curstep
 
 									case 1 :// el curbeat de la alerta que inicie
-									add(kb_attack_alert);
-									KBATTACK_ALERT();
-									KBATTACK();
+									add(shad_attack_alert);
+									SHADATTACK_ALERT();
+									SHADATTACK();
 									
 									case 5 : // direferencia entre 4 para doble sonido
-									KBATTACK_ALERT();
+									SHADATTACK_ALERT();
 
 									case 9 : // diferencia de 4 para ataque
-									KBATTACK(true);
+									SHADATTACK(true);
 
 									*/
 
 									
 									
 									case 204 :
-										add(kb_attack_alert);
-										KBATTACK_ALERT();
+										add(shad_attack_alert);
+										SHADATTACK_ALERT();
 
 										case 208 :
 										
-											KBATTACK(true);	
+											SHADATTACK(true);	
 									
 									// mrz del futuro resuelve porque a cada rato el bf hace el idle y tambien elos timings de la alerta
 								}
 						
 		
 						}
+
+						if (SONG.song.toLowerCase() == 'permadeath')
+							{
+								switch (curStep)
+									{
+										/* guia curstep
+	
+										case 1 :// el curbeat de la alerta que inicie
+										add(shad_attack_alert);
+										SHADATTACK_ALERT();
+										SHADATTACK();
+										
+										case 5 : // direferencia entre 4 para doble sonido
+										SHADATTACK_ALERT();
+	
+										case 9 : // diferencia de 4 para ataque
+										SHADATTACK(true);
+	
+										*/
+										case 120:
+											add(shad_attack_alert);
+											SHADATTACK_ALERT();
+											SHADATTACK();
+										case 124:
+											SHADATTACK_ALERT();
+										case 128:
+											SHADATTACK(true);
+										
+											///////////////
+										case 278:
+											add(shad_attack_alert);
+											SHADATTACK_ALERT();
+											SHADATTACK();
+										case 282:
+											SHADATTACK_ALERT();
+										case 286:
+											SHADATTACK(true);
+
+											///////////////
+
+										case 352:
+											add(shad_attack_alert);
+											SHADATTACK_ALERT();
+											SHADATTACK();
+										case 356:
+											SHADATTACK_ALERT();
+										case 360:
+											SHADATTACK(true);
+
+											///////////////
+
+											case 418:
+												add(shad_attack_alert);
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 420:
+												SHADATTACK_ALERT();
+											case 424:
+												SHADATTACK(true);
+	
+												///////////////
+
+											case 488:
+												add(shad_attack_alert);
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 492:
+												SHADATTACK_ALERT();
+											case 496:
+												SHADATTACK(true);
+	
+												///////////////
+
+											case 452:
+												add(shad_attack_alert);
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 556:
+												SHADATTACK_ALERT();
+											case 560:
+												SHADATTACK(true);
+	
+												///////////////
+
+												case 608:
+													add(shad_attack_alert);
+													SHADATTACK_ALERT();
+													SHADATTACK();
+												case 612:
+													SHADATTACK_ALERT();
+												case 616:
+													SHADATTACK(true);
+		
+													///////////////
+
+													case 696:
+														add(shad_attack_alert);
+														SHADATTACK_ALERT();
+														SHADATTACK();
+													case 700:
+														SHADATTACK_ALERT();
+													case 704:
+														SHADATTACK(true);
+			
+														///////////////
+
+														case 752:
+															add(shad_attack_alert);
+															SHADATTACK_ALERT();
+															SHADATTACK();
+														case 756:
+															SHADATTACK_ALERT();
+														case 760:
+															SHADATTACK(true);
+				
+															///////////////
+
+															case 800:
+																add(shad_attack_alert);
+																SHADATTACK_ALERT();
+																SHADATTACK();
+															case 804:
+																SHADATTACK_ALERT();
+															case 808:
+																SHADATTACK(true);
+					
+																///////////////
+
+																case 812:
+																	add(shad_attack_alert);
+																	SHADATTACK_ALERT();
+																	SHADATTACK();
+																case 816:
+																	SHADATTACK_ALERT();
+																case 820:
+																	SHADATTACK(true);
+						
+																	///////////////
+
+																	case 952:
+																		add(shad_attack_alert);
+																		SHADATTACK_ALERT();
+																		SHADATTACK();
+																	case 956:
+																		SHADATTACK_ALERT();
+																	case 960:
+																		SHADATTACK(true);
+							
+																		///////////////
+
+																		case 1072:
+																			add(shad_attack_alert);
+																			SHADATTACK_ALERT();
+																			SHADATTACK();
+																		case 1076:
+																			SHADATTACK_ALERT();
+																		case 1080:
+																			SHADATTACK(true);
+								
+																			///////////////
+
+																			case 1248:
+																				add(shad_attack_alert);
+																				SHADATTACK_ALERT();
+																				SHADATTACK();
+																			case 1252:
+																				SHADATTACK_ALERT();
+																			case 1256:
+																				SHADATTACK(true);
+									
+																				///////////////
+
+																				case 1312:
+																					add(shad_attack_alert);
+																					SHADATTACK_ALERT();
+																					SHADATTACK();
+																				case 1316:
+																					SHADATTACK_ALERT();
+																				case 1320:
+																					SHADATTACK(true);
+										
+																					///////////////
+
+																					case 1342:
+																						add(shad_attack_alert);
+																						SHADATTACK_ALERT();
+																						SHADATTACK();
+																					case 1346:
+																						SHADATTACK_ALERT();
+																					case 1350:
+																						SHADATTACK(true);
+											
+																						///////////////
+
+																						case 1532:
+																							add(shad_attack_alert);
+																							SHADATTACK_ALERT();
+																							SHADATTACK();
+																						case 1536:
+																							SHADATTACK_ALERT();
+																						case 1540:
+																							SHADATTACK(true);
+												
+																							///////////////
+
+																							case 1542:
+																								add(shad_attack_alert);
+																								SHADATTACK_ALERT();
+																								SHADATTACK();
+																							case 1546:
+																								SHADATTACK_ALERT();
+																							case 1550:
+																								SHADATTACK(true);
+													
+																								///////////////
+
+																								case 1552:
+																									add(shad_attack_alert);
+																									SHADATTACK_ALERT();
+																									SHADATTACK();
+																								case 1556:
+																									SHADATTACK_ALERT();
+																								case 1560:
+																									SHADATTACK(true);
+														
+																									///////////////
+
+																									case 1562:
+																										add(shad_attack_alert);
+																										SHADATTACK_ALERT();
+																										SHADATTACK();
+																									case 1566:
+																										SHADATTACK_ALERT();
+																									case 1570:
+																										SHADATTACK(true);
+															
+																										///////////////
+
+																										case 1572:
+																											add(shad_attack_alert);
+																											SHADATTACK_ALERT();
+																											SHADATTACK();
+																										case 1576:
+																											SHADATTACK_ALERT();
+																										case 1580:
+																											SHADATTACK(true);
+																
+																											///////////////
+
+																											case 1582:
+																												add(shad_attack_alert);
+																												SHADATTACK_ALERT();
+																												SHADATTACK();
+																											case 1586:
+																												SHADATTACK_ALERT();
+																											case 1590:
+																												SHADATTACK(true);
+																	
+																												///////////////
+
+																												case 1592:
+																													add(shad_attack_alert);
+																													SHADATTACK_ALERT();
+																													SHADATTACK();
+																												case 1596:
+																													SHADATTACK_ALERT();
+																												case 1600:
+																													SHADATTACK(true);
+																		
+																													///////////////
+
+																													case 1712:
+																														add(shad_attack_alert);
+																														SHADATTACK_ALERT();
+																														SHADATTACK();
+																													case 1716:
+																														SHADATTACK_ALERT();
+																													case 1720:
+																														SHADATTACK(true);
+																			
+																														///////////////
+
+																														case 1752:
+																															add(shad_attack_alert);
+																															SHADATTACK_ALERT();
+																															SHADATTACK();
+																														case 1756:
+																															SHADATTACK_ALERT();
+																														case 1760:
+																															SHADATTACK(true);
+																				
+																															///////////////
+
+																															
+																															case 1782:
+																																add(shad_attack_alert);
+																																SHADATTACK_ALERT();
+																																SHADATTACK();
+																															case 1786:
+																																SHADATTACK_ALERT();
+																															case 1790:
+																																SHADATTACK(true);
+																					
+																																///////////////
+
+																																case 1842:
+																																	add(shad_attack_alert);
+																																	SHADATTACK_ALERT();
+																																	SHADATTACK();
+																																case 1846:
+																																	SHADATTACK_ALERT();
+																																case 1850:
+																																	SHADATTACK(true);
+																						
+																																	///////////////
+
+																																	case 1862:
+																																		add(shad_attack_alert);
+																																		SHADATTACK_ALERT();
+																																		SHADATTACK();
+																																	case 1866:
+																																		SHADATTACK_ALERT();
+																																	case 1870:
+																																		SHADATTACK(true);
+																							
+																																		///////////////
+
+																																		case 1892:
+																																			add(shad_attack_alert);
+																																			SHADATTACK_ALERT();
+																																			SHADATTACK();
+																																		case 1896:
+																																			SHADATTACK_ALERT();
+																																		case 1900:
+																																			SHADATTACK(true);
+																								
+																																			///////////////
+
+																																			case 1902:
+																																				add(shad_attack_alert);
+																																				SHADATTACK_ALERT();
+																																				SHADATTACK();
+																																			case 1906:
+																																				SHADATTACK_ALERT();
+																																			case 1910:
+																																				SHADATTACK(true);
+																									
+																																				///////////////
+
+																																				case 1912:
+																																					add(shad_attack_alert);
+																																					SHADATTACK_ALERT();
+																																					SHADATTACK();
+																																				case 1916:
+																																					SHADATTACK_ALERT();
+																																				case 1920:
+																																					SHADATTACK(true);
+																										
+																																					///////////////
+
+																																					case 1962:
+																																						add(shad_attack_alert);
+																																						SHADATTACK_ALERT();
+																																						SHADATTACK();
+																																					case 1966:
+																																						SHADATTACK_ALERT();
+																																					case 1970:
+																																						SHADATTACK(true);
+																											
+																																						///////////////
+
+																																						case 1982:
+																																							add(shad_attack_alert);
+																																							SHADATTACK_ALERT();
+																																							SHADATTACK();
+																																						case 1986:
+																																							SHADATTACK_ALERT();
+																																						case 1990:
+																																							SHADATTACK(true);
+																												
+																																							///////////////
+
+																																							case 2012:
+																																								add(shad_attack_alert);
+																																								SHADATTACK_ALERT();
+																																								SHADATTACK();
+																																							case 2016:
+																																								SHADATTACK_ALERT();
+																																							case 2020:
+																																								SHADATTACK(true);
+																													
+																																								///////////////
+
+																																								
+																																							case 2032:
+																																								add(shad_attack_alert);
+																																								SHADATTACK_ALERT();
+																																								SHADATTACK();
+																																							case 2036:
+																																								SHADATTACK_ALERT();
+																																							case 2040:
+																																								SHADATTACK(true);
+																													
+																																								///////////////
+
+																																								case 2042:
+																																									add(shad_attack_alert);
+																																									SHADATTACK_ALERT();
+																																									SHADATTACK();
+																																								case 2046:
+																																									SHADATTACK_ALERT();
+																																								case 2050:
+																																									SHADATTACK(true);
+																														
+																																									///////////////
+
+																																									case 2072:
+																																										add(shad_attack_alert);
+																																										SHADATTACK_ALERT();
+																																										SHADATTACK();
+																																									case 2076:
+																																										SHADATTACK_ALERT();
+																																									case 2080:
+																																										SHADATTACK(true);
+																															
+																																										///////////////
+
+																																										case 2082:
+																																											add(shad_attack_alert);
+																																											SHADATTACK_ALERT();
+																																											SHADATTACK();
+																																										case 2086:
+																																											SHADATTACK_ALERT();
+																																										case 2090:
+																																											SHADATTACK(true);
+																																
+																																											///////////////
+
+																																											case 2092:
+																																												add(shad_attack_alert);
+																																												SHADATTACK_ALERT();
+																																												SHADATTACK();
+																																											case 2096:
+																																												SHADATTACK_ALERT();
+																																											case 2100:
+																																												SHADATTACK(true);
+																																	
+																																												///////////////
+
+																																												case 2102:
+																																													add(shad_attack_alert);
+																																													SHADATTACK_ALERT();
+																																													SHADATTACK();
+																																												case 2106:
+																																													SHADATTACK_ALERT();
+																																												case 2110:
+																																													SHADATTACK(true);
+																																		
+																																													///////////////
+
+																																													case 2232:
+																																														add(shad_attack_alert);
+																																														SHADATTACK_ALERT();
+																																														SHADATTACK();
+																																													case 2236:
+																																														SHADATTACK_ALERT();
+																																													case 2240:
+																																														SHADATTACK(true);
+																																			
+																																														///////////////
+
+																																														case 2252:
+																																															add(shad_attack_alert);
+																																															SHADATTACK_ALERT();
+																																															SHADATTACK();
+																																														case 2256:
+																																															SHADATTACK_ALERT();
+																																														case 2260:
+																																															SHADATTACK(true);
+																																				
+																																															///////////////
+
+																																															case 2262:
+																																																add(shad_attack_alert);
+																																																SHADATTACK_ALERT();
+																																																SHADATTACK();
+																																															case 2266:
+																																																SHADATTACK_ALERT();
+																																															case 2270:
+																																																SHADATTACK(true);
+																																					
+																																																///////////////
+
+																																																case 2332:
+																																																	add(shad_attack_alert);
+																																																	SHADATTACK_ALERT();
+																																																	SHADATTACK();
+																																																case 2336:
+																																																	SHADATTACK_ALERT();
+																																																case 2340:
+																																																	SHADATTACK(true);
+																																						
+																																																	///////////////
+
+																																																	case 2552:
+																																																		add(shad_attack_alert);
+																																																		SHADATTACK_ALERT();
+																																																		SHADATTACK();
+																																																	case 2556:
+																																																		SHADATTACK_ALERT();
+																																																	case 2560:
+																																																		SHADATTACK(true);
+																																							
+																																																		///////////////
+
+																																																		case 2612:
+																																																			add(shad_attack_alert);
+																																																			SHADATTACK_ALERT();
+																																																			SHADATTACK();
+																																																		case 2616:
+																																																			SHADATTACK_ALERT();
+																																																		case 2620:
+																																																			SHADATTACK(true);
+																																								
+																																																			///////////////
+
+																																																			
+																																																		case 2632:
+																																																			add(shad_attack_alert);
+																																																			SHADATTACK_ALERT();
+																																																			SHADATTACK();
+																																																		case 2636:
+																																																			SHADATTACK_ALERT();
+																																																		case 2640:
+																																																			SHADATTACK(true);
+																																								
+																																																			///////////////
+																																																			
+																																																			case 2662:
+																																																				add(shad_attack_alert);
+																																																				SHADATTACK_ALERT();
+																																																				SHADATTACK();
+																																																			case 2666:
+																																																				SHADATTACK_ALERT();
+																																																			case 2670:
+																																																				SHADATTACK(true);
+																																									
+																																																				///////////////	
+																																																										
+																																																				case 2812:
+																																																					add(shad_attack_alert);
+																																																					SHADATTACK_ALERT();
+																																																					SHADATTACK();
+																																																				case 2816:
+																																																					SHADATTACK_ALERT();
+																																																				case 2820:
+																																																					SHADATTACK(true);
+																																										
+																																																					///////////////	
+
+																																																					case 2842:
+																																																						add(shad_attack_alert);
+																																																						SHADATTACK_ALERT();
+																																																						SHADATTACK();
+																																																					case 2846:
+																																																						SHADATTACK_ALERT();
+																																																					case 2850:
+																																																						SHADATTACK(true);
+																																											
+																																																						///////////////	
+
+																																																						case 2862:
+																																																							add(shad_attack_alert);
+																																																							SHADATTACK_ALERT();
+																																																							SHADATTACK();
+																																																						case 2866:
+																																																							SHADATTACK_ALERT();
+																																																						case 2870:
+																																																							SHADATTACK(true);
+																																												
+																																																							///////////////	
+
+																																																							case 2872:
+																																																								add(shad_attack_alert);
+																																																								SHADATTACK_ALERT();
+																																																								SHADATTACK();
+																																																							case 2876:
+																																																								SHADATTACK_ALERT();
+																																																							case 2880:
+																																																								SHADATTACK(true);
+																																													
+																																																								///////////////	
+
+																																																								
+																																																								case 2902:
+																																																									add(shad_attack_alert);
+																																																									SHADATTACK_ALERT();
+																																																									SHADATTACK();
+																																																								case 2906:
+																																																									SHADATTACK_ALERT();
+																																																								case 2910:
+																																																									SHADATTACK(true);
+																																														
+																																																									///////////////																	
+
+																																																									case 2922:
+																																																										add(shad_attack_alert);
+																																																										SHADATTACK_ALERT();
+																																																										SHADATTACK();
+																																																									case 2926:
+																																																										SHADATTACK_ALERT();
+																																																									case 2930:
+																																																										SHADATTACK(true);
+																																															
+																																																										///////////////
+																																																											
+																																																										case 2932:
+																																																											add(shad_attack_alert);
+																																																											SHADATTACK_ALERT();
+																																																											SHADATTACK();
+																																																										case 2936:
+																																																											SHADATTACK_ALERT();
+																																																										case 2940:
+																																																											SHADATTACK(true);
+																																																
+																																																											///////////////
+
+																																																											case 3202:
+																																																												add(shad_attack_alert);
+																																																												SHADATTACK_ALERT();
+																																																												SHADATTACK();
+																																																											case 3206:
+																																																												SHADATTACK_ALERT();
+																																																											case 3210:
+																																																												SHADATTACK(true);
+																																																	
+																																																												///////////////
+
+																																																												case 3222:
+																																																													add(shad_attack_alert);
+																																																													SHADATTACK_ALERT();
+																																																													SHADATTACK();
+																																																												case 3226:
+																																																													SHADATTACK_ALERT();
+																																																												case 3230:
+																																																													SHADATTACK(true);
+																																																		
+																																																													///////////////
+
+																																																													case 3242:
+																																																														add(shad_attack_alert);
+																																																														SHADATTACK_ALERT();
+																																																														SHADATTACK();
+																																																													case 3246:
+																																																														SHADATTACK_ALERT();
+																																																													case 3250:
+																																																														SHADATTACK(true);
+																																																			
+																																																														///////////////
+
+																																																														case 3252:
+																																																															add(shad_attack_alert);
+																																																															SHADATTACK_ALERT();
+																																																															SHADATTACK();
+																																																														case 3256:
+																																																															SHADATTACK_ALERT();
+																																																														case 3360:
+																																																															SHADATTACK(true);
+																																																				
+																																																															///////////////
+
+																																																															case 3402:
+																																																																add(shad_attack_alert);
+																																																																SHADATTACK_ALERT();
+																																																																SHADATTACK();
+																																																															case 3406:
+																																																																SHADATTACK_ALERT();
+																																																															case 3410:
+																																																																SHADATTACK(true);
+																																																					
+																																																																///////////////
+
+																																																																
+																																																																case 3412:
+																																																																	add(shad_attack_alert);
+																																																																	SHADATTACK_ALERT();
+																																																																	SHADATTACK();
+																																																																case 3416:
+																																																																	SHADATTACK_ALERT();
+																																																																case 3420:
+																																																																	SHADATTACK(true);
+																																																						
+																																																																	///////////////
+
+																																																																	
+																																																																	case 3422:
+																																																																		add(shad_attack_alert);
+																																																																		SHADATTACK_ALERT();
+																																																																		SHADATTACK();
+																																																																	case 3426:
+																																																																		SHADATTACK_ALERT();
+																																																																	case 3430:
+																																																																		SHADATTACK(true);
+																																																							
+																																																																		///////////////
+
+																																																																		case 3432:
+																																																																			add(shad_attack_alert);
+																																																																			SHADATTACK_ALERT();
+																																																																			SHADATTACK();
+																																																																		case 3436:
+																																																																			SHADATTACK_ALERT();
+																																																																		case 3440:
+																																																																			SHADATTACK(true);
+																																																								
+																																																																			///////////////
+
+																																																																			case 3442:
+																																																																				add(shad_attack_alert);
+																																																																				SHADATTACK_ALERT();
+																																																																				SHADATTACK();
+																																																																			case 3446:
+																																																																				SHADATTACK_ALERT();
+																																																																			case 3450:
+																																																																				SHADATTACK(true);
+																																																									
+																																																																				///////////////
+
+																																																																				case 3612:
+																																																																					add(shad_attack_alert);
+																																																																					SHADATTACK_ALERT();
+																																																																					SHADATTACK();
+																																																																				case 3616:
+																																																																					SHADATTACK_ALERT();
+																																																																				case 3620:
+																																																																					SHADATTACK(true);
+																																																										
+																																																																					///////////////	
+
+																																																																					case 3622:
+																																																																						add(shad_attack_alert);
+																																																																						SHADATTACK_ALERT();
+																																																																						SHADATTACK();
+																																																																					case 3626:
+																																																																						SHADATTACK_ALERT();
+																																																																					case 3630:
+																																																																						SHADATTACK(true);
+																																																											
+																																																																						///////////////	
+																																																																						
+																																																																						case 3702:
+																																																																							add(shad_attack_alert);
+																																																																							SHADATTACK_ALERT();
+																																																																							SHADATTACK();
+																																																																						case 3706:
+																																																																							SHADATTACK_ALERT();
+																																																																						case 3710:
+																																																																							SHADATTACK(true);
+																																																												
+																																																																							///////////////	
+
+																																																																							case 4102:
+																																																																								add(shad_attack_alert);
+																																																																								SHADATTACK_ALERT();
+																																																																								SHADATTACK();
+																																																																							case 4106:
+																																																																								SHADATTACK_ALERT();
+																																																																							case 4110:
+																																																																								SHADATTACK(true);
+																																																													
+																																																																								///////////////	
+
+																																																																								case 4122:
+																																																																									add(shad_attack_alert);
+																																																																									SHADATTACK_ALERT();
+																																																																									SHADATTACK();
+																																																																								case 4126:
+																																																																									SHADATTACK_ALERT();
+																																																																								case 4130:
+																																																																									SHADATTACK(true);
+																																																														
+																																																																									///////////////
+																																																																									
+																																																																									case 4142:
+																																																																										add(shad_attack_alert);
+																																																																										SHADATTACK_ALERT();
+																																																																										SHADATTACK();
+																																																																									case 4146:
+																																																																										SHADATTACK_ALERT();
+																																																																									case 4150:
+																																																																										SHADATTACK(true);
+																																																															
+																																																																										///////////////
+
+																																																																										case 4172:
+																																																																											add(shad_attack_alert);
+																																																																											SHADATTACK_ALERT();
+																																																																											SHADATTACK();
+																																																																										case 4176:
+																																																																											SHADATTACK_ALERT();
+																																																																										case 4180:
+																																																																											SHADATTACK(true);
+																																																																
+																																																																											///////////////
+
+																																																																											case 4202:
+																																																																												add(shad_attack_alert);
+																																																																												SHADATTACK_ALERT();
+																																																																												SHADATTACK();
+																																																																											case 4206:
+																																																																												SHADATTACK_ALERT();
+																																																																											case 4210:
+																																																																												SHADATTACK(true);
+																																																																	
+																																																																												///////////////
+
+																																																																												case 4362:
+																																																																													add(shad_attack_alert);
+																																																																													SHADATTACK_ALERT();
+																																																																													SHADATTACK();
+																																																																												case 4366:
+																																																																													SHADATTACK_ALERT();
+																																																																												case 4370:
+																																																																													SHADATTACK(true);
+																																																																		
+																																																																													///////////////
+										
+
+
+										// mrz del futuro resuelve porque a cada rato el bf hace el idle y tambien elos timings de la alerta
+										//ya lo arregle lmao
+
+										//me demore como unas 2 horas hacer el timing de los ataques xdasdasdasdasd
+
+									}
+							
+			
+							}
 				
 			
 			
@@ -7663,101 +9228,98 @@ class PlayState extends MusicBeatState
 						
 					
 				case 48:
-					add(kb_attack_saw);
-					add(kb_attack_alert);
-					KBATTACK_ALERT();
-					KBATTACK();
+					add(shad_attack_saw);
+					add(shad_attack_alert);
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 52:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 56:
-					KBATTACK(true);
+					SHADATTACK(true);
 				case 112:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 116:
-					KBATTACK_ALERTDOUBLE();
+					SHADATTACK_ALERTDOUBLE();
 				case 120:
-					KBATTACK(true, "old/attack_alt01");
+					SHADATTACK(true, "old/attack_alt01");
 				
 				case 123:
-					KBATTACK();
+					SHADATTACK();
 				case 124:
 				    //FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
-					KBATTACK(true, "old/attack_alt02");
+					SHADATTACK(true, "old/attack_alt02");
 				
 
 				case 272 | 304 | 404 | 416 | 504 | 544 | 560 | 612 | 664 | 696 | 752 | 816 | 868 | 880 | 1088 | 1204 | 1344 | 1400 | 1428 | 1440 | 1472 | 1520 | 1584 | 1648 | 1680 | 1712 | 1744:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 276 | 308 | 408 | 420 | 508 | 548 | 564 | 616 | 668 | 700 | 756 | 820 | 872 | 884 | 1092 | 1208 | 1348 | 1404 | 1432 | 1444 | 1476 | 1524 | 1588 | 1652 | 1684 | 1716 | 1748: 
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 280 | 312 | 412 | 424 | 512 | 552 | 568 | 620 | 672 | 704 | 760 | 824 | 876 | 888 | 1096 | 1212 | 1352 | 1408 | 1436 | 1448 | 1480 | 1528 | 1592 | 1656 | 1688 | 1720 | 1752:
-					KBATTACK(true);
+					SHADATTACK(true);
 
 				case 1776 | 1904 | 2576 | 2596 | 2624 | 2640 | 2660 | 2704 | 2736 | 3072 | 3104 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 1780 | 1908 | 2580 | 2600 | 2628 | 2644 | 2664 | 2708 | 2740 | 3076 | 3108 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 1784 | 1912 | 2584 | 2604 | 2632 | 2648 | 2668 | 2712 | 2744 | 3080 | 3112 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
-					KBATTACK(true);
+					SHADATTACK(true);
 
 				case 1808 | 1840 | 1872 | 1952 | 2000 | 2112 | 2148 | 2176 | 2192 | 2228 | 2240 | 2272 | 2768 | 2788 | 2800 | 2864 | 2916 | 2928 | 3024 | 3264 | 3280 | 3300:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 1812 | 1844 | 1876 | 1956 | 2004 | 2116 | 2152 | 2180 | 2196 | 2232 | 2244 | 2276 | 2772 | 2792 | 2804 | 2868 | 2920 | 2932 | 3028 | 3268 | 3284 | 3304:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 1816 | 1848 | 1880 | 1960 | 2008 | 2120 | 2156 | 2184 | 2200 | 2236 | 2248 | 2280 | 2776 | 2796 | 2808 | 2872 | 2924 | 2936 | 3032 | 3272 | 3288 | 3308:
-					KBATTACK(true);
+					SHADATTACK(true);
 
                 case 624 | 1136 | 2032 | 2608 | 2672 | 3084 | 3116 | 4140 | 4204 | 4464:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 628 | 1140 | 2036 | 2612 | 2676 | 3088 | 3120 | 4144 | 4208 | 4468:
-					KBATTACK_ALERTDOUBLE();
+					SHADATTACK_ALERTDOUBLE();
 				case 632 | 1144 | 2040 | 2616 | 2680 | 3092 | 3124 | 4148 | 4212 | 4472:
-					KBATTACK(true, "old/attack_alt01");
+					SHADATTACK(true, "old/attack_alt01");
 				case 635 | 1147 | 2043 | 2619 | 2683 | 3095 | 3127 | 4151 | 4215 | 4475:
-					KBATTACK();
+					SHADATTACK();
 				case 636 | 1148 | 2044 | 2620 | 2684 | 3096 | 3128 | 4152 | 4216 | 4476:
-					KBATTACK(true, "old/attack_alt02");
+					SHADATTACK(true, "old/attack_alt02");
 				//Sawblades before bluescreen thing
 				//These were seperated for double sawblade experimentation if you're wondering.
 				//My god this organisation is so bad. Too bad!
 				//Yes, this is too bad! -DrkFon376
 				case 2304 | 2320 | 2340 | 2368 | 2384 | 2404 | 2496 | 2528:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 2308 | 2324 | 2344 | 2372 | 2388 | 2408 | 2500 | 2532:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 2312 | 2328 | 2348 | 2376 | 2392 | 2412 | 2504 | 2536:
-					KBATTACK(true);
+					SHADATTACK(true);
 
 				case 2352 | 2416:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 2356 | 2420:
-					KBATTACK_ALERTDOUBLE();
+					SHADATTACK_ALERTDOUBLE();
 				case 2360 | 2424:
-					KBATTACK(true, "old/attack_alt01");
+					SHADATTACK(true, "old/attack_alt01");
 				case 2363 | 2427:
-					KBATTACK();
+					SHADATTACK();
 				case 2364 | 2428:
-					KBATTACK(true, "old/attack_alt02");
+					SHADATTACK(true, "old/attack_alt02");
 
 				case 2560:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 					
 				case 2564:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 2568:
-					KBATTACK(true);
+					SHADATTACK(true);
 				
-				case 2808:
-					//Change to glitch background
-					
-					FlxG.camera.shake(0.0075,0.675);
+				
 					
 
 				case 2816: //404 section
@@ -7765,90 +9327,90 @@ class PlayState extends MusicBeatState
 				case 3328: //Final drop
 				
 				case 3360 | 3376 | 3396 | 3408 | 3424 | 3440 | 3504 | 3552 | 3576 | 3616 | 3636 | 3648 | 3664 | 3680 | 3696 | 3776 | 3808 | 3888 | 3824 | 3872 | 3924 | 3936 | 3952 | 3984:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 3364 | 3380 | 3400 | 3412 | 3428 | 3444 | 3508 | 3556 | 3580 | 3620 | 3640 | 3652 | 3668 | 3684 | 3700 | 3780 | 3812 | 3892 | 3828 | 3876 | 3928 | 3940 | 3956 | 3988:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 3368 | 3384 | 3404 | 3416 | 3432 | 3448 | 3512 | 3560 | 3584 | 3624 | 3644 | 3656 | 3672 | 3688 | 3704 | 3784 | 3816 | 3896 | 3832 | 3880 | 3932 | 3944 | 3960 | 3992:
-					KBATTACK(true);
+					SHADATTACK(true);
 
 				case 4020 | 4032 | 4064 | 4080 | 4096 | 4108 | 4128 | 4160 | 4176 | 4192 | 4224 | 4256 | 4268 | 4288 | 4324 | 4336 | 4368 | 4400 | 4432 | 4496 | 4528 | 4560 | 4592 | 4656:
-					KBATTACK_ALERT();
-					KBATTACK();
+					SHADATTACK_ALERT();
+					SHADATTACK();
 				case 4024 | 4036 | 4068 | 4084 | 4100 | 4112 | 4132 | 4164 | 4180 | 4196 | 4228 | 4260 | 4272 | 4292 | 4328 | 4340 | 4372 | 4404 | 4436 | 4500 | 4532 | 4564 | 4596 | 4660:
-					KBATTACK_ALERT();
+					SHADATTACK_ALERT();
 				case 4028 | 4040 | 4072 | 4088 | 4104 | 4116 | 4136 | 4168 | 4184 | 4200 | 4232 | 4264 | 4276 | 4296 | 4332 | 4344 | 4376 | 4408 | 4440 | 4504 | 4536 | 4568 | 4600 | 4664://<----LMAO this is the last sawblade placed on the penultimate beat of the level. Funny, right? 
-					KBATTACK(true);
+					SHADATTACK(true);
 								
 				
 						
 						/*case 112:
 							
-							add(kb_attack_alert);
-							KBATTACK_ALERT();
-							KBATTACK();
+							add(shad_attack_alert);
+							SHADATTACK_ALERT();
+							SHADATTACK();
 						case 116:
-							//KBATTACK_ALERTDOUBLE();
-							KBATTACK_ALERT();
+							//SHADATTACK_ALERTDOUBLE();
+							SHADATTACK_ALERT();
 						case 120:
-							//KBATTACK(true, "old/attack_alt01");
-							KBATTACK(true);
+							//SHADATTACK(true, "old/attack_alt01");
+							SHADATTACK(true);
 					
 						//case 123:
-							//KBATTACK();
+							//SHADATTACK();
 						//case 124:
 							//FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
-							//KBATTACK(true, "old/attack_alt02");
+							//SHADATTACK(true, "old/attack_alt02");
 					
 		
 						case 1776 | 1904 | 2032 | 2576 | 2596 | 2608 | 2624 | 2640 | 2660 | 2672 | 2704 | 2736 | 3072 | 3084 | 3104 | 3116 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
-							KBATTACK_ALERT();
-							KBATTACK();
+							SHADATTACK_ALERT();
+							SHADATTACK();
 						case 1780 | 1908 | 2036 | 2580 | 2600 | 2612 | 2628 | 2644 | 2664 | 2676 | 2708 | 2740 | 3076 | 3088 | 3108 | 3120 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
-							KBATTACK_ALERT();
+							SHADATTACK_ALERT();
 						case 1784 | 1912 | 2040 | 2584 | 2604 | 2616 | 2632 | 2648 | 2668 | 2680 | 2712 | 2744 | 3080 | 3092 | 3112 | 3124 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
-							KBATTACK(true);
+							SHADATTACK(true);
 		
 						//Sawblades before bluescreen thing
 						//These were seperated for double sawblade experimentation if you're wondering.
 						//My god this organisation is so bad. Too bad!
 						case 2304 | 2320 | 2340 | 2368 | 2384 | 2404:
-							KBATTACK_ALERT();
-							KBATTACK();
+							SHADATTACK_ALERT();
+							SHADATTACK();
 						case 2308 | 2324 | 2344 | 2372 | 2388 | 2408:
-							KBATTACK_ALERT();
+							SHADATTACK_ALERT();
 						case 2312 | 2328 | 2348 | 2376 | 2392 | 2412:
-							KBATTACK(true);
+							SHADATTACK(true);
 						case 2352 | 2416:
-							KBATTACK_ALERT();
-							KBATTACK();
+							SHADATTACK_ALERT();
+							SHADATTACK();
 						case 2356 | 2420:
-							//KBATTACK_ALERTDOUBLE();
-							KBATTACK_ALERT();
+							//SHADATTACK_ALERTDOUBLE();
+							SHADATTACK_ALERT();
 						case 2360 | 2424:
-							KBATTACK(true);
+							SHADATTACK(true);
 						case 2363 | 2427:
-							//KBATTACK();
+							//SHADATTACK();
 						case 2364 | 2428:
-							//KBATTACK(true, "old/attack_alt02");
+							//SHADATTACK(true, "old/attack_alt02");
 		
 						case 2560:
-							KBATTACK_ALERT();
-							KBATTACK();
+							SHADATTACK_ALERT();
+							SHADATTACK();
 
 						case 2564:
-							KBATTACK_ALERT();
+							SHADATTACK_ALERT();
 						case 2568:
-							KBATTACK(true);
+							SHADATTACK(true);
 		
 		
 						case 3376 | 3408 | 3424 | 3440 | 3576 | 3636 | 3648 | 3680 | 3696 | 3888 | 3936 | 3952 | 4096 | 4108 | 4128 | 4140 | 4160 | 4176 | 4192 | 4204:
-							KBATTACK_ALERT();
-							KBATTACK();
+							SHADATTACK_ALERT();
+							SHADATTACK();
 						case 3380 | 3412 | 3428 | 3444 | 3580 | 3640 | 3652 | 3684 | 3700 | 3892 | 3940 | 3956 | 4100 | 4112 | 4132 | 4144 | 4164 | 4180 | 4196 | 4208:
-							KBATTACK_ALERT();
+							SHADATTACK_ALERT();
 						case 3384 | 3416 | 3432 | 3448 | 3584 | 3644 | 3656 | 3688 | 3704 | 3896 | 3944 | 3960 | 4104 | 4116 | 4136 | 4148 | 4168 | 4184 | 4200 | 4212:
-							KBATTACK(true);*/
+							SHADATTACK(true);*/
 					}
 				}
 				//????

@@ -132,7 +132,7 @@ class MP4Handler
 		FlxG.camera.fade(FlxColor.BLACK, 0, false);
 
 
-		trace("Big, Big Chungus, Big Chungus!");
+		trace("baguetita uwu");
 
 		new FlxTimer().start(0.3, function (tmr:FlxTimer)
 		{

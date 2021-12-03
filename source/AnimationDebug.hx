@@ -163,6 +163,12 @@ class AnimationDebug extends FlxState
 			genBoyOffsets(false);
 		}
 
+		if (FlxG.keys.justPressed.ESCAPE)
+			{
+				LoadingState.loadAndSwitchState(new PlayState(), true);
+			}
+			
+
 		var upP = FlxG.keys.anyJustPressed([UP]);
 		var rightP = FlxG.keys.anyJustPressed([RIGHT]);
 		var downP = FlxG.keys.anyJustPressed([DOWN]);

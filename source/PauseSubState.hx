@@ -22,7 +22,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Toggle Practice Mode', 'Botplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -201,6 +201,40 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				case "Resume":
 					close();
+
+				//test aun no lo compruebo
+				// mrz del futuro hazlo tu xd
+				case 'Toggle Practice Mode':
+					FlxG.save.data.die = !FlxG.save.data.die;
+
+					//xd?
+
+					/*
+					display = updateDisplay();
+					return true;
+
+					talvez pon eso si es que no funciona bien
+					*/
+				case 'Botplay':
+					
+					PlayStateChangeables.botPlay = !PlayStateChangeables.botPlay;
+				
+					
+					//PlayState.botPlayState.visible = FlxG.save.data.botplay;
+					
+
+					
+							PlayState.botPlayState.visible = true;
+					
+
+					
+			
+					//aun no lo comprumburefsabo
+					//mrz del futuro lo compruebas tu oK
+					//tambien lo del titlestate
+
+					//tambien lo de shadoune chikito el fondo uwu
+
 				case "Restart Song":
 					if (PlayState.instance.useVideo)
 					{

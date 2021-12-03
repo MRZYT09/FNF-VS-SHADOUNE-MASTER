@@ -4,12 +4,70 @@ import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
+import lime.utils.Assets;
+import flixel.FlxSprite;
+import sys.FileSystem;
+#if MODS_ALLOWED
+import sys.io.File;
+import flixel.graphics.FlxGraphic;
+import openfl.display.BitmapData;
+#end
+
+import flash.media.Sound;
+
+using StringTools;
 
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
+	inline public static var VIDEO_EXT = "mp4";
 
+	#if MODS_ALLOWED
+	#if (haxe >= "4.0.0")
+	public static var ignoreModFolders:Map<String, Bool> = new Map();
+	public static var customImagesLoaded:Map<String, Bool> = new Map();
+	public static var customSoundsLoaded:Map<String, Sound> = new Map();
+	#else
+	public static var ignoreModFolders:Map<String, Bool> = new Map<String, Bool>();
+	public static var customImagesLoaded:Map<String, Bool> = new Map<String, Bool>();
+	public static var customSoundsLoaded:Map<String, Sound> = new Map<String, Sound>();
+	#end
+	#end
+
+	public static function destroyLoadedImages(ignoreCheck:Bool = false) {
+		#if MODS_ALLOWED
+		if(!ignoreCheck && ClientPrefs.imagesPersist) return; //If there's 20+ images loaded, do a cleanup just for preventing a crash
+
+		for (key in customImagesLoaded.keys()) {
+			var graphic:FlxGraphic = FlxG.bitmap.get(key);
+			if(graphic != null) {
+				graphic.bitmap.dispose();
+				graphic.destroy();
+				FlxG.bitmap.removeByKey(key);
+			}
+		}
+		Paths.customImagesLoaded.clear();
+		#end
+	}
+
+	static public var currentModDirectory:String = null;
 	static var currentLevel:String;
+	static public function getModFolders()
+		{
+			#if MODS_ALLOWED
+			ignoreModFolders.set('characters', true);
+			ignoreModFolders.set('custom_events', true);
+			ignoreModFolders.set('custom_notetypes', true);
+			ignoreModFolders.set('data', true);
+			ignoreModFolders.set('songs', true);
+			ignoreModFolders.set('music', true);
+			ignoreModFolders.set('sounds', true);
+			ignoreModFolders.set('videos', true);
+			ignoreModFolders.set('images', true);
+			ignoreModFolders.set('stages', true);
+			ignoreModFolders.set('weeks', true);
+			#end
+		}
 
 	static public function setCurrentLevel(name:String)
 	{
@@ -138,6 +196,20 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 
+	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+		{
+			#if MODS_ALLOWED
+			if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+				return true;
+			}
+			#end
+			
+			if(OpenFlAssets.exists(Paths.getPath('images/$key.png', IMAGE, library))) {
+				return true;
+			}
+			return false;
+		}
+
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
@@ -147,4 +219,5 @@ class Paths
 	{
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 	}
+	
 }

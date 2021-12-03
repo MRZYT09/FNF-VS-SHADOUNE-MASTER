@@ -219,16 +219,16 @@ class StoryMenuState extends MusicBeatState
 
 				if (gamepad != null)
 				{
-					if (gamepad.justPressed.DPAD_UP)
+					if (gamepad.justPressed.DPAD_UP || FlxG.mouse.wheel == 1)
 					{
 						changeWeek(-1);
 					}
-					if (gamepad.justPressed.DPAD_DOWN)
+					if (gamepad.justPressed.DPAD_DOWN || FlxG.mouse.wheel == -1)
 					{
 						changeWeek(1);
 					}
 
-					if (gamepad.pressed.DPAD_RIGHT)
+					if (gamepad.pressed.DPAD_RIGHT || FlxG.mouse.pressedRight)
 						rightArrow.animation.play('press')
 					else
 						rightArrow.animation.play('idle');
@@ -237,7 +237,7 @@ class StoryMenuState extends MusicBeatState
 					else
 						leftArrow.animation.play('idle');
 
-					if (gamepad.justPressed.DPAD_RIGHT)
+					if (gamepad.justPressed.DPAD_RIGHT || FlxG.mouse.pressedRight)
 					{
 						changeDifficulty(1);
 					}
@@ -257,7 +257,7 @@ class StoryMenuState extends MusicBeatState
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.RIGHT || FlxG.mouse.pressedRight)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
@@ -267,7 +267,7 @@ class StoryMenuState extends MusicBeatState
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.RIGHT_P || FlxG.mouse.pressedRight)
 					changeDifficulty(1);
 				if (controls.LEFT_P)
 					changeDifficulty(-1);
@@ -340,13 +340,14 @@ class StoryMenuState extends MusicBeatState
 			PlayState.SONG = Song.loadFromJson(poop, PlayState.storyPlaylist[0]);
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
-			new FlxTimer().start(1, function(tmr:FlxTimer)
+			destroyFreeplayVocals();
+		/*	new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 			});
-
+*/
 			//////////////////////////////// jijijija
-				/*var video:MP4Handler = new MP4Handler();
+				var video:MP4Handler = new MP4Handler();
 
 			if (curWeek == 1 && !isCutscene) // pog
 			{
@@ -358,12 +359,12 @@ class StoryMenuState extends MusicBeatState
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					if (isCutscene)
-						video.onVLCComplete();
+						
 
 					LoadingState.loadAndSwitchState(new PlayState(), true);
 				});
 			}
-			*/
+			
 		}
 	}
 

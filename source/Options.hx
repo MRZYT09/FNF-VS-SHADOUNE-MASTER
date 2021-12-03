@@ -162,6 +162,97 @@ class CpuStrums extends Option
 			}
 	}
 
+
+	// shake option for epilepcia
+	class Shake extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.shake = !FlxG.save.data.shake;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.shake ? "shake on" : "shake off";
+			}
+	}
+
+	// Anti-Crash i think
+	class Crash extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.crashReplay = !FlxG.save.data.crashReplay;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.crashReplay ? "crashReplay on" : "crashReplay off";
+			}
+	}
+
+
+
+		// can die
+		class Die extends Option
+		{
+			public function new(desc:String)
+			{
+				super();
+				description = desc;
+			}
+	
+			public override function press():Bool
+			{
+				FlxG.save.data.die = !FlxG.save.data.die;
+				display = updateDisplay();
+				return true;
+			}
+	
+			private override function updateDisplay():String
+				{
+					return FlxG.save.data.die ? "can die on" : "can die off";
+				}
+		}
+
+	// middlescroll
+	class Middlescroll extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.middlescroll ? "middlescroll on" : "middlescroll off";
+			}
+	}
+
 		// health mecanic
 		class Health extends Option
 		{
@@ -1032,8 +1123,12 @@ class ResetSettings extends Option
 		//noobs
 		FlxG.save.data.bestinputfornoobs = null;
 		FlxG.save.data.dodge = null;
+		FlxG.save.data.shake = null;
+		FlxG.save.data.crashReplay = null;
 		FlxG.save.data.health = null;
 		FlxG.save.data.espacedodge = null;
+		FlxG.save.data.middlescroll = null;
+		FlxG.save.data.die = null;
 		// my options
 		FlxG.save.data.distractions = null;
 		FlxG.save.data.stepMania = null;

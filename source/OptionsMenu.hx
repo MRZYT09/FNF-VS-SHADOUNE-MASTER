@@ -28,14 +28,13 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("mecanics", [
 			new Dodge("dodge mecanic"),
 			new Health("health mecanic"),
-			new Espacedodge("Key of dodge (pls use click Right)")
-		]),
-		new OptionCategory("if the mod is so hard", [
-			new Bestinputfornoobs("new input spam")
-		]),
-		new OptionCategory("Mod Specfic", [
 			new OldTimingsOption("Change between KE 1.5.4 and KE 1.4.2 Hit timings."),
-			new NoteSplashOption("Toggle if a Splash will appear when hitting sicks.")
+			new NoteSplashOption("Toggle if a Splash will appear when hitting sicks."),
+			new Middlescroll("Middlescroll lmao(experimental)"),
+			new Crash("if active this the game crash when the song end"),
+			new Die("can die or no "),
+			new Shake("shake :v "),
+			new Bestinputfornoobs("new input spam")
 		]),
 		new OptionCategory("Gameplay", [
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),

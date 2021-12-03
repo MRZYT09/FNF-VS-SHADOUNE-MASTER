@@ -27,6 +27,7 @@ import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
 
+
 #if windows
 import Discord.DiscordClient;
 #end
@@ -57,6 +58,8 @@ class TitleState extends MusicBeatState
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end*/
 		
+	
+
 		#if sys
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
 			sys.FileSystem.createDirectory(Sys.getCwd() + "/assets/replays");
@@ -138,6 +141,14 @@ class TitleState extends MusicBeatState
 	{
 		if (!initialized)
 		{
+			var dirt:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('dirt'));
+			dirt.setGraphicSize(Std.int(dirt.width * 3));
+			dirt.updateHitbox();
+			dirt.antialiasing = FlxG.save.data.antialiasing;
+			dirt.scrollFactor.set(1.3, 1.3);
+			
+			add(dirt);
+
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
@@ -166,14 +177,24 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
+		
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		// bg.antialiasing = true;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
 
+		var dirt:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('dirt'));
+		dirt.setGraphicSize(Std.int(dirt.width * 3));
+		dirt.updateHitbox();
+		dirt.antialiasing = FlxG.save.data.antialiasing;
+		dirt.scrollFactor.set(1.3, 1.3);
+		
+		add(dirt);
+
 		if(Main.watermarks) {
-			logoBl = new FlxSprite(-50, -50);
+			logoBl = new FlxSprite(175, 0);
+		
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 			logoBl.antialiasing = true;
 			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
@@ -181,8 +202,20 @@ class TitleState extends MusicBeatState
 			logoBl.updateHitbox();
 			// logoBl.screenCenter();
 			// logoBl.color = FlxColor.BLACK;
+
+			//mrz mañana editas eso para que no sea vea shadoune y solo se vea el logo :VVV c papu
+
+			/*
+			x - izquierda + derecha
+			y - arriba + abajo
+			*/
+			/* character.hx:
+			x - derecha + izquierda
+			y - abajo + arriba
+			*/
 		} else {
-			logoBl = new FlxSprite(-50, -50);
+			logoBl = new FlxSprite(175, 0);
+			
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 			logoBl.antialiasing = true;
 			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
@@ -198,6 +231,7 @@ class TitleState extends MusicBeatState
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
 		gfDance.x += 175;
+		gfDance.visible = false;
 		add(gfDance);
 		add(logoBl);
 
@@ -224,7 +258,16 @@ class TitleState extends MusicBeatState
 		textGroup = new FlxGroup();
 
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var dirt:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('dirt'));
+				dirt.setGraphicSize(Std.int(dirt.width * 3));
+				dirt.updateHitbox();
+				dirt.antialiasing = FlxG.save.data.antialiasing;
+				dirt.scrollFactor.set(1.3, 1.3);
+				
+				
 		credGroup.add(blackScreen);
+
+		credGroup.add(dirt);
 
 		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
 		credTextShit.screenCenter();
@@ -400,10 +443,20 @@ class TitleState extends MusicBeatState
 
 		FlxG.log.add(curBeat);
 
+		
+
 		switch (curBeat)
 		{
+			case 0:
+				var dirt:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('dirt'));
+				dirt.setGraphicSize(Std.int(dirt.width * 3));
+				dirt.updateHitbox();
+				dirt.antialiasing = FlxG.save.data.antialiasing;
+				dirt.scrollFactor.set(1.3, 1.3);
+				
+				add(dirt);
 			case 1:
-				createCoolText(['better than','funkin madness', 'fight me yesnt','and DevJxlian']);
+				createCoolText(['inspired in various minecraft mods']);
 			case 2:
 				deleteCoolText();
 			case 3:	
@@ -412,7 +465,7 @@ class TitleState extends MusicBeatState
 				deleteCoolText();
 				
 			case 5:
-				createCoolText(['M.R.Z.', 'Kronos XL', 'JamieFailure', 'Ristar']);
+				createCoolText(['M.R.Z.', 'Kronos XL', 'Lightzmc', 'Ristar','Pizza-zama']);
 			// credTextShit.visible = true;
 			case 6:
 				addMoreText('present');
@@ -444,12 +497,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text += '\nlmao';
 			case 14:
 				deleteCoolText();
+				ngSpr.visible = false;
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 15:
 				addMoreText('Friday');
-				ngSpr.visible = false;
+				
 			// credTextShit.visible = true;
 			case 17:
 				addMoreText('Night');

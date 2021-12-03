@@ -103,31 +103,40 @@ class Replay
 		
 		var time = Date.now().getTime();
 
-		#if sys
-		File.saveContent("assets/replays/replay-" + PlayState.SONG.song + "-time" + time + ".kadeReplay", data);
-
-		path = "replay-" + PlayState.SONG.song + "-time" + time + ".kadeReplay"; // for score screen shit
-
-		LoadFromJSON();
-
-		replay.ana = ana;
-		#end
+		if (FlxG.save.data.crashReplay)
+			{
+				#if sys
+				File.saveContent("assets/replays/replay-" + PlayState.SONG.song + "-time" + time + ".kadeReplay", data);
+		
+				path = "replay-" + PlayState.SONG.song + "-time" + time + ".kadeReplay"; // for score screen shit
+		
+				LoadFromJSON();
+		
+				replay.ana = ana;
+				#end
+			}
+	
 	}
 
 	public function LoadFromJSON()
 	{
-		#if sys
-		trace('loading ' + Sys.getCwd() + 'assets/replays/' + path + ' replay...');
-		try
-		{
-			var repl:ReplayJSON = cast Json.parse(File.getContent(Sys.getCwd() + "assets/replays/" + path));
-			replay = repl;
-		}
-		catch(e)
-		{
-			trace('failed!\n' + e.message);
-		}
-		#end
+		if (FlxG.save.data.crashReplay)
+			{
+				#if sys
+				trace('loading ' + Sys.getCwd() + 'assets/replays/' + path + ' replay...');
+				try
+				{
+					var repl:ReplayJSON = cast Json.parse(File.getContent(Sys.getCwd() + "assets/replays/" + path));
+					replay = repl;
+				}
+				catch(e)
+				{
+					trace('failed!\n' + e.message);
+				}
+				#end
+			}
+
+		
 	}
 
 }
