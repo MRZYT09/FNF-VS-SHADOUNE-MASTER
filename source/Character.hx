@@ -321,11 +321,21 @@ class Character extends FlxSprite
 
 				addOffset('scared', -4);
 				addOffset("dodge", -38, -7);
-				addOffset("SHIELD", 30, 1);
+				addOffset("SHIELD", 20, 7);
 
 				playAnim('idle');
 
 				flipX = true;
+
+					/*
+						x - izquierda + derecha
+						y - arriba + abajo
+						*/
+						/* character.hx:
+						x - derecha + izquierda
+						y - abajo + arriba
+						*/
+						//xddddd
 
 			case 'bf-christmas':
 				var tex = Paths.getSparrowAtlas('characters/bfChristmas');
@@ -669,7 +679,7 @@ class Character extends FlxSprite
 
 				addOffset('scared', -4);
 				addOffset("dodge", -38, -7);
-				addOffset("SHIELD", 30, 1);
+				addOffset("SHIELD", 20, 7);
 
 				playAnim('idle');
 

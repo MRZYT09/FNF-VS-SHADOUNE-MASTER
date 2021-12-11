@@ -25,15 +25,18 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCategory> = [
-		new OptionCategory("mecanics", [
-			new Dodge("dodge mecanic"),
+		new OptionCategory("Vs Shadoune", [
+			new Dodge("shield mecanic"),
 			new Health("health mecanic"),
 			new OldTimingsOption("Change between KE 1.5.4 and KE 1.4.2 Hit timings."),
 			new NoteSplashOption("Toggle if a Splash will appear when hitting sicks."),
 			new Middlescroll("Middlescroll lmao(experimental)"),
-			new Crash("if active this the game crash when the song end"),
 			new Die("can die or no "),
+			new Modchart("move of the arrows "),
 			new Shake("shake :v "),
+			new Preload("preloading"),
+			new SpecialArrows("effects of arrows"),
+			new Dialogues("dialogues"),
 			new Bestinputfornoobs("new input spam")
 		]),
 		new OptionCategory("Gameplay", [

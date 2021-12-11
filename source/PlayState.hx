@@ -1,5 +1,6 @@
 package;
 
+import lime.app.Application;
 import openfl.ui.KeyLocation;
 import openfl.events.Event;
 import haxe.EnumTools;
@@ -480,7 +481,10 @@ class PlayState extends MusicBeatState
 		trace('INFORMATION ABOUT WHAT U PLAYIN WIT:\nFRAMES: ' + PlayStateChangeables.safeFrames + '\nZONE: ' + Conductor.safeZoneOffset + '\nTS: ' + Conductor.timeScale + '\nBotPlay : ' + PlayStateChangeables.botPlay);
 	
 		//dialogue shit
-		switch (songLowercase)
+
+		if (!FlxG.save.data.dialogues)
+			{
+				switch (songLowercase)
 		{
 			case 'tutorial':
 				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
@@ -505,17 +509,46 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 			case 'thorns':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
-			case 'permadeath':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('permadeath/dialog'));
-			case 'you-are-mine':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('you-are-mine/dialog'));
+			
+			
+				
+					case 'permadeath':
+						dialogue = CoolUtil.coolTextFile(Paths.txt('permadeath/dialog'));
+
+					case 'you-are-mine':
+						dialogue = CoolUtil.coolTextFile(Paths.txt('you-are-mine/dialog'));
+				
+					case 'decition':
+						dialogue = CoolUtil.coolTextFile(Paths.txt('decition/dialog'));
+				
+					case 'shadoune':
+						dialogue = CoolUtil.coolTextFile(Paths.txt('shadoune/dialog'));
+				
 		
-			case 'decition':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('decition/dialog'));
 		
-			case 'shadoune':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('shadoune/dialog'));
 		}
+			}
+		
+
+				
+		if (FlxG.save.data.dialogues)
+			{	
+				switch (songLowercase)
+				{
+				case 'permadeath':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('permadeath/esp'));
+					
+				case 'you-are-mine':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('you-are-mine/esp'));
+			
+				case 'decition':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('decition/esp'));
+			
+				case 'shadoune':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('shadoune/esp'));
+				}
+				
+			}	
 
 		//defaults if no stage was found in chart
 		var stageCheck:String = 'stage';
@@ -949,7 +982,7 @@ class PlayState extends MusicBeatState
 				   uno.active = true;
 				   uno.screenCenter(XY);
 	  
-				if (SONG.player1 == 'uwu')
+				/*if (SONG.player1 == 'uwu')
 					{
 						defaultCamZoom = 0.90;
 						curStage = 'permadeath';
@@ -996,7 +1029,7 @@ class PlayState extends MusicBeatState
 						uno.scrollFactor.set(1.3, 1.3);
 						uno.active = true;
 						uno.screenCenter(XY);
-					}
+					}*/
 			 } 
 			  case 'you-are-mine':
 				 {
@@ -1055,7 +1088,7 @@ class PlayState extends MusicBeatState
 					uno.active = true;
 					uno.screenCenter(XY);
 	   
-				  if (SONG.player1 == 'uwu')
+				 /* if (SONG.player1 == 'uwu')
 					{
 						defaultCamZoom = 0.90;
 						curStage = 'you-are-mine';
@@ -1101,7 +1134,7 @@ class PlayState extends MusicBeatState
 						uno.scrollFactor.set(1.3, 1.3);
 						uno.active = true;
 						uno.screenCenter(XY);
-					}
+					}*/
 			  } 
 			  case 'Termination':
 				{
@@ -1160,7 +1193,7 @@ class PlayState extends MusicBeatState
 					   uno.active = true;
 					   uno.screenCenter(XY);
 	  
-				 if (SONG.player1 == 'uwu')
+				/* if (SONG.player1 == 'uwu')
 				   {
 					   defaultCamZoom = 0.90;
 					   curStage = 'Termination';
@@ -1206,7 +1239,7 @@ class PlayState extends MusicBeatState
 					   uno.scrollFactor.set(1.3, 1.3);
 					   uno.active = true;
 					   uno.screenCenter(XY);
-				   }
+				   }*/
 			 } 
 			  case 'shadoune':
 				 {
@@ -1268,7 +1301,7 @@ class PlayState extends MusicBeatState
 					
 					
 		
-				   if (SONG.player1 == 'uwu')
+				   /*if (SONG.player1 == 'uwu')
 					   {
 						   defaultCamZoom = 0.90;
 						   curStage = 'shadoune';
@@ -1314,7 +1347,7 @@ class PlayState extends MusicBeatState
 						   uno.scrollFactor.set(1.3, 1.3);
 						   uno.active = true;
 						   uno.screenCenter(XY);
-					   }
+					   }*/
 			 } 
 			  case 'decition':
 			 {
@@ -1377,7 +1410,7 @@ class PlayState extends MusicBeatState
 				 
 				 
 	 
-				if (SONG.player1 == 'uwu')
+				/*if (SONG.player1 == 'uwu')
 					{
 						defaultCamZoom = 0.90;
 						curStage = 'decition';
@@ -1424,7 +1457,7 @@ class PlayState extends MusicBeatState
 						uno.scrollFactor.set(1.3, 1.3);
 						uno.active = true;
 						uno.screenCenter(XY);
-					}
+					}*/
 				 
 			  } 
 			  case 'shadlocked':
@@ -1463,7 +1496,7 @@ class PlayState extends MusicBeatState
 				 uno.active = true;
 				 uno.screenCenter(XY);
 
-				 if (SONG.player1 == 'uwu')
+				 /*if (SONG.player1 == 'uwu')
 					{
 						defaultCamZoom = 0.90;
 						curStage = 'shadlocked';
@@ -1510,7 +1543,7 @@ class PlayState extends MusicBeatState
 						uno.scrollFactor.set(1.3, 1.3);
 						uno.active = true;
 						uno.screenCenter(XY);
-					}
+					}*/
 			 }
 			case 'stage':
 				{
@@ -1568,6 +1601,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		}
+		Application.current.window.title = Main.appTitle;
 		//defaults if no gf was found in chart
 		var gfCheck:String = 'gf';
 		
@@ -1615,6 +1649,10 @@ class PlayState extends MusicBeatState
 
 		var dadcharacter:String = SONG.player2;
 
+
+		#if desktop
+		Application.current.window.title = Main.appTitle + ' - ' + StringTools.replace(SONG.song.toUpperCase(), " ", "-") + ' [' + storyDifficultyText + ']';
+		#end
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 		if (PlayStateChangeables.flip)
@@ -2113,7 +2151,9 @@ class PlayState extends MusicBeatState
 				case 'rainbow':
 					credits = 'Original Song made by Kitsune²';
 				case 'Termination':
-					credits = 'Original Song made by Hazardous24';
+					credits = 'Original Song of Vs QT MOD';
+				case 'the-end':
+					credits = 'Original Song of Vs Aflac Remastered';
 				default:
 					credits = '';
 			}
@@ -3917,7 +3957,7 @@ class PlayState extends MusicBeatState
 
 			if (PlayStateChangeables.Optimize || FlxG.save.data.middlescroll)
 				{	
-					babyArrow.x -= 270;
+					babyArrow.x -= 280;
 				}
 			
 
@@ -4146,6 +4186,18 @@ class PlayState extends MusicBeatState
 		}
 
 		#end
+
+		if (!FlxG.save.data.modchart)
+			{
+				#if windows
+				if (luaModchart != null)
+				{
+					luaModchart.die();
+					luaModchart = null;
+				}
+				#end
+			}
+
 		camNotes.zoom = camHUD.zoom;
 		camNotes.x = camHUD.x;
 		camNotes.y = camHUD.y;
@@ -4201,6 +4253,8 @@ class PlayState extends MusicBeatState
 		var lengthInPx = scoreTxt.textField.length * scoreTxt.frameHeight; // bad way but does more or less a better job
 
 		scoreTxt.x = (originalX - (lengthInPx / 2)) + 1250;
+
+	
 
 		if (controls.PAUSE && startedCountdown && canPause && !cannotDie)
 
@@ -4597,6 +4651,12 @@ class PlayState extends MusicBeatState
 		
 						if (dad.curCharacter == 'mom')
 							vocals.volume = 1;
+
+						if (SONG.song.toLowerCase() == 'Termination')
+							{
+								vocals.volume = 1.5;
+							}
+						
 					}
 		
 					if (camFollow.x != boyfriend.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
@@ -4645,8 +4705,16 @@ class PlayState extends MusicBeatState
 									camFollow.x -= 450;
 									camFollow.y -= 75;
 								case 'uwu':
-									camFollow.x -= 200;
+									camFollow.x -= 175;
 									camFollow.y -= 75;
+								/*
+									x - izquierda + derecha
+									y - arriba + abajo
+									
+									character.hx:
+									x - derecha + izquierda
+									y - abajo + arriba
+								*/
 								case 'shadlocked':
 									camFollow.x -= 525;
 									camFollow.y -= 280;
@@ -4728,6 +4796,12 @@ class PlayState extends MusicBeatState
 						if (luaModchart != null)
 							luaModchart.executeState('playerOneTurn', []);
 						#end
+
+						if (SONG.player1 == 'uwu')
+							{
+								camFollow.x -= 175;
+								camFollow.y -= 75;
+							}
 		
 						switch (curStage)
 						{
@@ -5457,62 +5531,90 @@ class PlayState extends MusicBeatState
 
 								}
 
-								case 1: //fire notes - makes missing them not count as one
-								{
-									daNote.kill();
-									notes.remove(daNote, true);
-									daNote.destroy();
-
-								}
-								case 2: //halo notes, same as fire
-								{
-									daNote.kill();
-									notes.remove(daNote, true);
-									daNote.destroy();
-								}
-
-								case 3:  //warning notes, removes half health and then removed so it doesn't repeatedly deal damage
-								{
-									
-									health = 0;
-
-									if (FlxG.save.data.die)
-										{
-											dad.playAnim('SWORD', true);
-											boyfriend.playAnim('hit', true);
-											FlxG.sound.play(Paths.sound('sonidomuerte'));
-											vocals.volume = 0;
-										}
-									
-									
-									
-									
-									misses++;
-									updateAccuracy();
 								
-									daNote.active = true;
-									daNote.visible = true;
-								}
-								case 4: //angel notes
-								{
-									daNote.kill();
-									notes.remove(daNote, true);
-									daNote.destroy();
-								}
-								case 6:  //bob notes
-								{
-									daNote.kill();
-									notes.remove(daNote, true);
-									daNote.destroy();
-								}
-								case 7: //gltich notes
-								{
-									HealthDrain();
-									daNote.kill();
-									notes.remove(daNote, true);
-									daNote.destroy();
-								}
+									
+										case 1: //fire notes - makes missing them not count as one
+										{
+											if (FlxG.save.data.arrows)
+												{
+													daNote.kill();
+													notes.remove(daNote, true);
+													daNote.destroy();
 
+												}
+											
+										}
+										case 2: //halo notes, same as fire
+										{
+											if (FlxG.save.data.arrows)
+												{
+													daNote.kill();
+													notes.remove(daNote, true);
+													daNote.destroy();
+												}
+											
+										}
+
+										case 3:  //warning notes, removes half health and then removed so it doesn't repeatedly deal damage
+										{
+											if (FlxG.save.data.arrows)
+												{
+													health = 0;
+
+													if (FlxG.save.data.die)
+														{
+															dad.playAnim('SWORD', true);
+															boyfriend.playAnim('hit', true);
+															FlxG.sound.play(Paths.sound('sonidomuerte'));
+															vocals.volume = 0;
+														}
+													
+													
+													
+													
+													misses++;
+													updateAccuracy();
+												
+													daNote.active = true;
+													daNote.visible = true;
+												}
+
+											
+										
+										}
+										case 4: //angel notes
+										{
+											if (FlxG.save.data.arrows)
+												{
+													daNote.kill();
+													notes.remove(daNote, true);
+													daNote.destroy();
+												}
+										}
+										case 6:  //bob notes
+										{
+											if (FlxG.save.data.arrows)
+												{
+													daNote.kill();
+													notes.remove(daNote, true);
+													daNote.destroy();
+												}
+										
+										}
+										case 7: //gltich notes
+										{
+											if (FlxG.save.data.arrows)
+												{
+													HealthDrain();
+													daNote.kill();
+													notes.remove(daNote, true);
+													daNote.destroy();
+												}
+											
+										}
+
+									
+								
 
 
 
@@ -5753,8 +5855,8 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-	/*	FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
-		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);*/
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
 		if (useVideo)
 			{
 				GlobalVideo.get().stop();
@@ -5766,8 +5868,8 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 			campaignMisses = misses;
 
-		/*if (!loadRep)
-			rep.SaveReplay(saveNotes, saveJudge, replayAna);*/
+		if (!loadRep)
+			rep.SaveReplay(saveNotes, saveJudge, replayAna);
 		else
 		{
 			PlayStateChangeables.botPlay = false;
@@ -5913,17 +6015,6 @@ class PlayState extends MusicBeatState
 
 					
 							video.playMP4(Paths.video('pog'), new PlayState()); 
-							isCutscene = true;
-						
-						}
-
-					else if (curSong.toLowerCase() == 'permadeath')
-						{
-							
-							var video:MP4Handler = new MP4Handler();
-
-					
-							video.playMP4(Paths.video('thanks'), new PlayState()); 
 							isCutscene = true;
 						
 						}
@@ -7745,55 +7836,58 @@ class PlayState extends MusicBeatState
 					if (luaModchart != null)
 						luaModchart.executeState('playerOneSing', [note.noteData, Conductor.songPosition]);
 					#end
-
-					if (note.burning) //fire note
+					if (FlxG.save.data.arrows)
 						{
-							dad.playAnim('SWORD', true);
-							boyfriend.playAnim('hit', true);
-							health = 0;
-							FlxG.sound.play(Paths.sound('sonidomuerte'));
-							
-							
-							vocals.volume = 0;
-							misses++;
-							updateAccuracy();
-						}
-
-					else if (note.death) //halo note
-						{
-							dad.playAnim('SWORD', true);
-							boyfriend.playAnim('hit', true);
-							health = 0;
-							FlxG.sound.play(Paths.sound('sonidomuerte'));
-							
-							
-							vocals.volume = 0;
-							misses++;
-							updateAccuracy();
-
-						}
-					else if (note.angel) //angel note
-						{
-							switch(note.rating)
-							{
-								case "shit": 
+							if (note.burning) //fire note
+								{
+									dad.playAnim('SWORD', true);
+									boyfriend.playAnim('hit', true);
+									health = 0;
+									FlxG.sound.play(Paths.sound('sonidomuerte'));
 									
-									health -= 1;
-								case "bad": 
 									
-									health -= 0.5;
-								case "good": 
-									health += 0.5;
-								case "sick": 
-									health += 1;
-
-							}
+									vocals.volume = 0;
+									misses++;
+									updateAccuracy();
+								}
+		
+							else if (note.death) //halo note
+								{
+									dad.playAnim('SWORD', true);
+									boyfriend.playAnim('hit', true);
+									health = 0;
+									FlxG.sound.play(Paths.sound('sonidomuerte'));
+									
+									
+									vocals.volume = 0;
+									misses++;
+									updateAccuracy();
+		
+								}
+							else if (note.angel) //angel note
+								{
+									switch(note.rating)
+									{
+										case "shit": 
+											
+											health -= 1;
+										case "bad": 
+											
+											health -= 0.5;
+										case "good": 
+											health += 0.5;
+										case "sick": 
+											health += 1;
+		
+									}
+								}
+							else if (note.bob) //bob note
+								{
+									HealthDrain();
+								}
+		
 						}
-					else if (note.bob) //bob note
-						{
-							HealthDrain();
-						}
-
+					
 
 					if(!loadRep && note.mustPress)
 					{
@@ -7914,7 +8008,7 @@ class PlayState extends MusicBeatState
 										
 					add(fire);
 				
-				}, 250);
+				}, 299);
 
 
 		}
@@ -8303,8 +8397,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		
-		if (SONG.song.toLowerCase() == "tutorial" && curStep != stepOfLast && storyDifficulty == 2) //song events
+		// guia modchart de mas flechas
+		/*if (SONG.song.toLowerCase() == "tutorial" && curStep != stepOfLast && storyDifficulty == 2) //song events
 			{
 				switch(curStep) //guide for anyone looking at this, switching mid song needs to be mania + 10
 				{
@@ -8330,46 +8424,13 @@ class PlayState extends MusicBeatState
 						//9 key
 						//switchMania(12);
 				}
-			}
-
-			
+			}*/
 
 			if (FlxG.save.data.dodge)
-				{
-					if (SONG.song.toLowerCase() == 'decition')
-						{
-							switch (curStep)
-								{
-									/* guia curstep
+			{
 
-									case 1 :// el curbeat de la alerta que inicie
-									add(shad_attack_alert);
-									SHADATTACK_ALERT();
-									SHADATTACK();
-									
-									case 5 : // direferencia entre 4 para doble sonido
-									SHADATTACK_ALERT();
-
-									case 9 : // diferencia de 4 para ataque
-									SHADATTACK(true);
-
-									*/
-
-									
-									
-									case 204 :
-										add(shad_attack_alert);
-										SHADATTACK_ALERT();
-
-										case 208 :
-										
-											SHADATTACK(true);	
-									
-									// mrz del futuro resuelve porque a cada rato el bf hace el idle y tambien elos timings de la alerta
-								}
-						
-		
-						}
+				
+			
 
 						if (SONG.song.toLowerCase() == 'permadeath')
 							{
@@ -9225,207 +9286,212 @@ class PlayState extends MusicBeatState
 						
 						//CONVERTED THE CUSTOM INTRO FROM MODCHART INTO HARDCODE OR WHATEVER! NO MORE INVISIBLE NOTES DUE TO NO MODCHART SUPPORT!
 				
-						
-					
-				case 48:
-					add(shad_attack_saw);
-					add(shad_attack_alert);
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 52:
-					SHADATTACK_ALERT();
-				case 56:
-					SHADATTACK(true);
-				case 112:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 116:
-					SHADATTACK_ALERTDOUBLE();
-				case 120:
-					SHADATTACK(true, "old/attack_alt01");
-				
-				case 123:
-					SHADATTACK();
-				case 124:
-				    //FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
-					SHADATTACK(true, "old/attack_alt02");
-				
+											
+										
+									case 48:
+										add(shad_attack_saw);
+										add(shad_attack_alert);
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 52:
+										SHADATTACK_ALERT();
+									case 56:
+										SHADATTACK(true);
+									case 112:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 116:
+										SHADATTACK_ALERTDOUBLE();
+									case 120:
+										SHADATTACK(true, "old/attack_alt01");
+									
+									case 123:
+										SHADATTACK();
+									case 124:
+										//FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
+										SHADATTACK(true, "old/attack_alt02");
+									
 
-				case 272 | 304 | 404 | 416 | 504 | 544 | 560 | 612 | 664 | 696 | 752 | 816 | 868 | 880 | 1088 | 1204 | 1344 | 1400 | 1428 | 1440 | 1472 | 1520 | 1584 | 1648 | 1680 | 1712 | 1744:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 276 | 308 | 408 | 420 | 508 | 548 | 564 | 616 | 668 | 700 | 756 | 820 | 872 | 884 | 1092 | 1208 | 1348 | 1404 | 1432 | 1444 | 1476 | 1524 | 1588 | 1652 | 1684 | 1716 | 1748: 
-					SHADATTACK_ALERT();
-				case 280 | 312 | 412 | 424 | 512 | 552 | 568 | 620 | 672 | 704 | 760 | 824 | 876 | 888 | 1096 | 1212 | 1352 | 1408 | 1436 | 1448 | 1480 | 1528 | 1592 | 1656 | 1688 | 1720 | 1752:
-					SHADATTACK(true);
+									case 272 | 304 | 404 | 416 | 504 | 544 | 560 | 612 | 664 | 696 | 752 | 816 | 868 | 880 | 1088 | 1204 | 1344 | 1400 | 1428 | 1440 | 1472 | 1520 | 1584 | 1648 | 1680 | 1712 | 1744:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 276 | 308 | 408 | 420 | 508 | 548 | 564 | 616 | 668 | 700 | 756 | 820 | 872 | 884 | 1092 | 1208 | 1348 | 1404 | 1432 | 1444 | 1476 | 1524 | 1588 | 1652 | 1684 | 1716 | 1748: 
+										SHADATTACK_ALERT();
+									case 280 | 312 | 412 | 424 | 512 | 552 | 568 | 620 | 672 | 704 | 760 | 824 | 876 | 888 | 1096 | 1212 | 1352 | 1408 | 1436 | 1448 | 1480 | 1528 | 1592 | 1656 | 1688 | 1720 | 1752:
+										SHADATTACK(true);
 
-				case 1776 | 1904 | 2576 | 2596 | 2624 | 2640 | 2660 | 2704 | 2736 | 3072 | 3104 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 1780 | 1908 | 2580 | 2600 | 2628 | 2644 | 2664 | 2708 | 2740 | 3076 | 3108 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
-					SHADATTACK_ALERT();
-				case 1784 | 1912 | 2584 | 2604 | 2632 | 2648 | 2668 | 2712 | 2744 | 3080 | 3112 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
-					SHADATTACK(true);
+									case 1776 | 1904 | 2576 | 2596 | 2624 | 2640 | 2660 | 2704 | 2736 | 3072 | 3104 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 1780 | 1908 | 2580 | 2600 | 2628 | 2644 | 2664 | 2708 | 2740 | 3076 | 3108 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
+										SHADATTACK_ALERT();
+									case 1784 | 1912 | 2584 | 2604 | 2632 | 2648 | 2668 | 2712 | 2744 | 3080 | 3112 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
+										SHADATTACK(true);
 
-				case 1808 | 1840 | 1872 | 1952 | 2000 | 2112 | 2148 | 2176 | 2192 | 2228 | 2240 | 2272 | 2768 | 2788 | 2800 | 2864 | 2916 | 2928 | 3024 | 3264 | 3280 | 3300:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 1812 | 1844 | 1876 | 1956 | 2004 | 2116 | 2152 | 2180 | 2196 | 2232 | 2244 | 2276 | 2772 | 2792 | 2804 | 2868 | 2920 | 2932 | 3028 | 3268 | 3284 | 3304:
-					SHADATTACK_ALERT();
-				case 1816 | 1848 | 1880 | 1960 | 2008 | 2120 | 2156 | 2184 | 2200 | 2236 | 2248 | 2280 | 2776 | 2796 | 2808 | 2872 | 2924 | 2936 | 3032 | 3272 | 3288 | 3308:
-					SHADATTACK(true);
+									case 1808 | 1840 | 1872 | 1952 | 2000 | 2112 | 2148 | 2176 | 2192 | 2228 | 2240 | 2272 | 2768 | 2788 | 2800 | 2864 | 2916 | 2928 | 3024 | 3264 | 3280 | 3300:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 1812 | 1844 | 1876 | 1956 | 2004 | 2116 | 2152 | 2180 | 2196 | 2232 | 2244 | 2276 | 2772 | 2792 | 2804 | 2868 | 2920 | 2932 | 3028 | 3268 | 3284 | 3304:
+										SHADATTACK_ALERT();
+									case 1816 | 1848 | 1880 | 1960 | 2008 | 2120 | 2156 | 2184 | 2200 | 2236 | 2248 | 2280 | 2776 | 2796 | 2808 | 2872 | 2924 | 2936 | 3032 | 3272 | 3288 | 3308:
+										SHADATTACK(true);
 
-                case 624 | 1136 | 2032 | 2608 | 2672 | 3084 | 3116 | 4140 | 4204 | 4464:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 628 | 1140 | 2036 | 2612 | 2676 | 3088 | 3120 | 4144 | 4208 | 4468:
-					SHADATTACK_ALERTDOUBLE();
-				case 632 | 1144 | 2040 | 2616 | 2680 | 3092 | 3124 | 4148 | 4212 | 4472:
-					SHADATTACK(true, "old/attack_alt01");
-				case 635 | 1147 | 2043 | 2619 | 2683 | 3095 | 3127 | 4151 | 4215 | 4475:
-					SHADATTACK();
-				case 636 | 1148 | 2044 | 2620 | 2684 | 3096 | 3128 | 4152 | 4216 | 4476:
-					SHADATTACK(true, "old/attack_alt02");
-				//Sawblades before bluescreen thing
-				//These were seperated for double sawblade experimentation if you're wondering.
-				//My god this organisation is so bad. Too bad!
-				//Yes, this is too bad! -DrkFon376
-				case 2304 | 2320 | 2340 | 2368 | 2384 | 2404 | 2496 | 2528:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 2308 | 2324 | 2344 | 2372 | 2388 | 2408 | 2500 | 2532:
-					SHADATTACK_ALERT();
-				case 2312 | 2328 | 2348 | 2376 | 2392 | 2412 | 2504 | 2536:
-					SHADATTACK(true);
+									case 624 | 1136 | 2032 | 2608 | 2672 | 3084 | 3116 | 4140 | 4204 | 4464:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 628 | 1140 | 2036 | 2612 | 2676 | 3088 | 3120 | 4144 | 4208 | 4468:
+										SHADATTACK_ALERTDOUBLE();
+									case 632 | 1144 | 2040 | 2616 | 2680 | 3092 | 3124 | 4148 | 4212 | 4472:
+										SHADATTACK(true, "old/attack_alt01");
+									case 635 | 1147 | 2043 | 2619 | 2683 | 3095 | 3127 | 4151 | 4215 | 4475:
+										SHADATTACK();
+									case 636 | 1148 | 2044 | 2620 | 2684 | 3096 | 3128 | 4152 | 4216 | 4476:
+										SHADATTACK(true, "old/attack_alt02");
+									//Sawblades before bluescreen thing
+									//These were seperated for double sawblade experimentation if you're wondering.
+									//My god this organisation is so bad. Too bad!
+									//Yes, this is too bad! -DrkFon376
+									case 2304 | 2320 | 2340 | 2368 | 2384 | 2404 | 2496 | 2528:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 2308 | 2324 | 2344 | 2372 | 2388 | 2408 | 2500 | 2532:
+										SHADATTACK_ALERT();
+									case 2312 | 2328 | 2348 | 2376 | 2392 | 2412 | 2504 | 2536:
+										SHADATTACK(true);
 
-				case 2352 | 2416:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 2356 | 2420:
-					SHADATTACK_ALERTDOUBLE();
-				case 2360 | 2424:
-					SHADATTACK(true, "old/attack_alt01");
-				case 2363 | 2427:
-					SHADATTACK();
-				case 2364 | 2428:
-					SHADATTACK(true, "old/attack_alt02");
+									case 2352 | 2416:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 2356 | 2420:
+										SHADATTACK_ALERTDOUBLE();
+									case 2360 | 2424:
+										SHADATTACK(true, "old/attack_alt01");
+									case 2363 | 2427:
+										SHADATTACK();
+									case 2364 | 2428:
+										SHADATTACK(true, "old/attack_alt02");
 
-				case 2560:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-					
-				case 2564:
-					SHADATTACK_ALERT();
-				case 2568:
-					SHADATTACK(true);
-				
-				
-					
+									case 2560:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+										
+									case 2564:
+										SHADATTACK_ALERT();
+									case 2568:
+										SHADATTACK(true);
+									
+									
+										
 
-				case 2816: //404 section
-					
-				case 3328: //Final drop
-				
-				case 3360 | 3376 | 3396 | 3408 | 3424 | 3440 | 3504 | 3552 | 3576 | 3616 | 3636 | 3648 | 3664 | 3680 | 3696 | 3776 | 3808 | 3888 | 3824 | 3872 | 3924 | 3936 | 3952 | 3984:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 3364 | 3380 | 3400 | 3412 | 3428 | 3444 | 3508 | 3556 | 3580 | 3620 | 3640 | 3652 | 3668 | 3684 | 3700 | 3780 | 3812 | 3892 | 3828 | 3876 | 3928 | 3940 | 3956 | 3988:
-					SHADATTACK_ALERT();
-				case 3368 | 3384 | 3404 | 3416 | 3432 | 3448 | 3512 | 3560 | 3584 | 3624 | 3644 | 3656 | 3672 | 3688 | 3704 | 3784 | 3816 | 3896 | 3832 | 3880 | 3932 | 3944 | 3960 | 3992:
-					SHADATTACK(true);
+									case 2816: //404 section
+										
+									case 3328: //Final drop
+									
+									case 3360 | 3376 | 3396 | 3408 | 3424 | 3440 | 3504 | 3552 | 3576 | 3616 | 3636 | 3648 | 3664 | 3680 | 3696 | 3776 | 3808 | 3888 | 3824 | 3872 | 3924 | 3936 | 3952 | 3984:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 3364 | 3380 | 3400 | 3412 | 3428 | 3444 | 3508 | 3556 | 3580 | 3620 | 3640 | 3652 | 3668 | 3684 | 3700 | 3780 | 3812 | 3892 | 3828 | 3876 | 3928 | 3940 | 3956 | 3988:
+										SHADATTACK_ALERT();
+									case 3368 | 3384 | 3404 | 3416 | 3432 | 3448 | 3512 | 3560 | 3584 | 3624 | 3644 | 3656 | 3672 | 3688 | 3704 | 3784 | 3816 | 3896 | 3832 | 3880 | 3932 | 3944 | 3960 | 3992:
+										SHADATTACK(true);
 
-				case 4020 | 4032 | 4064 | 4080 | 4096 | 4108 | 4128 | 4160 | 4176 | 4192 | 4224 | 4256 | 4268 | 4288 | 4324 | 4336 | 4368 | 4400 | 4432 | 4496 | 4528 | 4560 | 4592 | 4656:
-					SHADATTACK_ALERT();
-					SHADATTACK();
-				case 4024 | 4036 | 4068 | 4084 | 4100 | 4112 | 4132 | 4164 | 4180 | 4196 | 4228 | 4260 | 4272 | 4292 | 4328 | 4340 | 4372 | 4404 | 4436 | 4500 | 4532 | 4564 | 4596 | 4660:
-					SHADATTACK_ALERT();
-				case 4028 | 4040 | 4072 | 4088 | 4104 | 4116 | 4136 | 4168 | 4184 | 4200 | 4232 | 4264 | 4276 | 4296 | 4332 | 4344 | 4376 | 4408 | 4440 | 4504 | 4536 | 4568 | 4600 | 4664://<----LMAO this is the last sawblade placed on the penultimate beat of the level. Funny, right? 
-					SHADATTACK(true);
-								
-				
-						
-						/*case 112:
+									case 4020 | 4032 | 4064 | 4080 | 4096 | 4108 | 4128 | 4160 | 4176 | 4192 | 4224 | 4256 | 4268 | 4288 | 4324 | 4336 | 4368 | 4400 | 4432 | 4496 | 4528 | 4560 | 4592 | 4656:
+										SHADATTACK_ALERT();
+										SHADATTACK();
+									case 4024 | 4036 | 4068 | 4084 | 4100 | 4112 | 4132 | 4164 | 4180 | 4196 | 4228 | 4260 | 4272 | 4292 | 4328 | 4340 | 4372 | 4404 | 4436 | 4500 | 4532 | 4564 | 4596 | 4660:
+										SHADATTACK_ALERT();
+									case 4028 | 4040 | 4072 | 4088 | 4104 | 4116 | 4136 | 4168 | 4184 | 4200 | 4232 | 4264 | 4276 | 4296 | 4332 | 4344 | 4376 | 4408 | 4440 | 4504 | 4536 | 4568 | 4600 | 4664://<----LMAO this is the last sawblade placed on the penultimate beat of the level. Funny, right? 
+										SHADATTACK(true);
+													
+									
+											
+											/*case 112:
+												
+												add(shad_attack_alert);
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 116:
+												//SHADATTACK_ALERTDOUBLE();
+												SHADATTACK_ALERT();
+											case 120:
+												//SHADATTACK(true, "old/attack_alt01");
+												SHADATTACK(true);
+										
+											//case 123:
+												//SHADATTACK();
+											//case 124:
+												//FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
+												//SHADATTACK(true, "old/attack_alt02");
+										
 							
-							add(shad_attack_alert);
-							SHADATTACK_ALERT();
-							SHADATTACK();
-						case 116:
-							//SHADATTACK_ALERTDOUBLE();
-							SHADATTACK_ALERT();
-						case 120:
-							//SHADATTACK(true, "old/attack_alt01");
-							SHADATTACK(true);
-					
-						//case 123:
-							//SHADATTACK();
-						//case 124:
-							//FlxTween.tween(strumLineNotes.members[0], {alpha: 0}, 2, {ease: FlxEase.sineInOut}); //for testing outro code
-							//SHADATTACK(true, "old/attack_alt02");
-					
-		
-						case 1776 | 1904 | 2032 | 2576 | 2596 | 2608 | 2624 | 2640 | 2660 | 2672 | 2704 | 2736 | 3072 | 3084 | 3104 | 3116 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
-							SHADATTACK_ALERT();
-							SHADATTACK();
-						case 1780 | 1908 | 2036 | 2580 | 2600 | 2612 | 2628 | 2644 | 2664 | 2676 | 2708 | 2740 | 3076 | 3088 | 3108 | 3120 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
-							SHADATTACK_ALERT();
-						case 1784 | 1912 | 2040 | 2584 | 2604 | 2616 | 2632 | 2648 | 2668 | 2680 | 2712 | 2744 | 3080 | 3092 | 3112 | 3124 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
-							SHADATTACK(true);
-		
-						//Sawblades before bluescreen thing
-						//These were seperated for double sawblade experimentation if you're wondering.
-						//My god this organisation is so bad. Too bad!
-						case 2304 | 2320 | 2340 | 2368 | 2384 | 2404:
-							SHADATTACK_ALERT();
-							SHADATTACK();
-						case 2308 | 2324 | 2344 | 2372 | 2388 | 2408:
-							SHADATTACK_ALERT();
-						case 2312 | 2328 | 2348 | 2376 | 2392 | 2412:
-							SHADATTACK(true);
-						case 2352 | 2416:
-							SHADATTACK_ALERT();
-							SHADATTACK();
-						case 2356 | 2420:
-							//SHADATTACK_ALERTDOUBLE();
-							SHADATTACK_ALERT();
-						case 2360 | 2424:
-							SHADATTACK(true);
-						case 2363 | 2427:
-							//SHADATTACK();
-						case 2364 | 2428:
-							//SHADATTACK(true, "old/attack_alt02");
-		
-						case 2560:
-							SHADATTACK_ALERT();
-							SHADATTACK();
+											case 1776 | 1904 | 2032 | 2576 | 2596 | 2608 | 2624 | 2640 | 2660 | 2672 | 2704 | 2736 | 3072 | 3084 | 3104 | 3116 | 3136 | 3152 | 3168 | 3184 | 3216 | 3248 | 3312:
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 1780 | 1908 | 2036 | 2580 | 2600 | 2612 | 2628 | 2644 | 2664 | 2676 | 2708 | 2740 | 3076 | 3088 | 3108 | 3120 | 3140 | 3156 | 3172 | 3188 | 3220 | 3252 | 3316:
+												SHADATTACK_ALERT();
+											case 1784 | 1912 | 2040 | 2584 | 2604 | 2616 | 2632 | 2648 | 2668 | 2680 | 2712 | 2744 | 3080 | 3092 | 3112 | 3124 | 3144 | 3160 | 3176 | 3192 | 3224 | 3256 | 3320:
+												SHADATTACK(true);
+							
+											//Sawblades before bluescreen thing
+											//These were seperated for double sawblade experimentation if you're wondering.
+											//My god this organisation is so bad. Too bad!
+											case 2304 | 2320 | 2340 | 2368 | 2384 | 2404:
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 2308 | 2324 | 2344 | 2372 | 2388 | 2408:
+												SHADATTACK_ALERT();
+											case 2312 | 2328 | 2348 | 2376 | 2392 | 2412:
+												SHADATTACK(true);
+											case 2352 | 2416:
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 2356 | 2420:
+												//SHADATTACK_ALERTDOUBLE();
+												SHADATTACK_ALERT();
+											case 2360 | 2424:
+												SHADATTACK(true);
+											case 2363 | 2427:
+												//SHADATTACK();
+											case 2364 | 2428:
+												//SHADATTACK(true, "old/attack_alt02");
+							
+											case 2560:
+												SHADATTACK_ALERT();
+												SHADATTACK();
 
-						case 2564:
-							SHADATTACK_ALERT();
-						case 2568:
-							SHADATTACK(true);
-		
-		
-						case 3376 | 3408 | 3424 | 3440 | 3576 | 3636 | 3648 | 3680 | 3696 | 3888 | 3936 | 3952 | 4096 | 4108 | 4128 | 4140 | 4160 | 4176 | 4192 | 4204:
-							SHADATTACK_ALERT();
-							SHADATTACK();
-						case 3380 | 3412 | 3428 | 3444 | 3580 | 3640 | 3652 | 3684 | 3700 | 3892 | 3940 | 3956 | 4100 | 4112 | 4132 | 4144 | 4164 | 4180 | 4196 | 4208:
-							SHADATTACK_ALERT();
-						case 3384 | 3416 | 3432 | 3448 | 3584 | 3644 | 3656 | 3688 | 3704 | 3896 | 3944 | 3960 | 4104 | 4116 | 4136 | 4148 | 4168 | 4184 | 4200 | 4212:
-							SHADATTACK(true);*/
+											case 2564:
+												SHADATTACK_ALERT();
+											case 2568:
+												SHADATTACK(true);
+							
+							
+											case 3376 | 3408 | 3424 | 3440 | 3576 | 3636 | 3648 | 3680 | 3696 | 3888 | 3936 | 3952 | 4096 | 4108 | 4128 | 4140 | 4160 | 4176 | 4192 | 4204:
+												SHADATTACK_ALERT();
+												SHADATTACK();
+											case 3380 | 3412 | 3428 | 3444 | 3580 | 3640 | 3652 | 3684 | 3700 | 3892 | 3940 | 3956 | 4100 | 4112 | 4132 | 4144 | 4164 | 4180 | 4196 | 4208:
+												SHADATTACK_ALERT();
+											case 3384 | 3416 | 3432 | 3448 | 3584 | 3644 | 3656 | 3688 | 3704 | 3896 | 3944 | 3960 | 4104 | 4116 | 4136 | 4148 | 4168 | 4184 | 4200 | 4212:
+												SHADATTACK(true);*/
 					}
 				}
 				//????
 			}
+
+		
+
+			
 		
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
-		#if windows
+		
+		
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy), "Acc: " + HelperFunctions.truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC,true,  songLength - Conductor.songPosition);
-		#end
+	
 
 	}
 

@@ -1,9 +1,9 @@
 function start (song)
 	setCamZoom(1)
 	setHudZoom(2)
-	showOnlyStrums = true
-	strumLine1Visible = false
-	strumLine2Visible = false
+
+	--strumLine1Visible = false
+	--strumLine2Visible = false
 	
 	end
 	
@@ -21,12 +21,12 @@ function start (song)
 				--strumLine1Visible = true
 				--strumLine2Visible = true
 			--end
-				if curStep == 120 then
-				strumLine1Visible = true
-			end
-				if curStep == 128 then
-				strumLine2Visible = true
-			end
+			--	if curStep == 120 then
+				--strumLine1Visible = true
+		--	end
+			--	if curStep == 128 then
+			--	strumLine2Visible = true
+			--end
 
 			if curStep == 170 then
 				setCamZoom(1.7)
@@ -53,7 +53,7 @@ function start (song)
 			end
 				if curStep == 576 then
 				setCamZoom(1.7)
-				showOnlyStrums = true
+				
 			end
 				if curStep == 580 then
 				setCamZoom(1.7)
@@ -110,7 +110,7 @@ function start (song)
 				setCamZoom(0.7)
 			end
 				if curStep == 1290 then
-				showOnlyStrums = true
+					setCamZoom(0.7)
 			end
 
 			if curStep == 1350 then

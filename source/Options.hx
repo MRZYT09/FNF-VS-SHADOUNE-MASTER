@@ -39,7 +39,71 @@ class OptionCategory
 	}
 }
 
+class OptionCategoryNEW
+{
+	private var _options:Array<Option> = new Array<Option>();
+	public final function getOptions():Array<Option>
+	{
+		return _options;
+	}
+
+	public final function addOption(opt:Option)
+	{
+		_options.push(opt);
+	}
+
+	
+	public final function removeOption(opt:Option)
+	{
+		_options.remove(opt);
+	}
+
+	private var _name:String = "New Category";
+	public final function getName() {
+		return _name;
+	}
+
+	public function new (catName:String, options:Array<Option>)
+	{
+		_name = catName;
+		_options = options;
+	}
+}
+
 class Option
+{
+	public function new()
+	{
+		display = updateDisplay();
+	}
+	private var description:String = "";
+	private var display:String;
+	private var acceptValues:Bool = false;
+	public final function getDisplay():String
+	{
+		return display;
+	}
+
+	public final function getAccept():Bool
+	{
+		return acceptValues;
+	}
+
+	public final function getDescription():String
+	{
+		return description;
+	}
+
+	public function getValue():String { return throw "stub!"; };
+	
+	// Returns whether the label is to be updated.
+	public function press():Bool { return throw "stub!"; }
+	private function updateDisplay():String { return throw "stub!"; }
+	public function left():Bool { return throw "stub!"; }
+	public function right():Bool { return throw "stub!"; }
+}
+
+class OptionNEW
 {
 	public function new()
 	{
@@ -158,7 +222,7 @@ class CpuStrums extends Option
 
 		private override function updateDisplay():String
 			{
-				return FlxG.save.data.dodge ? "dodge on" : "dodge off";
+				return FlxG.save.data.dodge ? "SHIELD on" : "SHIELD off";
 			}
 	}
 
@@ -206,6 +270,95 @@ class CpuStrums extends Option
 				return FlxG.save.data.crashReplay ? "crashReplay on" : "crashReplay off";
 			}
 	}
+
+	class Modchart extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.modchart = !FlxG.save.data.modchart;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.modchart ? "modchart on" : "modchart off";
+			}
+	}
+
+	class Dialogues extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.dialogues = !FlxG.save.data.dialogues;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.dialogues ? "Dialogues in Espanish on" : "Dialogues in English on";
+			}
+	}
+
+	class SpecialArrows extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.arrows = !FlxG.save.data.arrows;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.arrows ? "SpecialArrows on" : "SpecialArrows off";
+			}
+	}
+
+
+
+
+
+	class Preload extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.preload = !FlxG.save.data.preload;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.preload ? "preload on" : "preload off";
+			}
+	}
+
 
 
 
@@ -1128,6 +1281,10 @@ class ResetSettings extends Option
 		FlxG.save.data.health = null;
 		FlxG.save.data.espacedodge = null;
 		FlxG.save.data.middlescroll = null;
+		FlxG.save.data.modchart = null;
+		FlxG.save.data.preload = null;
+		FlxG.save.data.dialogues = null;
+		FlxG.save.data.arrows = null;
 		FlxG.save.data.die = null;
 		// my options
 		FlxG.save.data.distractions = null;

@@ -1631,9 +1631,11 @@ class MainMenuState extends MusicBeatState
 		fuckBump(0);
 		firstStart = false;
 
+		Application.current.window.title = Main.appTitle;
+
 		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var credits:FlxText = new FlxText(5,675 ,"Intro Song of Trap Music Now", 12);
+		var credits:FlxText = new FlxText(5,675 ,"Original Intro Song made by Sinesita", 12);
 		credits.scrollFactor.set();
 		credits.setFormat("Minecraftia 2.0", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(credits);

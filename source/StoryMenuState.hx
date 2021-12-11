@@ -13,6 +13,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
+import lime.app.Application;
+
 
 #if windows
 import Discord.DiscordClient;
@@ -62,7 +64,10 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+
+		
 		#if windows
+		Application.current.window.title = Main.appTitle + ' - Story Mode Menu';
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Story Mode Menu", null);
 		#end

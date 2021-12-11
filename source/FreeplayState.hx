@@ -11,6 +11,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.system.FlxSound;
 import lime.utils.Assets;
+import lime.app.Application;
+
 
 
 #if windows
@@ -70,9 +72,12 @@ class FreeplayState extends MusicBeatState
 		 */
 
 		 #if windows
+		 Application.current.window.title = Main.appTitle + ' - FreePlay';
 		 // Updating Discord Rich Presence
 		 DiscordClient.changePresence("In the Freeplay Menu", null);
 		 #end
+
+		
 
 		var isDebug:Bool = false;
 
@@ -81,7 +86,7 @@ class FreeplayState extends MusicBeatState
 		#end
 
 
-			addWeek(['shadoune', 'decition', 'you-are-mine', 'permadeath', 'termination'], 1, ['shadoune', 'shadoune', 'shadounearmor', 'shadounearmor', 'shadounearmor']);
+			addWeek(['shadoune', 'decition', 'you-are-mine', 'permadeath', 'rainbow' ,'termination', 'the-end'], 1, ['shadoune', 'shadoune', 'shadounearmor', 'shadounearmor', 'shadoune', 'shadounearmor', 'shadoune']);
 
 		// LOAD MUSIC
 
