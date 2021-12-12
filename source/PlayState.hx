@@ -3633,6 +3633,16 @@ class PlayState extends MusicBeatState
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 
+
+					babyArrow.animation.addByPrefix('yellow', 'arrowLEFT');
+					
+					babyArrow.animation.addByPrefix('dark', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('white', 'arrowUP');
+					
+					
+					babyArrow.animation.addByPrefix('darkred', 'arrowRIGHT');
+					babyArrow.animation.addByPrefix('violet', 'arrowLEFT');
+
 					babyArrow.antialiasing = true;
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 
@@ -3658,6 +3668,34 @@ class PlayState extends MusicBeatState
 							babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
 							babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
 							babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+
+						case 4:
+							babyArrow.x += Note.swagWidth * 4;
+							babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+							babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+						case 5:
+							babyArrow.x += Note.swagWidth * 5;
+							babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+							babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+						case 6:
+							babyArrow.x += Note.swagWidth * 6;
+							babyArrow.animation.addByPrefix('static', 'arrowUP');
+							babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+						case 7:
+							babyArrow.x += Note.swagWidth * 7;
+							babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+							babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+						case 8:
+							babyArrow.x += Note.swagWidth * 8;
+							babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+							babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+							babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
 					}
 				
 				
@@ -3665,72 +3703,147 @@ class PlayState extends MusicBeatState
 
 					babyArrow.frames = Paths.getSparrowAtlas('notes/cool_notes');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
-					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
-					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
-					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
+			babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
+			babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
+			babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 
-					babyArrow.antialiasing = true;
-					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 
-					switch (Math.abs(i))
-					{
-						case 0:
-							babyArrow.x += Note.swagWidth * 0;
-							babyArrow.animation.addByPrefix('static', 'arrowLEFT');
-							babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
-						case 1:
-							babyArrow.x += Note.swagWidth * 1;
-							babyArrow.animation.addByPrefix('static', 'arrowDOWN');
-							babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
-						case 2:
-							babyArrow.x += Note.swagWidth * 2;
-							babyArrow.animation.addByPrefix('static', 'arrowUP');
-							babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
-						case 3:
-							babyArrow.x += Note.swagWidth * 3;
-							babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
-							babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
-					}
-				
+			babyArrow.animation.addByPrefix('yellow', 'arrowLEFT');
+			
+			babyArrow.animation.addByPrefix('dark', 'arrowDOWN');
+			babyArrow.animation.addByPrefix('white', 'arrowUP');
+			
+			
+			babyArrow.animation.addByPrefix('darkred', 'arrowRIGHT');
+			babyArrow.animation.addByPrefix('violet', 'arrowLEFT');
+
+			babyArrow.antialiasing = true;
+			babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
+
+			switch (Math.abs(i))
+			{
+				case 0:
+					babyArrow.x += Note.swagWidth * 0;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				case 1:
+					babyArrow.x += Note.swagWidth * 1;
+					babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				case 2:
+					babyArrow.x += Note.swagWidth * 2;
+					babyArrow.animation.addByPrefix('static', 'arrowUP');
+					babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				case 3:
+					babyArrow.x += Note.swagWidth * 3;
+					babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+					babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+
+				case 4:
+					babyArrow.x += Note.swagWidth * 4;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				case 5:
+					babyArrow.x += Note.swagWidth * 5;
+					babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				case 6:
+					babyArrow.x += Note.swagWidth * 6;
+					babyArrow.animation.addByPrefix('static', 'arrowUP');
+					babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				case 7:
+					babyArrow.x += Note.swagWidth * 7;
+					babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+					babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+				case 8:
+					babyArrow.x += Note.swagWidth * 8;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+			}
 
 				case 'you-are-mine':
 
 					babyArrow.frames = Paths.getSparrowAtlas('notes/cool_notes_noche');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
-					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
-					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
-					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
+			babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
+			babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
+			babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 
-					babyArrow.antialiasing = true;
-					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 
-					switch (Math.abs(i))
-					{
-						case 0:
-							babyArrow.x += Note.swagWidth * 0;
-							babyArrow.animation.addByPrefix('static', 'arrowLEFT');
-							babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
-						case 1:
-							babyArrow.x += Note.swagWidth * 1;
-							babyArrow.animation.addByPrefix('static', 'arrowDOWN');
-							babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
-						case 2:
-							babyArrow.x += Note.swagWidth * 2;
-							babyArrow.animation.addByPrefix('static', 'arrowUP');
-							babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
-						case 3:
-							babyArrow.x += Note.swagWidth * 3;
-							babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
-							babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
-							babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
-					}
+			babyArrow.animation.addByPrefix('yellow', 'arrowLEFT');
+			
+			babyArrow.animation.addByPrefix('dark', 'arrowDOWN');
+			babyArrow.animation.addByPrefix('white', 'arrowUP');
+			
+			
+			babyArrow.animation.addByPrefix('darkred', 'arrowRIGHT');
+			babyArrow.animation.addByPrefix('violet', 'arrowLEFT');
+
+			babyArrow.antialiasing = true;
+			babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
+
+			switch (Math.abs(i))
+			{
+				case 0:
+					babyArrow.x += Note.swagWidth * 0;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				case 1:
+					babyArrow.x += Note.swagWidth * 1;
+					babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				case 2:
+					babyArrow.x += Note.swagWidth * 2;
+					babyArrow.animation.addByPrefix('static', 'arrowUP');
+					babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				case 3:
+					babyArrow.x += Note.swagWidth * 3;
+					babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+					babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+
+				case 4:
+					babyArrow.x += Note.swagWidth * 4;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				case 5:
+					babyArrow.x += Note.swagWidth * 5;
+					babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+					babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				case 6:
+					babyArrow.x += Note.swagWidth * 6;
+					babyArrow.animation.addByPrefix('static', 'arrowUP');
+					babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				case 7:
+					babyArrow.x += Note.swagWidth * 7;
+					babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+					babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+
+				case 8:
+					babyArrow.x += Note.swagWidth * 8;
+					babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+			}
 				
 				case 'permadeath':
 
@@ -3959,6 +4072,11 @@ class PlayState extends MusicBeatState
 				{	
 					babyArrow.x -= 280;
 				}
+
+				if (PlayStateChangeables.flip || FlxG.save.data.middlescroll)
+					{
+						babyArrow.x += 280;
+					}
 			
 
 			if (PlayStateChangeables.flip)
@@ -4618,26 +4736,24 @@ class PlayState extends MusicBeatState
 							luaModchart.executeState('playerTwoTurn', []);
 						#end
 						// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
-						switch (curStage)
+						switch (dad.curCharacter)
 						{
-							case 'limo':
-								camFollow.x = dad.getMidpoint().x - 300;
-							case 'mall':
-								camFollow.y = dad.getMidpoint().y - 200;
-							case 'school':
-								camFollow.x = dad.getMidpoint().x - 200;
-								camFollow.y = dad.getMidpoint().y - 200;
-							case 'schoolEvil':
-								camFollow.x = dad.getMidpoint().x - 200;
-								camFollow.y = dad.getMidpoint().y - 200;
+							case 'mom':
+								camFollow.y = dad.getMidpoint().y;
+							case 'senpai':
+								camFollow.y = dad.getMidpoint().y - 430;
+								camFollow.x = dad.getMidpoint().x - 100;
+							case 'senpai-angry':
+								camFollow.y = dad.getMidpoint().y - 430;
+								camFollow.x = dad.getMidpoint().x - 100;
 								case 'shadoune': 
 									camFollow.x -= 385;
 									camFollow.y -= 240;
 								case 'shadounearmor':		
 									camFollow.x -= 400;
 									camFollow.y -= 240;
-								case 'decition':
-									camFollow.x -= 385;
+								case 'persimon':
+									camFollow.x -= 400;
 									camFollow.y -= 240;
 								case 'you-are-mine':
 									camFollow.x -= 400;
@@ -4652,10 +4768,6 @@ class PlayState extends MusicBeatState
 						if (dad.curCharacter == 'mom')
 							vocals.volume = 1;
 
-						if (SONG.song.toLowerCase() == 'Termination')
-							{
-								vocals.volume = 1.5;
-							}
 						
 					}
 		
@@ -4679,51 +4791,44 @@ class PlayState extends MusicBeatState
 		
 
 
-						/*
-						x - izquierda + derecha
-						y - arriba + abajo
-						*/
-						/* character.hx:
-						x - derecha + izquierda
-						y - abajo + arriba
-						*/
-						//xddddd
-						switch (boyfriend.curCharacter)
+						if (SONG.player1 == 'uwu')
+							{
+								camFollow.x -= 175;
+								camFollow.y -= 75;
+							}
+		
+						switch (curStage)
 						{
-							case 'mom':
-								camFollow.y = boyfriend.getMidpoint().y;
-							case 'senpai':
-								camFollow.y = boyfriend.getMidpoint().y - 430;
-								camFollow.x = boyfriend.getMidpoint().x - 100;
-							case 'senpai-angry':
-								camFollow.y = boyfriend.getMidpoint().y - 430;
-								camFollow.x = boyfriend.getMidpoint().x - 100;
-								case 'bf':
+							case 'limo':
+								camFollow.x = boyfriend.getMidpoint().x - 300;
+							case 'mall':
+								camFollow.y = boyfriend.getMidpoint().y - 200;
+							case 'school':
+								camFollow.x = boyfriend.getMidpoint().x - 200;
+								camFollow.y = boyfriend.getMidpoint().y - 200;
+							case 'schoolEvil':
+								camFollow.x = boyfriend.getMidpoint().x - 200;
+								camFollow.y = boyfriend.getMidpoint().y - 200;
+
+								case 'shadoune':
 									camFollow.x -= 450;
 									camFollow.y -= 75;
-								case 'bfnoche':
+								case 'shadounearmor':
 									camFollow.x -= 450;
 									camFollow.y -= 75;
-								case 'uwu':
-									camFollow.x -= 175;
+								case 'permadeath':
+									camFollow.x -= 450;
 									camFollow.y -= 75;
-								/*
-									x - izquierda + derecha
-									y - arriba + abajo
-									
-									character.hx:
-									x - derecha + izquierda
-									y - abajo + arriba
-								*/
 								case 'shadlocked':
-									camFollow.x -= 525;
-									camFollow.y -= 280;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'decition':
-									camFollow.x -= 525;
-									camFollow.y -= 280;
+									camFollow.x -= 450;
+									camFollow.y -= 75;
 								case 'you-are-mine':
 									camFollow.x -= 450;
 									camFollow.y -= 75;
+							
 						}
 					}
 			}

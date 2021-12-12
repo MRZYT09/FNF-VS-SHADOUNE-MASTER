@@ -288,6 +288,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
 				animation.addByPrefix('hit', 'BF hit', 24, false);
+				animation.addByPrefix('SWORD', 'bf pre attack', 24, false);
 				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
 
 				animation.addByPrefix('firstDeath', "BF dies", 24, false);
@@ -322,6 +323,7 @@ class Character extends FlxSprite
 				addOffset('scared', -4);
 				addOffset("dodge", -38, -7);
 				addOffset("SHIELD", 20, 7);
+				addOffset('SWORD', -5);
 
 				playAnim('idle');
 
@@ -539,16 +541,27 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'shadoune RIGHT', 24);
 				animation.addByPrefix('singDOWN', 'shadoune DOWN', 24);
 				animation.addByPrefix('singLEFT', 'shadoune LEFT', 24);
-				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
+				animation.addByPrefix('SWORD', 'shadoune RIGHT', 24);
 
+
+				animation.addByPrefix('singUPmiss', 'shadoune UP', 24);
+				animation.addByPrefix('singRIGHTmiss', 'shadoune RIGHT', 24);
+				animation.addByPrefix('singDOWNmiss', 'shadoune DOWN', 24);
+				animation.addByPrefix('singLEFTmiss', 'shadoune LEFT', 24);
 	
-	
+
+
 				addOffset('idle', 715, 185);
 				addOffset("singUP", 715, 185);
 				addOffset("singRIGHT", 715, 160);
 				addOffset("singLEFT", 715, 240);
 				addOffset("singDOWN", 715, 290);
 				addOffset("SWORD", 715, 106);
+
+				addOffset('singUPmiss', 715, 185);
+				addOffset('singRIGHTmiss', 715, 160);
+				addOffset('singLEFTmiss', 715, 240);
+				addOffset('singDOWNmiss', 715, 290);
 	
 				playAnim('idle');
 
@@ -562,6 +575,13 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'shadoune DOWN', 24);
 				animation.addByPrefix('singLEFT', 'shadoune LEFT', 24);
 				animation.addByPrefix('SWORD', 'shadoune SWORD', 24);
+				animation.addByPrefix('SHIELD', 'shadoune SWORD', 24);
+
+
+				animation.addByPrefix('singUPmiss', 'shadoune UP', 24);
+				animation.addByPrefix('singRIGHTmiss', 'shadoune RIGHT', 24);
+				animation.addByPrefix('singDOWNmiss', 'shadoune DOWN', 24);
+				animation.addByPrefix('singLEFTmiss', 'shadoune LEFT', 24);
 	
 	
 				addOffset('idle', 715, 185);
@@ -570,6 +590,14 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 715, 240);
 				addOffset("singDOWN", 715, 290);
 				addOffset("SWORD", 715,360);
+
+				addOffset('SHIELD', 715,360);
+
+				
+				addOffset('singUPmiss', 715, 240);
+				addOffset('singRIGHTmiss', 715,350);
+				addOffset('singLEFTmiss', 715, 240);
+				addOffset('singDOWNmiss', 715, 290);
 	
 				playAnim('idle');	
 

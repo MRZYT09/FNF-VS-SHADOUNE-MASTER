@@ -103,8 +103,7 @@ class Replay
 		
 		var time = Date.now().getTime();
 
-		if (FlxG.save.data.crashReplay)
-			{
+	
 				#if sys
 				File.saveContent("assets/replays/replay-" + PlayState.SONG.song + "-time" + time + ".kadeReplay", data);
 		
@@ -114,7 +113,7 @@ class Replay
 		
 				replay.ana = ana;
 				#end
-			}
+			
 	
 	}
 

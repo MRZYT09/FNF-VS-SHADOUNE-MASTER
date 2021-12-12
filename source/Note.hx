@@ -267,16 +267,34 @@ class Note extends FlxSprite
 					animation.addByPrefix('redScroll', 'red0');
 					animation.addByPrefix('blueScroll', 'blue0');
 					animation.addByPrefix('purpleScroll', 'purple0');
+
+					animation.addByPrefix('whiteScroll', 'green0');
+					animation.addByPrefix('darkredScroll', 'red0');
+					animation.addByPrefix('darkScroll', 'blue0');
+					animation.addByPrefix('yellowScroll', 'purple0');
+					animation.addByPrefix('violetScroll', 'purple0');
 	
 					animation.addByPrefix('purpleholdend', 'pruple end hold');
 					animation.addByPrefix('greenholdend', 'green hold end');
 					animation.addByPrefix('redholdend', 'red hold end');
 					animation.addByPrefix('blueholdend', 'blue hold end');
+
+					animation.addByPrefix('violetholdend', 'pruple end hold');
+					animation.addByPrefix('yellowholdend', 'pruple end hold');
+					animation.addByPrefix('whiteholdend', 'green hold end');
+					animation.addByPrefix('darkredholdend', 'red hold end');
+					animation.addByPrefix('darkholdend', 'blue hold end');
 	
 					animation.addByPrefix('purplehold', 'purple hold piece');
 					animation.addByPrefix('greenhold', 'green hold piece');
 					animation.addByPrefix('redhold', 'red hold piece');
 					animation.addByPrefix('bluehold', 'blue hold piece');
+
+					animation.addByPrefix('violethold', 'purple hold piece');
+					animation.addByPrefix('yellowhold', 'purple hold piece');
+					animation.addByPrefix('whitehold', 'green hold piece');
+					animation.addByPrefix('darkredhold', 'red hold piece');
+					animation.addByPrefix('darkhold', 'blue hold piece');
 					
 					if (burning || death || warning || angel || bob || glitch)
 						{
@@ -340,16 +358,34 @@ class Note extends FlxSprite
 					animation.addByPrefix('redScroll', 'red0');
 					animation.addByPrefix('blueScroll', 'blue0');
 					animation.addByPrefix('purpleScroll', 'purple0');
+
+					animation.addByPrefix('whiteScroll', 'green0');
+					animation.addByPrefix('darkredScroll', 'red0');
+					animation.addByPrefix('darkScroll', 'blue0');
+					animation.addByPrefix('yellowScroll', 'purple0');
+					animation.addByPrefix('violetScroll', 'purple0');
 	
 					animation.addByPrefix('purpleholdend', 'pruple end hold');
 					animation.addByPrefix('greenholdend', 'green hold end');
 					animation.addByPrefix('redholdend', 'red hold end');
 					animation.addByPrefix('blueholdend', 'blue hold end');
+
+					animation.addByPrefix('violetholdend', 'pruple end hold');
+					animation.addByPrefix('yellowholdend', 'pruple end hold');
+					animation.addByPrefix('whiteholdend', 'green hold end');
+					animation.addByPrefix('darkredholdend', 'red hold end');
+					animation.addByPrefix('darkholdend', 'blue hold end');
 	
 					animation.addByPrefix('purplehold', 'purple hold piece');
 					animation.addByPrefix('greenhold', 'green hold piece');
 					animation.addByPrefix('redhold', 'red hold piece');
 					animation.addByPrefix('bluehold', 'blue hold piece');
+
+					animation.addByPrefix('violethold', 'purple hold piece');
+					animation.addByPrefix('yellowhold', 'purple hold piece');
+					animation.addByPrefix('whitehold', 'green hold piece');
+					animation.addByPrefix('darkredhold', 'red hold piece');
+					animation.addByPrefix('darkhold', 'blue hold piece');
 					
 					if (burning || death || warning || angel || bob || glitch)
 						{
@@ -409,20 +445,38 @@ class Note extends FlxSprite
 
 						frames = Paths.getSparrowAtlas('notes/cool_notes_noche');
 			
-					animation.addByPrefix('greenScroll', 'green0');
-					animation.addByPrefix('redScroll', 'red0');
-					animation.addByPrefix('blueScroll', 'blue0');
-					animation.addByPrefix('purpleScroll', 'purple0');
+						animation.addByPrefix('greenScroll', 'green0');
+						animation.addByPrefix('redScroll', 'red0');
+						animation.addByPrefix('blueScroll', 'blue0');
+						animation.addByPrefix('purpleScroll', 'purple0');
 	
-					animation.addByPrefix('purpleholdend', 'pruple end hold');
-					animation.addByPrefix('greenholdend', 'green hold end');
-					animation.addByPrefix('redholdend', 'red hold end');
-					animation.addByPrefix('blueholdend', 'blue hold end');
+						animation.addByPrefix('whiteScroll', 'green0');
+						animation.addByPrefix('darkredScroll', 'red0');
+						animation.addByPrefix('darkScroll', 'blue0');
+						animation.addByPrefix('yellowScroll', 'purple0');
+						animation.addByPrefix('violetScroll', 'purple0');
+		
+						animation.addByPrefix('purpleholdend', 'pruple end hold');
+						animation.addByPrefix('greenholdend', 'green hold end');
+						animation.addByPrefix('redholdend', 'red hold end');
+						animation.addByPrefix('blueholdend', 'blue hold end');
 	
-					animation.addByPrefix('purplehold', 'purple hold piece');
-					animation.addByPrefix('greenhold', 'green hold piece');
-					animation.addByPrefix('redhold', 'red hold piece');
-					animation.addByPrefix('bluehold', 'blue hold piece');
+						animation.addByPrefix('violetholdend', 'pruple end hold');
+						animation.addByPrefix('yellowholdend', 'pruple end hold');
+						animation.addByPrefix('whiteholdend', 'green hold end');
+						animation.addByPrefix('darkredholdend', 'red hold end');
+						animation.addByPrefix('darkholdend', 'blue hold end');
+		
+						animation.addByPrefix('purplehold', 'purple hold piece');
+						animation.addByPrefix('greenhold', 'green hold piece');
+						animation.addByPrefix('redhold', 'red hold piece');
+						animation.addByPrefix('bluehold', 'blue hold piece');
+	
+						animation.addByPrefix('violethold', 'purple hold piece');
+						animation.addByPrefix('yellowhold', 'purple hold piece');
+						animation.addByPrefix('whitehold', 'green hold piece');
+						animation.addByPrefix('darkredhold', 'red hold piece');
+						animation.addByPrefix('darkhold', 'blue hold piece');
 					
 					if (burning || death || warning || angel || bob || glitch)
 						{

@@ -225,6 +225,22 @@ class TitleState extends MusicBeatState
 			// logoBl.color = FlxColor.BLACK;
 		}
 
+		/*var dirtColors:Array<String> = [
+			'#C80B0B',
+			'#EA7610',
+			'#EE3D00',
+			'#FC0422'
+		];
+	var colorRotation:Int = 1;
+
+		FlxTween.color(dirt, 2, dirt.color, FlxColor.fromString(dirtColors[colorRotation]));
+		new FlxTimer().start(2, function(tmr:FlxTimer)
+			{
+				FlxTween.color(dirt, 2, dirt.color, FlxColor.fromString(dirtColors[colorRotation]));
+				if(colorRotation < (dirtColors.length - 1)) colorRotation++;
+				else colorRotation = 0;
+			}, 0);
+*/
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
