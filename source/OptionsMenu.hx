@@ -35,6 +35,7 @@ class OptionsMenu extends MusicBeatState
 			new Modchart("move of the arrows "),
 			new Shake("shake :v "),
 			new Preload("preloading"),
+			new UwU("custom covers"),
 			new SpecialArrows("effects of arrows"),
 			new Dialogues("dialogues"),
 			new Bestinputfornoobs("new input spam")

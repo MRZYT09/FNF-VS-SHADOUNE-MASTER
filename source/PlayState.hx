@@ -65,6 +65,8 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 
+import openfl.display.Shader;
+
 #if windows
 import Discord.DiscordClient;
 #end
@@ -145,6 +147,8 @@ class PlayState extends MusicBeatState
 	#end
 
 	private var vocals:FlxSound;
+
+	private var vocalsShad:FlxSound;
 
 	public var originalX:Float;
 
@@ -1964,6 +1968,40 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
+		#if debug
+		if (curSong.toLowerCase() == 'decition')
+			{
+				//if (FlxG.save.data.vfx)
+				//{
+					var distor:DistortedShader;
+					distor = new DistortedShader();
+	
+					/*var daStatic:FlxSprite = new FlxSprite(0, 0);
+	
+					daStatic.frames = Paths.getSparrowAtlas('');
+	
+					daStatic.setGraphicSize(FlxG.width, FlxG.height);
+	
+					daStatic.alpha = 0.05;
+	
+					daStatic.screenCenter();
+	
+					daStatic.cameras = [camHUD];
+	
+					daStatic.animation.addByPrefix('static', 'staticFLASH', 24, true);
+	
+					add(daStatic);*/
+	
+					//daStatic.animation.play('static');
+	
+					camGame.setFilters([new ShaderFilter(distor)]);
+	
+					camHUD.setFilters([new ShaderFilter(distor)]);
+				//}
+	
+				FlxG.camera.follow(camFollow, LOCKON, 0.06 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
+			}
+			#end
 		if (FlxG.save.data.songPosition) // I dont wanna talk about this code :(
 			{
 				songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.image('healthBar'));
@@ -1976,7 +2014,7 @@ class PlayState extends MusicBeatState
 				songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
 					'songPositionBar', 0, 90000);
 				songPosBar.scrollFactor.set();
-				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+				songPosBar.createFilledBar(FlxColor.BLACK, FlxColor.fromRGB(0, 255, 128));
 				add(songPosBar);
 	
 				var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - (SONG.song.length * 5),songPosBG.y,0,SONG.song, 16);
@@ -3272,6 +3310,28 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 		else
 			vocals = new FlxSound();
+
+		if (FlxG.save.data.uwu)
+			{
+				if (SONG.song.toLowerCase() == 'shadoune' || SONG.song.toLowerCase() == 'decition' ||  SONG.song.toLowerCase() == 'you-are-mine' || SONG.song.toLowerCase() == 'permadeath')
+					{
+						if (SONG.player1 == 'uwu')
+							vocals = new FlxSound().loadEmbedded(Paths.voicesShad(PlayState.SONG.song));
+
+							/*
+								o podria ser 
+								if (SONG.player1 == 'uwu')
+									vocals = new FlxSound().loadEmbedded(Paths.voicesShad(PlayState.SONG.song));
+								else if (!SONG.player1 == 'uwu' && SONG.needsVoices)
+									vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+								else
+									vocals = new FlxSound();
+							*/
+					}
+				
+					
+			}
+
 
 		trace('loaded vocals');
 
@@ -6900,7 +6960,7 @@ class PlayState extends MusicBeatState
 							if(FlxG.keys.justPressed.SPACE)
 								trace('butttonpressed');
 		
-							if(FlxG.keys.justPressed.SPACE && !bfDodging && bfCanDodge){
+							if(FlxG.keys.justPressed.SPACE || FlxG.save.data.dodgeBind  && !bfDodging && bfCanDodge){
 								trace('DODGE START!');
 								bfDodging = true;
 								bfCanDodge = false;

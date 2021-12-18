@@ -41,6 +41,10 @@ enum abstract Action(String) to String from String
 	var CHEAT = "cheat";
 	var GTSTRUM = "gtstrum";
 
+	var SPACEB = 'space';
+	var SPACE_P = 'space-press';
+	var SPACE_R = 'space-release';
+
 	var L1 = "l1";
 	var U1 = "u";
 	var R1 = "r1";
@@ -117,6 +121,10 @@ abstract Action(String) to String from String
 	var RESET = "reset";
 	var CHEAT = "cheat";
 	var GTSTRUM = "gtstrum";
+
+	var SPACEB = 'space';
+	var SPACE_P = 'space-press';
+	var SPACE_R = 'space-release';
 
 	var L1 = "l1";
 	var U1 = "u";
@@ -195,6 +203,7 @@ enum Control
 	BACK;
 	PAUSE;
 	CHEAT;
+	SPACEB;
 	GTSTRUM;
 	L1;
 	U1;
@@ -239,6 +248,9 @@ class Controls extends FlxActionSet
 	var _leftR = new FlxActionDigital(Action.LEFT_R);
 	var _rightR = new FlxActionDigital(Action.RIGHT_R);
 	var _downR = new FlxActionDigital(Action.DOWN_R);
+	var _space = new FlxActionDigital(Action.SPACEB);
+	var _spaceP = new FlxActionDigital(Action.SPACE_P);
+	var _spaceR = new FlxActionDigital(Action.SPACE_R);
 
 
 	
@@ -397,6 +409,21 @@ class Controls extends FlxActionSet
 
 	inline function get_CHEAT()
 		return _cheat.check();
+
+	public var SPACEB(get, never):Bool;
+
+	inline function get_SPACEB()
+		return _space.check();
+
+	public var SPACE_P(get, never):Bool;
+
+	inline function get_SPACE_P()
+		return _spaceP.check();
+
+	public var SPACE_R(get, never):Bool;
+
+	inline function get_SPACE_R()
+		return _spaceR.check();
 
 	public var L1(get, never):Bool;
 
@@ -571,8 +598,9 @@ class Controls extends FlxActionSet
 		add(_leftR);
 		add(_rightR);
 		add(_downR);
-
-
+		add(_space);
+		add(_spaceP);
+		add(_spaceR);
 		add(_accept);
 		add(_back);
 		add(_pause);
@@ -659,6 +687,9 @@ class Controls extends FlxActionSet
 		add(_reset);
 		add(_cheat);
 		add(_gtstrum);
+		add(_space);
+		add(_spaceP);
+		add(_spaceR);
 
 
 
@@ -762,6 +793,7 @@ class Controls extends FlxActionSet
 			case DOWN: _down;
 			case LEFT: _left;
 			case RIGHT: _right;
+		
 
 
 
@@ -771,6 +803,7 @@ class Controls extends FlxActionSet
 			case RESET: _reset;
 			case CHEAT: _cheat;
 			case GTSTRUM: _gtstrum;
+			case SPACEB: _space;
 
 			case L1: _l1;
 			case D1: _d;
@@ -823,8 +856,6 @@ class Controls extends FlxActionSet
 				func(_down, PRESSED);
 				func(_downP, JUST_PRESSED);
 				func(_downR, JUST_RELEASED);
-
-	
 			case ACCEPT:
 				func(_accept, JUST_PRESSED);
 			case BACK:
@@ -863,6 +894,10 @@ class Controls extends FlxActionSet
 				func(_r2P, JUST_PRESSED);
 				func(_r2R, JUST_RELEASED);
 
+			case SPACEB:
+				func(_space, PRESSED);
+				func(_spaceP, JUST_PRESSED);
+				func(_spaceR, JUST_RELEASED);
 			case N0:
 				func(_n0, PRESSED);
 				func(_n0P, JUST_PRESSED);
@@ -1153,6 +1188,7 @@ class Controls extends FlxActionSet
 		inline bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 		inline bindKeys(Control.PAUSE, [ENTER, ESCAPE]);
 		inline bindKeys(Control.RESET, [FlxKey.fromString(FlxG.save.data.killBind)]);
+		inline bindKeys(Control.SPACEB, [FlxKey.fromString(FlxG.save.data.middleBind), FlxKey.SPACE]);
 		inline bindKeys(Control.GTSTRUM, [SPACE]);
 
 		inline bindKeys(Control.N0, [FlxKey.fromString(FlxG.save.data.N0Bind)]);

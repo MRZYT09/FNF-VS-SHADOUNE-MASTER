@@ -176,6 +176,16 @@ class Paths
 		return 'songs:assets/songs/${songLowercase}/Voices.$SOUND_EXT';
 	}
 
+	inline static public function voicesShad(song:String)
+		{
+			var songLowercase = StringTools.replace(song, " ", "-").toLowerCase();
+				switch (songLowercase) {
+					case 'dad-battle': songLowercase = 'dadbattle';
+					case 'philly-nice': songLowercase = 'philly';
+				}
+			return 'songs:assets/songs/${songLowercase}/VoicesShad.$SOUND_EXT';
+		}
+
 	inline static public function inst(song:String)
 	{
 		var songLowercase = StringTools.replace(song, " ", "-").toLowerCase();

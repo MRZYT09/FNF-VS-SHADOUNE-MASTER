@@ -47,6 +47,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var code:Int = 0;
 
 	var curWacky:Array<String> = [];
 
@@ -351,6 +352,29 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
+		if (FlxG.keys.justPressed.UP)
+			if (code == 0)
+				code = 1;
+			else
+				code == 0;
+
+		if (FlxG.keys.justPressed.DOWN)
+			if (code == 1)
+				code = 2;
+			else
+				code == 0;
+
+		if (FlxG.keys.justPressed.LEFT)
+			if (code == 2)
+				code = 3;
+			else
+				code == 0;
+
+		if (FlxG.keys.justPressed.RIGHT)
+			if (code == 3)
+				code = 4;
+			else
+				code == 0;
 
 		if (pressedEnter || FlxG.mouse.pressed && !transitioning && skippedIntro)
 		{
@@ -386,31 +410,46 @@ class TitleState extends MusicBeatState
 					returnedData[1] = data.substring(data.indexOf('-'), data.length);
 				  	if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
 					{
-						trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
-						OutdatedSubState.needVer = returnedData[0];
-						OutdatedSubState.currChanges = returnedData[1];
+						
 						FlxG.switchState(new OutdatedSubState());
 					}
 					else
 					{
-						FlxG.switchState(new MainMenuState());
+							FlxG.switchState(new OutdatedSubState());
 					}
 				}
 				
 				http.onError = function (error) {
 				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
+				  	FlxG.switchState(new OutdatedSubState()); // fail but we go anyway
 				}
 				
 				http.request();
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
+		else if (pressedEnter && !transitioning && skippedIntro && code == 4)
+			{
+				transitioning = true;
+	
+				
+				PlayState.SONG = Song.loadFromJson('shadlocked-uhc', 'shadlocked');
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = 3;
+				PlayState.storyWeek = 2;
+				FlxG.camera.fade(FlxColor.WHITE, 0.5, false);
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+				if (!FlxG.save.data.songArray.contains('shadlocked') && !FlxG.save.data.botplay)
+					FlxG.save.data.songArray.push('shadlocked');
+				new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new PlayState());
+				});
+			}
 
-		if (pressedEnter || FlxG.mouse.pressed && !skippedIntro && initialized)
-		{
-			skipIntro();
-		}
+	
 
 		super.update(elapsed);
 	}
@@ -472,7 +511,7 @@ class TitleState extends MusicBeatState
 				
 				add(dirt);
 			case 1:
-				createCoolText(['inspired in various minecraft mods']);
+				createCoolText(['inspired in',' various' ,'minecraft mods']);
 			case 2:
 				deleteCoolText();
 			case 3:	

@@ -406,6 +406,28 @@ class CpuStrums extends Option
 			}
 	}
 
+//covers
+	class UwU extends Option
+	{
+		public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+
+		public override function press():Bool
+		{
+			FlxG.save.data.uwu = !FlxG.save.data.uwu;
+			display = updateDisplay();
+			return true;
+		}
+
+		private override function updateDisplay():String
+			{
+				return FlxG.save.data.uwu ? "custom covers unsing shadoune bf on" : "custom covers unsing shadoune bf off";
+			}
+	}
+
 		// health mecanic
 		class Health extends Option
 		{

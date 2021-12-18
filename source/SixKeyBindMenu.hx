@@ -35,9 +35,9 @@ class SixKeyBindMenu extends FlxSubState
     var keyTextDisplay:FlxText;
     var keyWarning:FlxText;
     var warningTween:FlxTween;
-    var keyText:Array<String> = ["LEFT1", "UP", "RIGHT1", "LEFT2", "DOWN", "RIGHT2"];
-    var defaultKeys:Array<String> = ["S", "D", "F", "J", "K", "L"];
-    var defaultArrowKeys:Array<String> = ["S", "D", "F", "LEFT", "DOWN", "RIGHT"];
+    var keyText:Array<String> = ["LEFT1", "UP", "RIGHT1", "LEFT2", "DOWN", "RIGHT2", "DODGE"];
+    var defaultKeys:Array<String> = ["S", "D", "F", "J", "K", "L", "SPACE"];
+    var defaultArrowKeys:Array<String> = ["S", "D", "F", "LEFT", "DOWN", "RIGHT", "SPACE"];
 
     var defaultGpKeys:Array<String> = ["DPAD_LEFT", "DPAD_DOWN", "DPAD_UP", "DPAD_RIGHT"];
     var curSelected:Int = 0;
@@ -47,13 +47,15 @@ class SixKeyBindMenu extends FlxSubState
                               FlxG.save.data.R1Bind,
                               FlxG.save.data.L2Bind,
                               FlxG.save.data.D1Bind,
-                              FlxG.save.data.R2Bind];
+                              FlxG.save.data.R2Bind,
+                              FlxG.save.data.dodgeBind];
     var gpKeys:Array<String> = [FlxG.save.data.gpleftBind,
                               FlxG.save.data.gpdownBind,
                               FlxG.save.data.gpupBind,
-                              FlxG.save.data.gprightBind];
+                              FlxG.save.data.gprightBind,
+                              FlxG.save.data.gpdodgeBind];
     var tempKey:String = "";
-    var blacklist:Array<String> = ["ESCAPE", "ENTER", "BACKSPACE", "SPACE", "TAB"];
+    var blacklist:Array<String> = ["ESCAPE", "ENTER", "BACKSPACE", "TAB"];
 
     var blackBox:FlxSprite;
     var infoText:FlxText;
@@ -83,7 +85,7 @@ class SixKeyBindMenu extends FlxSubState
 
         keyTextDisplay = new FlxText(-10, 0, 1280, "", 72);
 		keyTextDisplay.scrollFactor.set(0, 0);
-		keyTextDisplay.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		keyTextDisplay.setFormat("Minecraftia 2.0", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		keyTextDisplay.borderSize = 2;
 		keyTextDisplay.borderQuality = 3;
 
@@ -92,7 +94,7 @@ class SixKeyBindMenu extends FlxSubState
 
         infoText = new FlxText(-10, 580, 1280, 'Current Mode: ${KeyBinds.gamepad ? 'GAMEPAD' : 'KEYBOARD'}. Press TAB to switch\n(${KeyBinds.gamepad ? 'RIGHT Trigger' : 'Escape'} to save, ${KeyBinds.gamepad ? 'LEFT Trigger' : 'Backspace'} to reset, ${KeyBinds.gamepad ? 'why are you using gamepad lol' : 'L'} to set up for Arrow Keys. ${KeyBinds.gamepad ? 'START To change a keybind' : ''})', 72);
 		infoText.scrollFactor.set(0, 0);
-		infoText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoText.setFormat("Minecraftia 2.0", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		infoText.borderSize = 2;
 		infoText.borderQuality = 3;
         infoText.alpha = 0;
@@ -260,7 +262,7 @@ class SixKeyBindMenu extends FlxSubState
 
         if (KeyBinds.gamepad)
         {
-            for(i in 0...6){
+            for(i in 0...7){
 
                 var textStart = (i == curSelected) ? "> " : "  ";
                 trace(gpKeys[i]);
@@ -270,7 +272,7 @@ class SixKeyBindMenu extends FlxSubState
         }
         else
         {
-            for(i in 0...6){
+            for(i in 0...7){
 
                 var textStart = (i == curSelected) ? "> " : "  ";
                 keyTextDisplay.text += textStart + keyText[i] + ": " + ((keys[i] != keyText[i]) ? (keys[i] + " / ") : "" ) + keyText[i] + " ARROW\n";
@@ -287,6 +289,8 @@ class SixKeyBindMenu extends FlxSubState
         FlxG.save.data.gpdownBind = gpKeys[1];
         FlxG.save.data.gpleftBind = gpKeys[0];
         FlxG.save.data.gprightBind = gpKeys[3];
+        FlxG.save.data.gpdodgeBind = gpKeys[4];
+        FlxG.save.data.gpmiddleBind = gpKeys[5];
 
         FlxG.save.data.L1Bind = keys[0];
         FlxG.save.data.U1Bind = keys[1];
@@ -294,6 +298,8 @@ class SixKeyBindMenu extends FlxSubState
         FlxG.save.data.L2Bind = keys[3];
         FlxG.save.data.D1Bind = keys[4];
         FlxG.save.data.R2Bind = keys[5];
+        FlxG.save.data.dodgeBind = keys[4];
+        FlxG.save.data.middleBind = keys[5];
 
         FlxG.save.flush();
 
@@ -410,9 +416,9 @@ class SixKeyBindMenu extends FlxSubState
     {
         curSelected += _amount;
                 
-        if (curSelected > 5)
+        if (curSelected > 6)
             curSelected = 0;
         if (curSelected < 0)
-            curSelected = 5;
+            curSelected = 6;
     }
 }
